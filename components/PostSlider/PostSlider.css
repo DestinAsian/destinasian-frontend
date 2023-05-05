@@ -1,0 +1,33 @@
+.post-swiper {
+  width: 100vw;
+  height: 60vh;
+}
+
+.swiper-slide {
+  text-align: center;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-pagination-fraction {
+  left: auto;
+  right: 0;
+  width: 3.5rem;
+  font-size: 20px;
+  color: #ffffff;
+}

@@ -1,8 +1,15 @@
 .component {
-  padding-bottom: 4rem;
+  max-width: var(--wpe--content--max-width);
+  margin: 0 auto;
+  line-height: 1.6875;
+  margin-bottom: 5rem;
 }
 
 .title {
+  margin-bottom: 0.5rem;
+}
+
+.parent {
   margin-bottom: 0.5rem;
 }
 

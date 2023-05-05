@@ -1,3 +1,1 @@
-# faust-getting-started
-
-Welcome to the experimental Faust getting started example.
+# DestinAsian Headless Worpress Front-End Source Code

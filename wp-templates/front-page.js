@@ -1,74 +1,135 @@
-import { useQuery, gql } from '@apollo/client';
-import * as MENUS from '../constants/menus';
-import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { gql } from '@apollo/client'
+import * as MENUS from '../constants/menus'
+import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import {
   Header,
   Footer,
   Main,
   Container,
+  ContentWrapper,
   NavigationMenu,
-  Hero,
+  FeaturedImage,
   SEO,
-} from '../components';
+  HomepageSlider,
+} from '../components'
+import NavigationHeader from '../components/NavigationHeader/NavigationHeader'
 
-export default function Component() {
-  const { data } = useQuery(Component.query, {
-    variables: Component.variables(),
-  });
+export default function Component(props) {
+  // Loading state for previews
+  if (props.loading) {
+    return <>Loading...</>
+  }
 
   const { title: siteTitle, description: siteDescription } =
-    data?.generalSettings;
-  const primaryMenu = data?.headerMenuItems?.nodes ?? [];
-  const footerMenu = data?.footerMenuItems?.nodes ?? [];
+    props?.data?.generalSettings
+  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
+  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
+  const navigationMenu = props?.data?.navigationMenuItems?.nodes ?? []
+  const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
+
+  const images = [
+    {
+      src: acfHomepageSlider.slide1.mediaItemUrl,
+      url: acfHomepageSlider.slideLink1,
+    },
+    {
+      src: acfHomepageSlider.slide2.mediaItemUrl,
+      url: acfHomepageSlider.slideLink2,
+    },
+    {
+      src: acfHomepageSlider.slide3.mediaItemUrl,
+      url: acfHomepageSlider.slideLink3,
+    },
+  ]
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={siteTitle}
+        description={siteDescription}
+        imageUrl={featuredImage?.node?.sourceUrl}
+      />
       <Header
         title={siteTitle}
         description={siteDescription}
         menuItems={primaryMenu}
-      />
+      >
+      </Header>
       <Main>
-        <Container>
-          <Hero title={'Front Page'} />
-          <div className="text-center">
-            <p>This page is utilizing the "front-page" WordPress template.</p>
-            <code>wp-templates/front-page.js</code>
-          </div>
-        </Container>
+        <>
+          <NavigationHeader menuItems={navigationMenu}/>
+          <HomepageSlider images={images} />
+          <Container>
+            <ContentWrapper content={content} />
+          </Container>
+        </>
       </Main>
       <Footer title={siteTitle} menuItems={footerMenu} />
     </>
-  );
+  )
 }
 
 Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
+  ${FeaturedImage.fragments.entry}
+  ${Header.fragments.entry}
   query GetPageData(
+    $databaseId: ID!
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
+    $navigationLocation: MenuLocationEnum
+    $asPreview: Boolean = false
   ) {
+    page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+      title
+      content
+      ...FeaturedImageFragment
+      acfHomepageSlider {
+        slide1 {
+          mediaItemUrl
+        }
+        slide2 {
+          mediaItemUrl
+        }
+        slide3 {
+          mediaItemUrl
+        }
+        slideLink1
+        slideLink2
+        slideLink3
+      }
+    }
     generalSettings {
       ...BlogInfoFragment
-    }
-    headerMenuItems: menuItems(where: { location: $headerLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
     }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
+    headerMenuItems: menuItems(where: { location: $headerLocation }) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    navigationMenuItems: menuItems(where: { location: $navigationLocation }) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    categories {
+      ...SearchQueryFragment
+    }
   }
-`;
+`
 
-Component.variables = () => {
+Component.variables = ({ databaseId }, ctx) => {
   return {
+    databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
-  };
-};
+    navigationLocation: MENUS.NAVIGATION_LOCATION,
+    asPreview: ctx?.asPreview,
+  }
+}

@@ -29,7 +29,7 @@
 	z-index: 1; // Pull text to the foreground to sit above <FeaturedImage />.
 }
 
-.title {
+.title, .parent {
 	line-height: 1.25;
 	font-size: 5rem;
 	color: var(--wpe--color--title);

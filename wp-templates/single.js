@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import {
-  Header,
+  SingleHeader,
   Footer,
   Main,
   Container,
@@ -11,6 +11,7 @@ import {
   ContentWrapper,
   FeaturedImage,
   SEO,
+  PostSlider,
 } from '../components';
 
 export default function Component(props) {
@@ -23,7 +24,15 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, date, author } = props.data.post;
+  const { title, content, featuredImage, date, author, acfPostSlider } = props.data.post;
+
+  const images = [
+      acfPostSlider.slide1.mediaItemUrl,
+      acfPostSlider.slide2.mediaItemUrl,
+      acfPostSlider.slide3.mediaItemUrl,
+      acfPostSlider.slide4.mediaItemUrl,
+      acfPostSlider.slide5.mediaItemUrl,
+  ]
 
   return (
     <>
@@ -32,19 +41,20 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
-      <Header
+      <SingleHeader
         title={siteTitle}
         description={siteDescription}
         menuItems={primaryMenu}
       />
       <Main>
         <>
-          <EntryHeader
+          <PostSlider images={images}/>
+          {/* <EntryHeader
             title={title}
             image={featuredImage?.node}
             date={date}
             author={author?.node?.name}
-          />
+          /> */}
           <Container>
             <ContentWrapper content={content} />
           </Container>
@@ -72,6 +82,23 @@ Component.query = gql`
       author {
         node {
           name
+        }
+      }
+      acfPostSlider {
+        slide1 {
+          mediaItemUrl
+        }
+        slide2 {
+          mediaItemUrl
+        }
+        slide3 {
+          mediaItemUrl
+        }
+        slide4 {
+          mediaItemUrl
+        }
+        slide5 {
+          mediaItemUrl
         }
       }
       ...FeaturedImageFragment

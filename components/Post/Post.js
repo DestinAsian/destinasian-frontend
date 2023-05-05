@@ -1,18 +1,17 @@
 import Link from 'next/link';
+import classNames from 'classnames/bind'
 import { FeaturedImage } from '../FeaturedImage';
-import { PostInfo } from '../PostInfo';
 import styles from './Post.module.scss';
+
+let cx = classNames.bind(styles)
 
 export default function Post({
   title,
-  content,
-  date,
-  author,
   uri,
   featuredImage,
 }) {
   return (
-    <article className={styles.component}>
+    <article className={cx('component')}>
       {featuredImage && (
         <Link href={uri}>
           <a>
@@ -27,14 +26,9 @@ export default function Post({
 
       <Link href={uri}>
         <a>
-          <h2>{title}</h2>
+          <h2 className={cx('title')}>{title}</h2>
         </a>
       </Link>
-      <PostInfo date={date} author={author} className={styles.postInfo} />
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
     </article>
   );
 }

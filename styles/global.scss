@@ -6,3 +6,9 @@
 @import "css-variables";
 @import "base";
 @import "utilities";
+@import "animation";
+@import "variables";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
