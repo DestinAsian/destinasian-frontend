@@ -1,4 +1,4 @@
-const { withFaust, getWpHostname, getWpUrl } = require('@faustwp/core');
+const { withFaust, getWpHostname } = require('@faustwp/core');
 
 /**
  * @type {import('next').NextConfig}
@@ -9,7 +9,7 @@ module.exports = withFaust({
     includePaths: ['node_modules'],
   },
   images: {
-    domains: [getWpUrl()],
+    domains: [getWpHostname()],
   },
   i18n: {
     locales: ['en'],

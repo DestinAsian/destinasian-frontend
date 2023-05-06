@@ -3,7 +3,6 @@ import classNames from 'classnames/bind'
 import Link from 'next/link'
 import { Container, NavigationMenu, SkipNavigationLink } from '../../components'
 import styles from './SingleHeader.module.scss'
-import { useScrollDirection } from '../Header/Header'
 
 let cx = classNames.bind(styles)
 
@@ -12,14 +11,9 @@ export default function SingleHeader({
   menuItems,
 }) {
   const [isNavShown, setIsNavShown] = useState(false)
-  const scrollDirection = useScrollDirection()
-  const [open, setOpen] = useState(false)
 
   return (
     <header
-      // className={`sticky hidden ${
-      //   scrollDirection === 'up' ? 'sliding-ttb !block relative	top-0' : '-top-24'
-      // } z-50 bg-white`}
       className={cx('components')}
     >
       <SkipNavigationLink />
