@@ -11,11 +11,7 @@ import 'swiper/css/navigation'
 // import required modules
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper'
 
-export default function HomepageSlider({ images }) {
-  const pagination = {
-    clickable: true,
-  }
-
+export default function SingleSlider({ images }) {
   return (
     <>
       <Swiper
@@ -26,19 +22,19 @@ export default function HomepageSlider({ images }) {
           delay: 5000,
           disableOnInteraction: true,
         }}
-        pagination={pagination}
+        pagination={{
+          type: 'fraction',
+        }}
         navigation={{
           prevEl: '.swiper-custom-button-prev',
           nextEl: '.swiper-custom-button-next',
         }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
-        className="homepage-swiper"
+        className="post-swiper"
       >
         {images?.map((image, index) => (
           <SwiperSlide key={index}>
-            <a href={image.url}>
-              <img src={image.src}></img>
-            </a>
+            <img src={image}></img>
           </SwiperSlide>
         ))}
         <div className="swiper-custom-button-prev">

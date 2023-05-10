@@ -5,7 +5,6 @@
   background-color: var(--wpe--header--background-color);
   position: relative;
   z-index: 2; // Pull dropdown menus to the foreground to sit above <Main />.
-  height: 3.5rem;
 }
 
 .navbar {
@@ -14,6 +13,7 @@
   flex-wrap: wrap;
   padding: 1rem 0;
   gap: 1rem;
+  height: 5.5rem;
 }
 
 .brand {
@@ -76,6 +76,7 @@
 @media only screen and (max-width: 640px) {
   .navbar {
     padding: 0;
+    height: 3.5rem;
   }
 
   .brand {

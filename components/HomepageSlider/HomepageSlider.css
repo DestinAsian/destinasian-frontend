@@ -1,38 +1,81 @@
 .homepage-swiper {
-    width: 100vw;
-    height: calc(-6rem + 100vh);
-  }
+  width: 100vw;
+  height: calc(-5.5rem + 100vh);
+}
 
-  .swiper-slide a{
-    width: 100%;
-    height: 100%;
-  }
-  
-  .swiper-slide a img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.swiper-slide a {
+  width: 100%;
+  height: 100%;
+}
 
-  .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
-    color: #000;
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.3);
-  }
-  
-  .swiper-pagination-bullet-active {
-    color: #fff;
-    background: #fff;
-  }
+.swiper-slide a img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
+.swiper-pagination-bullet {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #ffffff;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color: #000000;
+  opacity: 1;
+  background: #000000;
+}
 
-.swiper-button-next, .swiper-rtl .swiper-button-prev, .swiper-button-prev, .swiper-rtl .swiper-button-next{
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #fff;
+  border: 1px solid #000000;
+}
+
+.swiper-custom-button-next,
+.swiper-custom-button-prev {
   color: #ffffff;
-  padding: 1rem;
+  padding: 1rem 0 1rem 1rem;
+}
+
+.swiper-custom-button-prev {
+  left: var(--swiper-navigation-sides-offset, 10px);
+  right: auto;
+  transform: rotate(180deg);
+}
+
+.swiper-custom-button-next {
+  right: var(--swiper-navigation-sides-offset, 10px);
+  left: auto;
+}
+
+.swiper-custom-button-prev svg,
+.swiper-custom-button-next svg {
+  height: 32px;
+}
+
+.swiper-custom-button-next,
+.swiper-custom-button-prev {
+  position: absolute;
+  top: var(--swiper-navigation-top-offset, 50%);
+  width: calc(var(--swiper-navigation-size) / 37 * 61);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
+}
+
+@media only screen and (max-width: 640px) {
+  .homepage-swiper {
+    height: calc(-3.5rem + 100vh);
+  }
+  .swiper-custom-button-next,
+  .swiper-custom-button-prev {
+    display: none;
+  }
 }

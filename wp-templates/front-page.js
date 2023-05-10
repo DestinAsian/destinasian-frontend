@@ -23,6 +23,8 @@ export default function Component(props) {
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
+  const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
+  const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const navigationMenu = props?.data?.navigationMenuItems?.nodes ?? []
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
@@ -52,19 +54,22 @@ export default function Component(props) {
       <Header
         title={siteTitle}
         description={siteDescription}
-        menuItems={primaryMenu}
-      >
-      </Header>
+        primaryMenuItems={primaryMenu}
+        secondaryMenuItems={secondaryMenu}
+        thirdMenuItems={thirdMenu}
+      />
       <Main>
         <>
-          <NavigationHeader menuItems={navigationMenu}/>
+          {/* <NavigationHeader menuItems={navigationMenu}/> */}
           <HomepageSlider images={images} />
           <Container>
-            <ContentWrapper content={content} />
+            <div className="my-12">
+              <ContentWrapper content={content} />
+            </div>
           </Container>
         </>
       </Main>
-      <Footer title={siteTitle} menuItems={footerMenu} />
+      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
     </>
   )
 }
@@ -77,9 +82,12 @@ Component.query = gql`
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
+    $secondHeaderLocation: MenuLocationEnum
+    $thirdHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $navigationLocation: MenuLocationEnum
     $asPreview: Boolean = false
+    $first: Int = 20
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -108,7 +116,26 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    secondHeaderMenuItems: menuItems(
+      where: { location: $secondHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    thirdHeaderMenuItems: menuItems(
+      where: { location: $thirdHeaderLocation }
+      first: $first
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
@@ -128,6 +155,8 @@ Component.variables = ({ databaseId }, ctx) => {
   return {
     databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
+    secondHeaderLocation: MENUS.SECONDARY_LOCATION,
+    thirdHeaderLocation: MENUS.THIRD_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     navigationLocation: MENUS.NAVIGATION_LOCATION,
     asPreview: ctx?.asPreview,

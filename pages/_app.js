@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { FaustProvider } from '@faustwp/core';
 import '@faustwp/core/dist/css/toolbar.css';
 import '../styles/global.scss';
-import '../components/PostSlider/PostSlider.css';
+import '../components/SingleSlider/SingleSlider.css';
 import '../components/HomepageSlider/HomepageSlider.css';
 
 export default function MyApp({ Component, pageProps }) {
