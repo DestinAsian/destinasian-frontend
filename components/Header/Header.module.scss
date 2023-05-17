@@ -4,12 +4,11 @@
   color: var(--wpe--header--color);
   background-color: var(--wpe--header--background-color);
   // position: relative;
-  z-index: 2; // Pull dropdown menus to the foreground to sit above <Main />.
   position: fixed;
   bottom: -60px;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 50;
 }
 
 .sticky {
@@ -30,6 +29,7 @@
   padding: 0;
   gap: 1rem;
   height: 3.5rem;
+  background-color: var(--wpe--color--white);
 
   @media (min-width: $breakpoint-extra-small) {
     padding: 1rem 0;
@@ -49,6 +49,7 @@
   @media (min-width: $breakpoint-extra-small) {
     font-size: 2.3rem;
     margin-left: 2rem;
+    width: 3.5rem;
   }
 }
 
@@ -75,67 +76,45 @@
   height: 3.5rem;
 }
 
-.description {
-  margin: 0.3rem 0 0 0;
-  font-size: 0.8rem;
-  opacity: 0.9;
-}
+.close-button {
+  margin-right: 1rem;
+  justify-content: flex-end;
 
-.nav-toggle {
-  align-items: center;
-  background-color: transparent;
-  border: 0.1rem solid var(--wpe--color--white);
-  color: var(--wpe--color--black);
-  cursor: pointer;
-  display: flex;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s ease-in;
-  user-select: none;
-  font-size: 2rem;
-
-  &:hover,
-  &:focus {
-    background-color: var(--wpe--color--white);
-    color: var(--wpe--color--black);
+  @media (min-width: $breakpoint-extra-small) {
+    margin-right: 2rem;
   }
 }
 
-.full-menu {
-  display: none;
-  width: 100vw;
-  height: calc(-3.5rem + 100vh);
+.close-button,
+.close-button button svg {
+  display: flex;
+  height: 3.5rem;
+}
 
-  &.show {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    z-index: 51;
-    top: 3.5rem;
-    left: 0;
-    bottom: 0;
-    background-color: var(--wpe--color--white);
-    color: var(--wpe--color--black);
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding: 0 1rem 2rem;
+.navbar-navigation-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
 
-    @media (min-width: $breakpoint-extra-small) {
-      height: calc(-5.5rem + 100vh);
-      top: 5.5rem;
-      padding: 0 10% 2rem;
+.primary-navbar-navigation {
+  ul:first-child {
+    display: none;
+  }
+  ul:nth-child(2) {
+    li ul {
+      display: none;
     }
+  }
+}
 
-    .first-wrapper {
-      display: flex;
-      flex-direction: column;
-      @media (min-width: $breakpoint-extra-small) {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
-      }
-    }
+.secondary-navbar-navigation {
+  padding-left: 1rem;
+
+  ul:nth-child(2) {
+    display: none;
   }
 }
 
@@ -150,36 +129,109 @@
       display: none;
     }
   }
-  // @media (min-width: $breakpoint-extra-small) {
-  //   display: flex;
-  //   width: 80%;
-  // }
 }
 
 // Secondary Menu {Other Destinations Menu}
 .secondary-navigation {
-  // @media (min-width: $breakpoint-extra-small) {
-  //   display: flex;
-  //   width: 20%;
-  // }
   ul:nth-child(2) {
     @media (min-width: $breakpoint-extra-small) {
       flex-direction: column;
     }
+  }
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding-left: 1rem;
   }
 }
 
 // Third Menu {Static Pages Menu}
 .third-navigation {
   padding-top: 1rem;
+
   ul:first-child {
     display: none;
   }
+
   ul li a {
     padding-left: 0;
   }
 
   @media (min-width: $breakpoint-extra-small) {
-    border-top: 1px solid #000000;
+    ul:nth-child(2) {
+      li ul {
+        padding-top: 2rem;
+      }
+    }
+  }
+}
+
+.full-menu-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: absolute;
+  z-index: 51;
+  width: 100vw;
+  transition: transform 0.4s ease-in-out;
+  transform: translateY(-150vh);
+  background-color: var(--wpe--color--white);
+  color: var(--wpe--color--black);
+
+  &.show {
+    padding: 0;
+    gap: 1rem;
+    top: 2.5rem;
+    transform: translateY(0vh);
+
+    @media (min-width: $breakpoint-extra-small) {
+      top: 5.5rem;
+      height: calc(-5.5rem + 100vh);
+    }
+  }
+}
+
+.full-menu-content {
+  display: flex;
+  flex-direction: column;
+  height: calc(-3.5rem + 100vh);
+  overflow-x: hidden;
+  padding: 0 1rem 7rem;
+  transition: transform 0.1s ease-out;
+  transform: translateY(0vh);
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding: 0 0 2rem;
+  }
+
+  .first-wrapper {
+    display: flex;
+    flex-direction: column;
+    @media (min-width: $breakpoint-extra-small) {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: -3.5rem;
+    }
+  }
+
+  .second-wrapper {
+    @media (min-width: $breakpoint-extra-small) {
+      border-top: 1px solid #000000;
+    }
+  }
+}
+
+.full-menu-left {
+  @media (min-width: $breakpoint-extra-small) {
+    display: flex;
+    margin-left: 5.5rem;
+  }
+}
+
+.full-menu-right {
+  @media (min-width: $breakpoint-extra-small) {
+    display: flex;
+    margin-right: 4rem;
   }
 }

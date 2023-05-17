@@ -1,6 +1,5 @@
 export { Button } from './Button';
 export { CategoryHeader } from './CategoryHeader';
-export { ChildNavigation } from './ChildNavigation';
 export { Container } from './Container';
 export { ContentWrapper } from './ContentWrapper';
 export { EntryHeader } from './EntryHeader';
@@ -19,7 +18,9 @@ export { PostInfo } from './PostInfo';
 export { SearchInput } from './SearchInput';
 export { SearchRecommendations } from './SearchRecommendations';
 export { SearchResults } from './SearchResults';
+export { SecondaryHeader } from './SecondaryHeader';
 export { SEO } from './SEO';
+export { SingleEntryHeader } from './SingleEntryHeader';
 export { SingleHeader } from './SingleHeader';
 export { SingleSlider } from './SingleSlider';
 export { SkipNavigationLink } from './SkipNavigationLink';

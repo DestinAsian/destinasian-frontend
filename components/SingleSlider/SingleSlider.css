@@ -22,6 +22,7 @@
 .swiper {
   margin-left: auto;
   margin-right: auto;
+  height: calc(-8.375rem + 100vh);
 }
 
 .swiper-pagination-fraction {
@@ -30,4 +31,10 @@
   width: 3.5rem;
   font-size: 20px;
   color: #ffffff;
+}
+
+@media only screen and (max-width: 640px) {
+  .swiper {
+    height: calc(-5.125rem + 100vh);
+  }
 }

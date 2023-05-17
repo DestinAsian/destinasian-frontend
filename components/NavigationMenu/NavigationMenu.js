@@ -8,13 +8,19 @@ import flatListToHierarchical from '../../utilities/flatListToHierarchical'
 let cx = classNames.bind(styles)
 let cxFromWp = classNames.bind(stylesFromWP)
 
-export default function NavigationMenu({ menuItems, className }) {
+export default function NavigationMenu({
+  menuItems,
+  className,
+  setIsNavShown,
+  isNavShown,
+}) {
   if (!menuItems) {
     return null
   }
 
   // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems)
+  const menuName = menuItems[0].menu?.node?.name
 
   function renderMenu(items) {
     return (
@@ -42,9 +48,21 @@ export default function NavigationMenu({ menuItems, className }) {
     <nav
       className={cx(['component', className])}
       role="navigation"
-      aria-label={`${menuItems[0]?.menu?.node?.name} menu`}
+      aria-label={menuName}
     >
-      <ul className={cx('menu-name')}>{menuItems[0]?.menu?.node?.name}</ul>
+      {menuName === 'Other Destinations+' ? (
+        <button
+          type="button"
+          onClick={setIsNavShown}
+          aria-label="Toggle navigation"
+          aria-controls={cx('full-menu-wrapper')}
+          aria-expanded={isNavShown}
+        >
+          <ul className={cx('menu-name')}>{menuName}</ul>
+        </button>
+      ) : (
+        <ul className={cx('menu-name')}>{menuName}</ul>
+      )}
       {renderMenu(hierarchicalMenuItems)}
     </nav>
   )

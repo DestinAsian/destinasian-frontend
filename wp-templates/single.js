@@ -7,12 +7,13 @@ import {
   Footer,
   Main,
   Container,
-  EntryHeader,
+  SingleEntryHeader,
   NavigationMenu,
   ContentWrapper,
   FeaturedImage,
   SEO,
   SingleSlider,
+  SecondaryHeader,
 } from '../components'
 
 export default function Component(props) {
@@ -27,8 +28,16 @@ export default function Component(props) {
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { title, content, featuredImage, date, author, acfPostSlider } =
-    props.data.post
+  const {
+    title,
+    content,
+    featuredImage,
+    date,
+    author,
+    acfPostSlider,
+    acfCategoryIcon,
+  } = props?.data?.post
+  const categories = props?.data?.post?.categories?.edges ?? []
 
   const images = [
     acfPostSlider.slide1.mediaItemUrl,
@@ -45,28 +54,36 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
-      <Header
+      <SingleHeader
         title={siteTitle}
         description={siteDescription}
         primaryMenuItems={primaryMenu}
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
+        parentCategoryName={categories[0]?.node?.parent?.node?.name}
+      />
+      <SecondaryHeader
+        parent={categories[0]?.node?.parent}
+        children={categories[0]?.node?.children}
       />
       <Main>
         <>
           <SingleSlider images={images} />
-          {/* <EntryHeader
+          <SingleEntryHeader
             title={title}
-            image={featuredImage?.node}
-            date={date}
-            author={author?.node?.name}
-          /> */}
+            parentCategory={categories[0]?.node?.parent?.node?.name}
+            categoryName={categories[0]?.node?.name}
+            chooseYourCategory={acfCategoryIcon?.chooseYourCategory}
+            categoryLabel={acfCategoryIcon?.categoryLabel}
+            locationLabel={acfCategoryIcon?.locationLabel}
+            locationUrl={acfCategoryIcon?.locationUrl}
+          />
           <Container>
             <ContentWrapper content={content} />
           </Container>
         </>
       </Main>
-      <Footer title={siteTitle} menuItems={footerMenu} />
+      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
     </>
   )
 }
@@ -93,6 +110,35 @@ Component.query = gql`
           name
         }
       }
+      categories {
+        edges {
+          node {
+            name
+            parent {
+              node {
+                name
+                uri
+                children {
+                  edges {
+                    node {
+                      name
+                      uri
+                    }
+                  }
+                }
+              }
+            }
+            children {
+              edges {
+                node {
+                  name
+                  uri
+                }
+              }
+            }
+          }
+        }
+      }
       acfPostSlider {
         slide1 {
           mediaItemUrl
@@ -109,6 +155,12 @@ Component.query = gql`
         slide5 {
           mediaItemUrl
         }
+      }
+      acfCategoryIcon {
+        categoryLabel
+        chooseYourCategory
+        locationLabel
+        locationUrl
       }
       ...FeaturedImageFragment
     }

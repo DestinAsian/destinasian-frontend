@@ -4,7 +4,7 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import { PostFragment } from '../fragments/PostFragment'
 import {
   CategoryHeader,
-  Header,
+  SecondaryHeader,
   Footer,
   Main,
   Container,
@@ -13,7 +13,6 @@ import {
   Post,
   FeaturedImage,
   SEO,
-  ChildNavigation,
 } from '../components'
 
 export default function Component(props) {
@@ -43,45 +42,31 @@ export default function Component(props) {
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
-      <Header
+      <CategoryHeader
         title={siteTitle}
         description={siteDescription}
         primaryMenuItems={primaryMenu}
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
+        categoryName={name}
+        parentCategoryName={parent?.node.name}
+        children={children.edges.length}
       />
+
+      <SecondaryHeader
+        parent={parent}
+        children={children}
+      />
+
+      {/* EntryHeader category name */}
+      {children.edges.length != 0 ? (
+        <EntryHeader title={`${name}`} />
+      ) : (
+        <EntryHeader parent={parent?.node.name} title={`${name}`} />
+      )}
+
       <Main>
         <>
-          {/* children category navigation */}
-          {children != null ? (
-            <div className="flex justify-center">
-              {children.edges.map((post) => (
-                <ChildNavigation name={post.node.name} uri={post.node.uri} />
-              ))}
-            </div>
-          ) : null}
-          {/* sibling category navigation */}
-          <nav>
-            <ul>
-              {parent != null ? (
-                <div className="flex justify-center">
-                  {parent.node.children.edges.map((post) => (
-                    <li key={post.node.uri}>
-                      <ChildNavigation
-                        name={post.node.name}
-                        uri={post.node.uri}
-                      />
-                    </li>
-                  ))}
-                </div>
-              ) : null}
-            </ul>
-          </nav>
-
-          <EntryHeader
-            // parent={parent?.node.name}
-            title={`${name}`}
-          />
           <Container>
             {/* category post card */}
             {posts.edges != null
@@ -154,6 +139,7 @@ Component.query = gql`
         parent {
           node {
             name
+            uri
             children(where: { childless: true }) {
               edges {
                 node {
@@ -235,8 +221,8 @@ Component.variables = ({ uri }) => {
   return {
     uri,
     headerLocation: MENUS.PRIMARY_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
+    footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

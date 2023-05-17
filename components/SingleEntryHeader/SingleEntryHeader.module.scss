@@ -1,0 +1,65 @@
+@import 'styles/breakpoints';
+
+.component {
+  background-color: var(--wpe--color--white);
+  color: var(--wpe--color--black);
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0;
+
+  @media (min-width: $breakpoint-small) {
+    margin: 2rem 0;
+  }
+}
+
+.header-wrapper {
+  display: flex;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 0 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    max-width: 50vw;
+    padding: 0;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .icon {
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+.category-name {
+  color: #f94700;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+
+  @media (min-width: $breakpoint-extra-small) {
+    color: #c06510;
+    font-size: 1.2rem;
+  }
+}
+
+.title,
+.parent {
+  line-height: 1.25;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--wpe--color--title);
+  text-transform: uppercase;
+
+  @media (max-width: $breakpoint-small) {
+    font-size: 2.5rem;
+  }
+}

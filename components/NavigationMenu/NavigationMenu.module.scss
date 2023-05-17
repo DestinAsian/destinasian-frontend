@@ -23,6 +23,18 @@
 
 .menu-name {
   padding: 1rem 0;
+  color: var(--wpe--navigation-menu--color);
+  display: block;
+  transition: all 0.2s ease-out;
+  width: 100%;
+  white-space: nowrap;
+  text-align: left;
+  font-weight: 700;
+
+  &:hover,
+  &:focus {
+    color: #f94700;
+  }
 }
 
 .menu {
@@ -33,7 +45,7 @@
   padding: 0;
   margin: 0;
   position: relative;
-  gap: 0.5rem;
+  gap: 0.25rem;
   flex-direction: column;
 
   @media (min-width: $breakpoint-extra-small) {
@@ -48,7 +60,6 @@
     flex-direction: row;
 
     @media (min-width: $breakpoint-small) {
-      width: calc(100% - 1rem);
       flex-direction: column;
     }
 
@@ -67,10 +78,11 @@
     width: 100%;
     white-space: nowrap;
     text-align: left;
+    font-weight: 700;
 
     &:hover,
     &:focus {
-      color: var(--wpe--navigation-menu--color--hover);
+      color: #f94700;
     }
 
     // Remove link underline when component is inside header.
@@ -85,10 +97,9 @@
 
   li ul {
     @extend %visible;
-    background-color: var(--wpe--dropdown--background-color);
     display: flex;
     flex-direction: row;
-    gap: 0.125rem;
+    gap: 0.25rem;
     width: 100%;
     flex-wrap: wrap;
 
@@ -101,13 +112,6 @@
 
     &:hover {
       @extend %visible;
-    }
-
-    li + li {
-      @media (min-width: $breakpoint-small) {
-        border-top: var(--wpe--border--light);
-        margin-top: 3px; // Make room for default browser focus styles.
-      }
     }
   }
 }

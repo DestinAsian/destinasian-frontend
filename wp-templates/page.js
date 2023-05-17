@@ -22,6 +22,8 @@ export default function Component(props) {
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
+  const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
+  const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
 
@@ -35,7 +37,9 @@ export default function Component(props) {
       <Header
         title={siteTitle}
         description={siteDescription}
-        menuItems={primaryMenu}
+        primaryMenuItems={primaryMenu}
+        secondaryMenuItems={secondaryMenu}
+        thirdMenuItems={thirdMenu}
       />
       <Main>
         <>
@@ -45,19 +49,10 @@ export default function Component(props) {
           </Container>
         </>
       </Main>
-      <Footer title={siteTitle} menuItems={footerMenu} />
+      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
     </>
   );
 }
-
-Component.variables = ({ databaseId }, ctx) => {
-  return {
-    databaseId,
-    headerLocation: MENUS.PRIMARY_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
-    asPreview: ctx?.asPreview,
-  };
-};
 
 Component.query = gql`
   ${BlogInfoFragment}
@@ -66,8 +61,11 @@ Component.query = gql`
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
+    $secondHeaderLocation: MenuLocationEnum
+    $thirdHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
+    $first: Int = 200
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -87,5 +85,32 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    secondHeaderMenuItems: menuItems(
+      where: { location: $secondHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    thirdHeaderMenuItems: menuItems(
+      where: { location: $thirdHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
   }
 `;
+
+Component.variables = ({ databaseId }, ctx) => {
+  return {
+    databaseId,
+    headerLocation: MENUS.PRIMARY_LOCATION,
+    secondHeaderLocation: MENUS.SECONDARY_LOCATION,
+    thirdHeaderLocation: MENUS.THIRD_LOCATION,
+    footerLocation: MENUS.FOOTER_LOCATION,
+    asPreview: ctx?.asPreview,
+  };
+};

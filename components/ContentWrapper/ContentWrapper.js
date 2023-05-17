@@ -6,7 +6,7 @@ let cx = className.bind(styles);
 export default function ContentWrapper({ content, children }) {
   return (
     <article className={cx('component')}>
-      <div dangerouslySetInnerHTML={{ __html: content ?? '' }} />
+      <div className={cx('content-wrapper')} dangerouslySetInnerHTML={{ __html: content ?? '' }} />
       {children}
     </article>
   );
