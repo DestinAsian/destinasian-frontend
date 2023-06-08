@@ -1,6 +1,5 @@
 .post-swiper {
   width: 100vw;
-  height: 60vh;
 }
 
 .swiper-slide {
@@ -22,7 +21,7 @@
 .swiper {
   margin-left: auto;
   margin-right: auto;
-  height: calc(-8.375rem + 100vh);
+  height: 35vh;
 }
 
 .swiper-pagination-fraction {
@@ -33,8 +32,23 @@
   color: #ffffff;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (min-width: 640px) {
   .swiper {
-    height: calc(-5.125rem + 100vh);
+    height: 50vh;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .post-swiper {
+    width: 50vw;
+  }
+}
+/* 
+@media only screen and (min-width: 640px) {
+  .swiper {
+    height: 50vh;
+  }
+  .post-swiper {
+    width: 50vw;
+  }
+} */

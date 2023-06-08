@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
+import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
   Header,
@@ -36,15 +37,16 @@ export default function Component(props) {
     author,
     acfPostSlider,
     acfCategoryIcon,
+    acfLocationIcon,
   } = props?.data?.post
   const categories = props?.data?.post?.categories?.edges ?? []
 
   const images = [
-    acfPostSlider.slide1.mediaItemUrl,
-    acfPostSlider.slide2.mediaItemUrl,
-    acfPostSlider.slide3.mediaItemUrl,
-    acfPostSlider.slide4.mediaItemUrl,
-    acfPostSlider.slide5.mediaItemUrl,
+    acfPostSlider.slide1 != null ? acfPostSlider.slide1.mediaItemUrl : defaultImage.src,
+    acfPostSlider.slide2 != null ? acfPostSlider.slide2.mediaItemUrl : defaultImage.src,
+    acfPostSlider.slide3 != null ? acfPostSlider.slide3.mediaItemUrl : defaultImage.src,
+    acfPostSlider.slide4 != null ? acfPostSlider.slide4.mediaItemUrl : defaultImage.src,
+    acfPostSlider.slide5 != null ? acfPostSlider.slide5.mediaItemUrl : defaultImage.src,
   ]
 
   return (
@@ -63,20 +65,21 @@ export default function Component(props) {
         parentCategoryName={categories[0]?.node?.parent?.node?.name}
       />
       <SecondaryHeader
+        uri={categories[0]?.node?.uri}
         parent={categories[0]?.node?.parent}
-        children={categories[0]?.node?.children}
       />
       <Main>
         <>
           <SingleSlider images={images} />
           <SingleEntryHeader
             title={title}
+            categoryUri={categories[0]?.node?.uri}
             parentCategory={categories[0]?.node?.parent?.node?.name}
             categoryName={categories[0]?.node?.name}
             chooseYourCategory={acfCategoryIcon?.chooseYourCategory}
             categoryLabel={acfCategoryIcon?.categoryLabel}
-            locationLabel={acfCategoryIcon?.locationLabel}
-            locationUrl={acfCategoryIcon?.locationUrl}
+            locationLabel={acfLocationIcon?.locationLabel}
+            locationUrl={acfLocationIcon?.locationUrl}
           />
           <Container>
             <ContentWrapper content={content} />
@@ -114,6 +117,7 @@ Component.query = gql`
         edges {
           node {
             name
+            uri
             parent {
               node {
                 name
@@ -159,6 +163,8 @@ Component.query = gql`
       acfCategoryIcon {
         categoryLabel
         chooseYourCategory
+      }
+      acfLocationIcon {
         locationLabel
         locationUrl
       }

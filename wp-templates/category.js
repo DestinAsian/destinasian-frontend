@@ -77,6 +77,8 @@ export default function Component(props) {
                     date={post.node.date}
                     author={post.node.author?.node.name}
                     uri={post.node.uri}
+                    category={post.node.categories.edges[0].node.name}
+                    categoryUri={post.node.categories.edges[0].node.uri}
                     featuredImage={post.node.featuredImage?.node}
                   />
                 ))
@@ -90,6 +92,8 @@ export default function Component(props) {
                       content={post.content}
                       date={post.date}
                       uri={post.uri}
+                      category={post.categories.edges[0].node.name}
+                    categoryUri={post.categories.edges[0].node.uri}
                       featuredImage={post.featuredImage?.node}
                     />
                   </div>
@@ -133,6 +137,14 @@ Component.query = gql`
                   name
                 }
               }
+              categories {
+                edges {
+                  node {
+                    name
+                    uri
+                  }
+                }
+              }
             }
           }
         }
@@ -159,6 +171,14 @@ Component.query = gql`
                 edges {
                   node {
                     ...PostFragment
+                    categories {
+                      edges {
+                        node {
+                          name
+                          uri
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -171,6 +191,14 @@ Component.query = gql`
                       edges {
                         node {
                           ...PostFragment
+                          categories {
+                            edges {
+                              node {
+                                name
+                                uri
+                              }
+                            }
+                          }
                         }
                       }
                     }

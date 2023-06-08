@@ -1,4 +1,5 @@
 @import 'styles/breakpoints';
+@import 'styles/fonts/typography';
 
 .component {
   background-color: var(--wpe--color--white);
@@ -18,48 +19,73 @@
   margin: 0 auto;
   padding: 0 1rem;
   flex-direction: column;
-  gap: 0.5rem;
+  row-gap: 0.5rem;
 
-  @media (min-width: $breakpoint-extra-small) {
+  @media (min-width: $breakpoint-small) {
     max-width: 50vw;
     padding: 0;
   }
 }
 
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  .icon {
-    svg {
-      width: 2rem;
-      height: 2rem;
-    }
-  }
-}
-
 .category-name {
-  color: #f94700;
+  color: var(--wpe--color--red);
   font-weight: 600;
   font-size: 0.8rem;
   text-transform: uppercase;
 
-  @media (min-width: $breakpoint-extra-small) {
-    color: #c06510;
-    font-size: 1.2rem;
+  @media (min-width: $breakpoint-small) {
+    color: var(--wpe--color--orange);
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    font-size: 1.25rem;
   }
 }
 
 .title,
 .parent {
-  line-height: 1.25;
-  font-size: 2.5rem;
+  font-family: 'Unit Slab Pro Black';
+  line-height: 1.2;
+  font-size: 2.25rem;
   font-weight: 900;
   color: var(--wpe--color--title);
   text-transform: uppercase;
 
-  @media (max-width: $breakpoint-small) {
-    font-size: 2.5rem;
+  @media (min-width: $breakpoint-medium) {
+    font-size: 3rem;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-family: 'Ringside Regular A', 'Ringside Regular B';
+  font-style: normal;
+  font-weight: 500;
+
+  .category-label {
+    font-size: 1rem;
+    line-height: 1.2;
+
+    @media (min-width: $breakpoint-medium) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .location-label {
+    font-size: 1rem;
+    line-height: 1.2;
+
+    @media (min-width: $breakpoint-medium) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .icon {
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
   }
 }

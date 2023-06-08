@@ -1,6 +1,6 @@
 .homepage-swiper {
   width: 100vw;
-  height: calc(-5.5rem + 100vh);
+  height: calc(-4.5rem + 100vh);
 }
 
 .swiper-slide a {
@@ -20,7 +20,7 @@
   height: 14px;
   border: 1px solid #ffffff;
   text-align: center;
-  line-height: 20px;
+  line-height: 1.2;
   font-size: 12px;
   color: #000000;
   opacity: 1;
@@ -31,12 +31,6 @@
   color: #fff;
   background: #fff;
   border: 1px solid #000000;
-}
-
-.swiper-custom-button-next,
-.swiper-custom-button-prev {
-  color: #ffffff;
-  padding: 1rem 0 1rem 1rem;
 }
 
 .swiper-custom-button-prev {
@@ -59,7 +53,7 @@
 .swiper-custom-button-prev {
   position: absolute;
   top: var(--swiper-navigation-top-offset, 50%);
-  width: calc(var(--swiper-navigation-size) / 37 * 61);
+  width: calc(var(--swiper-navigation-size) / 50 * 35);
   height: var(--swiper-navigation-size);
   margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
   z-index: 10;
@@ -68,6 +62,7 @@
   align-items: center;
   justify-content: center;
   color: var(--swiper-navigation-color, var(--swiper-theme-color));
+  padding: 0;
 }
 
 @media only screen and (max-width: 640px) {

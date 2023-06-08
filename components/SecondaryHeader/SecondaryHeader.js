@@ -1,14 +1,15 @@
-import { gql } from '@apollo/client'
-import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames/bind'
 import styles from './SecondaryHeader.module.scss'
+import { Container } from '../../components'
 
 let cx = classNames.bind(styles)
 
-export default function SecondaryHeader({ parent, children }) {
+export default function SecondaryHeader({ parent, children, uri }) {
   const [currentUrl, setCurrentUrl] = useState('')
+  const [categoryUrl, setCategoryUrl] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
+  const [prevScrollY, setPrevScrollY] = useState(0)
 
   // Add currentUrl function
   useEffect(() => {
@@ -18,10 +19,20 @@ export default function SecondaryHeader({ parent, children }) {
     return currentUrl === uri
   }
 
+  // Add currentCategoryUrl function
+  useEffect(() => {
+    setCategoryUrl(uri)
+  }, [])
+  function isActiveCategory(uri) {
+    return uri === uri
+  }
+
   // Add sticky header on scroll
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 0)
+      const currentScrollY = window.scrollY
+      setIsScrolled(currentScrollY > 0 && currentScrollY > prevScrollY)
+      setPrevScrollY(currentScrollY)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -29,15 +40,19 @@ export default function SecondaryHeader({ parent, children }) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [prevScrollY])
+
+  console.log(parent)
 
   return (
-    <nav className={cx('components', { sticky: isScrolled })}>
-      <div className={cx('navbar', isScrolled ? 'navbar--scrolled' : '')}>
-        {/* Children category navigation */}
-        {children != null ? (
-          <ul className={cx('nav-list')}>
-            <div className="flex justify-center gap-x-4	">
+    // <nav className={cx('sticky-header', { 'sticky-header-hidden': (!isScrolled && prevScrollY!=0) })}>
+    <nav className={cx('component', { sticky: isScrolled })}>
+      <Container>
+        <div className={cx('navbar')}>
+
+          {/* Children category navigation */}
+          {children != null ? (
+            <div className={cx('navigation-wrapper')}>
               {children.edges.map((post) => (
                 <li key={post.node.uri} className={cx('nav-link')}>
                   <a
@@ -49,13 +64,11 @@ export default function SecondaryHeader({ parent, children }) {
                 </li>
               ))}
             </div>
-          </ul>
-        ) : null}
+          ) : null}
 
-        {/* Parent category navigation */}
-        {parent != null ? (
-          <ul className={cx('nav-list')}>
-            <div className="flex justify-center gap-x-4	">
+          {/* Parent category navigation */}
+          {parent != null ? (
+            <div className={cx('navigation-wrapper')}>
               {parent.node.children.edges.map((post) => (
                 <li key={post.node.uri} className={cx('nav-link')}>
                   <a
@@ -67,9 +80,9 @@ export default function SecondaryHeader({ parent, children }) {
                 </li>
               ))}
             </div>
-          </ul>
-        ) : null}
-      </div>
+          ) : null}
+        </div>
+      </Container>
     </nav>
   )
 }

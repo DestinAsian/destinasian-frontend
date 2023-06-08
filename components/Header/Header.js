@@ -73,33 +73,14 @@ export default function Header({
       {isDesktop || (!isDesktop && !isNavShown) ? (
         <Container>
           <div className={cx('navbar')}>
-
             {/* DA logo */}
             <div className={cx('brand')}>
               <Link href="/">
                 <a className={cx('title')}>
-                  {!isScrolled && !isNavShown ? title : 'DA'}
+                  {title}
                 </a>
               </Link>
             </div>
-
-            {/* On desktop show navbar navigation when menu open & when scroll */}
-            {(isDesktop && isNavShown) || (isDesktop && isScrolled) ? (
-              <div className={cx('navbar-navigation-wrapper')}>
-                {/* Primary Menu {Travel Leisure Menu} */}
-                <NavigationMenu
-                  className={cx('primary-navbar-navigation')}
-                  menuItems={primaryMenuItems}
-                />
-                {/* Secondary Menu {Other Destinations Menu} */}
-                <NavigationMenu
-                  className={cx(['secondary-navbar-navigation'])}
-                  menuItems={secondaryMenuItems}
-                  setIsNavShown={() => setIsNavShown(!isNavShown)}
-                  isNavShown={!isNavShown}
-                />
-              </div>
-            ) : null}
 
             {/* Search bar */}
             {/* <div className={cx('search-bar')}>
@@ -271,27 +252,27 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
         </Container>
       )}
 
+      {/* Full menu */}
       <div
         className={cx(['full-menu-wrapper', isNavShown ? 'show' : undefined])}
       >
-        {/* Wrapper left Fullscreen Menu */}
-        <div className={cx('full-menu-left')}></div>
-
         {/* Full menu */}
         <div className={cx('full-menu-content')}>
           <div className={cx('first-wrapper')}>
-            {/* Primary Menu {Travel Leisure Menu} */}
+            {/* Primary Menu {City Guides Menu} */}
             <NavigationMenu
               className={cx('primary-navigation')}
               menuItems={primaryMenuItems}
             />
-            {/* Secondary Menu {Other Destinations Menu} */}
+          </div>
+          <div className={cx('second-wrapper')}>
+            {/* Secondary Menu {Destinations Menu} */}
             <NavigationMenu
               className={cx('secondary-navigation')}
               menuItems={secondaryMenuItems}
             />
           </div>
-          <div className={cx('second-wrapper')}>
+          <div className={cx('third-wrapper')}>
             {/* Third Menu {Static Pages Menu} */}
             <NavigationMenu
               className={cx(['third-navigation'])}
@@ -299,9 +280,6 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
             />
           </div>
         </div>
-
-        {/* Wrapper right Fullscreen Menu */}
-        <div className={cx('full-menu-right')}></div>
       </div>
     </header>
   )

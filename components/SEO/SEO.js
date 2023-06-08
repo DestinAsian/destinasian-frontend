@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'next/head'
 
 /**
  * Provide SEO related meta tags to a page.
@@ -13,7 +13,7 @@ import Head from 'next/head';
  */
 export default function SEO({ title, description, imageUrl, url }) {
   if (!title && !description && !imageUrl && !url) {
-    return null;
+    return null
   }
 
   return (
@@ -52,7 +52,14 @@ export default function SEO({ title, description, imageUrl, url }) {
             <meta property="twitter:url" content={url} />
           </>
         )}
+
+        {/* Typography Cloud */}
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cloud.typography.com/7429004/7933832/css/fonts.css"
+        />
       </Head>
     </>
-  );
+  )
 }

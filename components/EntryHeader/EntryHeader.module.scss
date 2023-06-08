@@ -1,14 +1,11 @@
 @import 'styles/breakpoints';
+@import 'styles/fonts/typography';
 
 .component {
 	color: var(--wpe--color--white);
 	position: relative;
 	overflow: hidden;
-	margin-bottom: 2rem;
-
-	@media (min-width: $breakpoint-small) {
-		margin-bottom: 5rem;
-	}
+	margin-bottom: 1rem;
 }
 
 .has-image {
@@ -24,18 +21,29 @@
 .text {
 	width: 100%;
 	max-width: 72rem;
-	padding: 8.25rem 0;
+	padding: 0.25rem 0;
 	position: relative;
 	z-index: 1; // Pull text to the foreground to sit above <FeaturedImage />.
+
+	@media (min-width: $breakpoint-small) {
+		padding: 0.5rem 0;
+	}
 }
 
 .title, .parent {
-	line-height: 1.25;
-	font-size: 5rem;
+	font-family: 'Unit Slab Pro Black';
+	line-height: 1.6;
+	font-size: 1.7rem;
+	font-weight: 500;
 	color: var(--wpe--color--title);
+	text-transform: uppercase;
 
-	@media (max-width: $breakpoint-small) {
-		font-size: 3rem;
+	@media (min-width: $breakpoint-extra-small) {
+		font-size: 1.75rem;
+	}
+
+	@media (min-width: $breakpoint-medium) {
+		font-size: 2.5rem;
 	}
 }
 

@@ -9,6 +9,7 @@ export default function SingleEntryHeader({
   title,
   className,
   parentCategory,
+  categoryUri,
   categoryName,
   categoryLabel,
   chooseYourCategory,
@@ -19,15 +20,17 @@ export default function SingleEntryHeader({
     <div className={cx(['component', className])}>
       <Container>
         <div className={cx('header-wrapper')}>
-          <div className={cx('category-name')}>
-            {parentCategory} {categoryName}
-          </div>
+          <a href={categoryUri}>
+            <div className={cx('category-name')}>
+              {parentCategory} {categoryName}
+            </div>
+          </a>
           <Heading className={cx('title')}>
             {parent || null} {title}
           </Heading>
           <div className={cx('icon-wrapper')}>
             {/* Generate category icon */}
-            {chooseYourCategory == 'attraction' ? (
+            {/* {chooseYourCategory == 'attraction' ? (
               <div className={cx('icon')}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +62,7 @@ export default function SingleEntryHeader({
                   </defs>
                 </svg>
               </div>
-            ) : null}
+            ) : undefined}
             {chooseYourCategory == 'dining' ? (
               <div className={cx('icon')}>
                 <svg
@@ -92,7 +95,7 @@ export default function SingleEntryHeader({
                   </defs>
                 </svg>
               </div>
-            ) : null}
+            ) : undefined}
             {chooseYourCategory == 'hotel' ? (
               <div className={cx('icon')}>
                 <svg
@@ -125,7 +128,7 @@ export default function SingleEntryHeader({
                   </defs>
                 </svg>
               </div>
-            ) : null}
+            ) : undefined}
             {chooseYourCategory == 'nightlife' ? (
               <div className={cx('icon')}>
                 <svg
@@ -158,7 +161,7 @@ export default function SingleEntryHeader({
                   </defs>
                 </svg>
               </div>
-            ) : null}
+            ) : undefined} */}
 
             {/* Label for category icon */}
             <div className={cx('category-label')}>{categoryLabel}</div>

@@ -50,19 +50,7 @@ export default function NavigationMenu({
       role="navigation"
       aria-label={menuName}
     >
-      {menuName === 'Other Destinations+' ? (
-        <button
-          type="button"
-          onClick={setIsNavShown}
-          aria-label="Toggle navigation"
-          aria-controls={cx('full-menu-wrapper')}
-          aria-expanded={isNavShown}
-        >
-          <ul className={cx('menu-name')}>{menuName}</ul>
-        </button>
-      ) : (
-        <ul className={cx('menu-name')}>{menuName}</ul>
-      )}
+      <ul className={cx('menu-name')}>{menuName}</ul>
       {renderMenu(hierarchicalMenuItems)}
     </nav>
   )

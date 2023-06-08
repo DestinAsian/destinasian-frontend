@@ -3,10 +3,7 @@
 .component {
   color: var(--wpe--header--color);
   background-color: var(--wpe--header--background-color);
-  // position: relative;
-  position: fixed;
-  bottom: -60px;
-  left: 0;
+  position: relative;
   width: 100%;
   z-index: 50;
 }
@@ -32,8 +29,8 @@
   background-color: var(--wpe--color--white);
 
   @media (min-width: $breakpoint-extra-small) {
-    padding: 1rem 0;
-    height: 5.5rem;
+    padding: 0.5rem 0;
+    height: 4.5rem;
   }
 }
 
@@ -49,7 +46,6 @@
   @media (min-width: $breakpoint-extra-small) {
     font-size: 2.3rem;
     margin-left: 2rem;
-    width: 3.5rem;
   }
 }
 
@@ -63,115 +59,41 @@
 }
 
 .menu-button {
+  display: flex;
   margin-right: 1rem;
+  justify-content: flex-end;
+  align-items: center;
 
   @media (min-width: $breakpoint-extra-small) {
     margin-right: 2rem;
   }
-}
 
-.menu-button,
-.menu-button button svg {
-  display: flex;
-  height: 3.5rem;
+  button svg {
+    height: 3.5rem;
+  }
 }
 
 .close-button {
+  display: flex;
   margin-right: 1rem;
   justify-content: flex-end;
+  align-items: center;
 
   @media (min-width: $breakpoint-extra-small) {
     margin-right: 2rem;
   }
-}
 
-.close-button,
-.close-button button svg {
-  display: flex;
-  height: 3.5rem;
-}
-
-.navbar-navigation-wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: baseline;
-}
-
-.primary-navbar-navigation {
-  ul:first-child {
-    display: none;
-  }
-  ul:nth-child(2) {
-    li ul {
-      display: none;
-    }
-  }
-}
-
-.secondary-navbar-navigation {
-  padding-left: 1rem;
-
-  ul:nth-child(2) {
-    display: none;
-  }
-}
-
-// Primary Menu {Travel Leisure Menu}
-.primary-navigation {
-  display: block;
-
-  ul:first-child {
-    display: block;
-
-    @media (min-width: $breakpoint-extra-small) {
-      display: none;
-    }
-  }
-}
-
-// Secondary Menu {Other Destinations Menu}
-.secondary-navigation {
-  ul:nth-child(2) {
-    @media (min-width: $breakpoint-extra-small) {
-      flex-direction: column;
-    }
-  }
-
-  @media (min-width: $breakpoint-extra-small) {
-    padding-left: 1rem;
-  }
-}
-
-// Third Menu {Static Pages Menu}
-.third-navigation {
-  padding-top: 1rem;
-
-  ul:first-child {
-    display: none;
-  }
-
-  ul li a {
-    padding-left: 0;
-  }
-
-  @media (min-width: $breakpoint-extra-small) {
-    ul:nth-child(2) {
-      li ul {
-        padding-top: 2rem;
-      }
-    }
+  button svg {
+    height: 3.5rem;
   }
 }
 
 .full-menu-wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: block;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   z-index: 51;
-  width: 100vw;
   transition: transform 0.4s ease-in-out;
   transform: translateY(-150vh);
   background-color: var(--wpe--color--white);
@@ -183,9 +105,14 @@
     top: 2.5rem;
     transform: translateY(0vh);
 
-    @media (min-width: $breakpoint-extra-small) {
-      top: 5.5rem;
-      height: calc(-5.5rem + 100vh);
+    @media ((min-width: $breakpoint-extra-small) and (max-width: $breakpoint-small)) {
+      top: 3.5rem;
+      height: calc(-3.5rem + 100vh);
+    }
+
+    @media (min-width: $breakpoint-small) {
+      top: 4.5rem;
+      height: calc(-4.5rem + 100vh);
     }
   }
 }
@@ -200,38 +127,100 @@
   transform: translateY(0vh);
 
   @media (min-width: $breakpoint-extra-small) {
-    padding: 0 0 2rem;
+    padding: 0 2rem 2rem;
   }
 
+  // Primary Menu {City Guides Menu}
   .first-wrapper {
-    display: flex;
-    flex-direction: column;
-    @media (min-width: $breakpoint-extra-small) {
+    display: block;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--wpe--color--black);
+
+    .primary-navigation {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: -3.5rem;
+      flex-direction: column;
+
+      ul li {
+        flex: 1 1 40vw;
+
+        @media (min-width: $breakpoint-extra-small) {
+          flex: 1 1 20vw;
+        }
+      }
     }
   }
 
+  // Secondary Menu {Destinations Menu}
   .second-wrapper {
-    @media (min-width: $breakpoint-extra-small) {
-      border-top: 1px solid #000000;
+    display: block;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--wpe--color--black);
+
+    .secondary-navigation {
+      display: flex;
+      flex-direction: column;
+
+      ul li {
+        flex: 1 1 40vw;
+
+        @media (min-width: $breakpoint-extra-small) {
+          flex: 1 1 20vw;
+        }
+      }
     }
   }
-}
 
-.full-menu-left {
-  @media (min-width: $breakpoint-extra-small) {
-    display: flex;
-    margin-left: 5.5rem;
-  }
-}
+  // Third Menu {Static Pages Menu}
+  .third-wrapper {
+    display: block;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--wpe--color--black);
 
-.full-menu-right {
-  @media (min-width: $breakpoint-extra-small) {
-    display: flex;
-    margin-right: 4rem;
+    .third-navigation {
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      ul:first-child {
+        display: none;
+      }
+
+      :is(ul li) {
+        flex: 1 1;
+
+          @media (min-width: $breakpoint-extra-small) {
+            flex: 1 1 10vw;
+          }
+      }
+
+      :is(ul li) :is(ul li) {
+        flex: 1 1;
+
+          @media (min-width: $breakpoint-extra-small) {
+            flex: 1 1;
+          }
+      }
+
+      ul {
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        @media (min-width: $breakpoint-extra-small) {
+          flex-wrap: wrap;
+          flex-direction: row;
+        }
+
+        li {
+
+          ul {
+            flex-direction: column;
+          }
+        }
+
+        a {
+          padding-left: 0;
+        }
+      }
+    }
   }
 }

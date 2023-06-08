@@ -1,18 +1,13 @@
 @import 'styles/breakpoints';
 
-.components {
+.component {
   color: var(--wpe--header--color);
   background-color: var(--wpe--header--background-color);
   position: relative;
-  width: 100%;
+  width: 50vw;
+  margin: 0 auto;
   z-index: 50;
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0.5rem;
-
-  @media (min-width: $breakpoint-extra-small) {
-    padding-bottom: 1rem;
-  }
+  padding: 0 0 0.5rem;
 }
 
 .sticky {
@@ -21,42 +16,57 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 50;
   transform: translateY(3.5rem);
   transition: transform 0.35s ease-in-out;
 
   @media (min-width: $breakpoint-extra-small) {
     top: 0;
-    transform: translateY(5.5rem);
+    transform: translateY(4.5rem);
   }
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 0;
-  gap: 1rem;
   background-color: var(--wpe--color--white);
 }
 
-.nav-list {
+.navigation-wrapper {
   display: flex;
+  justify-content: center;
+  column-gap: 5vw;
+
+  @media (min-width: $breakpoint-extra-small) {
+    column-gap: 3vw;
+  }
+
+  @media (min-width: $breakpoint-small) {
+    column-gap: 5vw;
+  }
 }
 
 .nav-link {
   display: flex;
-  font-size: 0.75rem;
 
-  @media (min-width: $breakpoint-extra-small) {
-    font-size: 1.25rem;
-  }
+  .active,
+  &:hover,
+  &:focus {
+    color: var(--wpe--color--red);
 
-  .active {
-    color: #f94700;
-
-    @media (min-width: $breakpoint-extra-small) {
-      color: #C06510;
+    @media (min-width: $breakpoint-small) {
+      color: var(--wpe--color--orange);
     }
+  }
+}
+
+.nav-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  @media (min-width: $breakpoint-medium) {
+    font-size: 1.25rem;
   }
 }
