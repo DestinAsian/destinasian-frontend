@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { CategoryHeader } from './CategoryHeader';
+export { CategoryIcon } from './CategoryIcon';
 export { Container } from './Container';
 export { ContentWrapper } from './ContentWrapper';
 export { EntryHeader } from './EntryHeader';
@@ -11,6 +12,7 @@ export { Heading } from './Heading';
 export { Hero } from './Hero';
 export { HomepageSlider } from './HomepageSlider';
 export { LoadingSearchResult } from './LoadingSearchResult';
+export { LocationIcon } from './LocationIcon';
 export { Main } from './Main';
 export { NavigationMenu } from './NavigationMenu';
 export { Post } from './Post';

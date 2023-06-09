@@ -4,7 +4,6 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
-  Header,
   Footer,
   Main,
   Container,
@@ -49,6 +48,9 @@ export default function Component(props) {
     acfPostSlider.slide5 != null ? acfPostSlider.slide5.mediaItemUrl : defaultImage.src,
   ]
 
+  console.log(categories[0]?.node?.uri)
+  console.log(categories[0]?.node?.parent)
+
   return (
     <>
       <SEO
@@ -65,8 +67,9 @@ export default function Component(props) {
         parentCategoryName={categories[0]?.node?.parent?.node?.name}
       />
       <SecondaryHeader
-        uri={categories[0]?.node?.uri}
-        parent={categories[0]?.node?.parent}
+        categoryUri={categories[0]?.node?.uri}
+        categories={categories[0]?.node?.parent}
+        // parent={categories[0]?.node?.parent}
       />
       <Main>
         <>
@@ -78,6 +81,7 @@ export default function Component(props) {
             categoryName={categories[0]?.node?.name}
             chooseYourCategory={acfCategoryIcon?.chooseYourCategory}
             categoryLabel={acfCategoryIcon?.categoryLabel}
+            locationValidation={acfLocationIcon?.fieldGroupName}
             locationLabel={acfLocationIcon?.locationLabel}
             locationUrl={acfLocationIcon?.locationUrl}
           />
@@ -165,6 +169,7 @@ Component.query = gql`
         chooseYourCategory
       }
       acfLocationIcon {
+        fieldGroupName
         locationLabel
         locationUrl
       }

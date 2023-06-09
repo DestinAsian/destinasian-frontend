@@ -5,7 +5,12 @@ import { Container } from '../../components'
 
 let cx = classNames.bind(styles)
 
-export default function SecondaryHeader({ parent, children, uri }) {
+export default function SecondaryHeader({
+  parent,
+  children,
+  categories,
+  categoryUri,
+}) {
   const [currentUrl, setCurrentUrl] = useState('')
   const [categoryUrl, setCategoryUrl] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
@@ -21,17 +26,17 @@ export default function SecondaryHeader({ parent, children, uri }) {
 
   // Add currentCategoryUrl function
   useEffect(() => {
-    setCategoryUrl(uri)
+    setCategoryUrl(categoryUri)
   }, [])
   function isActiveCategory(uri) {
-    return uri === uri
+    return categoryUrl === uri
   }
 
-  // Add sticky header on scroll
+  // Show sticky header when scroll down, Hide it when scroll up
   useEffect(() => {
     function handleScroll() {
       const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 0 && currentScrollY > prevScrollY)
+      setIsScrolled(currentScrollY > 0 && currentScrollY < prevScrollY)
       setPrevScrollY(currentScrollY)
     }
 
@@ -42,13 +47,28 @@ export default function SecondaryHeader({ parent, children, uri }) {
     }
   }, [prevScrollY])
 
-  console.log(parent)
+  console.log(categories)
 
   return (
     // <nav className={cx('sticky-header', { 'sticky-header-hidden': (!isScrolled && prevScrollY!=0) })}>
     <nav className={cx('component', { sticky: isScrolled })}>
       <Container>
         <div className={cx('navbar')}>
+          {/* Single post navigation */}
+          {categories != null ? (
+            <div className={cx('navigation-wrapper')}>
+              {categories.node.children.edges.map((post) => (
+                <li key={post.node.uri} className={cx('nav-link')}>
+                  <a
+                    href={post.node.uri}
+                    className={cx(isActiveCategory(post.node.uri) ? 'active' : '')}
+                  >
+                    <h2 className={cx('nav-name')}>{post.node.name}</h2>
+                  </a>
+                </li>
+              ))}
+            </div>
+          ) : null}
 
           {/* Children category navigation */}
           {children != null ? (

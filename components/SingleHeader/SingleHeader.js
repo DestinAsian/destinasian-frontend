@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import classNames from 'classnames/bind'
 import Link from 'next/link'
+import destinasianLogo from '../../assets/logo/destinasian-logo.png'
 import {
   Container,
   NavigationMenu,
@@ -18,7 +19,6 @@ import appConfig from '../../app.config'
 let cx = classNames.bind(styles)
 
 export default function SingleHeader({
-  title = 'DestinAsian',
   primaryMenuItems,
   secondaryMenuItems,
   thirdMenuItems,
@@ -58,7 +58,7 @@ export default function SingleHeader({
   // Add sticky header on scroll
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 0)
+      setIsScrolled(window.scrollY > 20)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -78,7 +78,9 @@ export default function SingleHeader({
             {/* DA logo */}
             <div className={cx('brand')}>
               <Link href="/">
-                <a className={cx('title')}>{title}</a>
+                <a className={cx('title')}>
+                  <img src={destinasianLogo.src} />
+                </a>
               </Link>
             </div>
 
