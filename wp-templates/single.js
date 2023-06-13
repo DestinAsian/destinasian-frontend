@@ -48,9 +48,6 @@ export default function Component(props) {
     acfPostSlider.slide5 != null ? acfPostSlider.slide5.mediaItemUrl : defaultImage.src,
   ]
 
-  console.log(categories[0]?.node?.uri)
-  console.log(categories[0]?.node?.parent)
-
   return (
     <>
       <SEO

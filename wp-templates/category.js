@@ -39,6 +39,8 @@ export default function Component(props) {
     })
   })
 
+  console.log(posts)
+
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
@@ -53,10 +55,7 @@ export default function Component(props) {
         children={children.edges.length}
       />
 
-      <SecondaryHeader
-        parent={parent}
-        children={children}
-      />
+      <SecondaryHeader parent={parent} children={children} />
 
       {/* EntryHeader category name */}
       {children.edges.length != 0 ? (
@@ -77,6 +76,7 @@ export default function Component(props) {
                     date={post.node.date}
                     author={post.node.author?.node.name}
                     uri={post.node.uri}
+                    parentCategory={post.node.categories.edges[0].node.parent?.node.name}
                     category={post.node.categories.edges[0].node.name}
                     categoryUri={post.node.categories.edges[0].node.uri}
                     featuredImage={post.node.featuredImage?.node}
@@ -92,8 +92,9 @@ export default function Component(props) {
                       content={post.content}
                       date={post.date}
                       uri={post.uri}
+                      parentCategory={post.categories.edges[0].node.parent?.node.name}
                       category={post.categories.edges[0].node.name}
-                    categoryUri={post.categories.edges[0].node.uri}
+                      categoryUri={post.categories.edges[0].node.uri}
                       featuredImage={post.featuredImage?.node}
                     />
                   </div>
@@ -142,6 +143,11 @@ Component.query = gql`
                   node {
                     name
                     uri
+                    parent {
+                      node {
+                        name
+                      }
+                    }
                   }
                 }
               }
@@ -176,6 +182,11 @@ Component.query = gql`
                         node {
                           name
                           uri
+                          parent {
+                            node {
+                              name
+                            }
+                          }
                         }
                       }
                     }
@@ -196,6 +207,11 @@ Component.query = gql`
                               node {
                                 name
                                 uri
+                                parent {
+                                  node {
+                                    name
+                                  }
+                                }
                               }
                             }
                           }

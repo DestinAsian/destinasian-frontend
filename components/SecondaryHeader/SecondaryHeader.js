@@ -36,7 +36,7 @@ export default function SecondaryHeader({
   useEffect(() => {
     function handleScroll() {
       const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 0 && currentScrollY < prevScrollY)
+      setIsScrolled(currentScrollY > 100 && currentScrollY < prevScrollY)
       setPrevScrollY(currentScrollY)
     }
 
@@ -46,8 +46,6 @@ export default function SecondaryHeader({
       window.removeEventListener('scroll', handleScroll)
     }
   }, [prevScrollY])
-
-  console.log(categories)
 
   return (
     // <nav className={cx('sticky-header', { 'sticky-header-hidden': (!isScrolled && prevScrollY!=0) })}>

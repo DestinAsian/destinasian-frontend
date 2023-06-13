@@ -7,6 +7,7 @@ let cx = classNames.bind(styles)
 
 export default function Post({
   title,
+  parentCategory,
   category,
   categoryUri,
   uri,
@@ -31,7 +32,7 @@ export default function Post({
       <div className={cx('content-wrapper')}>
         <Link href={categoryUri}>
           <a>
-            <h5 className={cx('category')}>{category}</h5>
+            <h5 className={cx('category')}>{parentCategory}{' '}{category}</h5>
           </a>
         </Link>
       </div>
