@@ -4,14 +4,14 @@
 }
 
 .swiper-slide a {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: calc(-4.5rem + 100vh);
 }
 
 .swiper-slide a img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: calc(-4.5rem + 100vh);
   object-fit: cover;
 }
 
@@ -69,6 +69,15 @@
   .homepage-swiper {
     height: calc(-3.5rem + 100vh);
   }
+
+  .swiper-slide a {
+    height: calc(-3.5rem + 100vh);
+  }
+
+  .swiper-slide a img {
+    height: calc(-3.5rem + 100vh);
+  }
+
   .swiper-custom-button-next,
   .swiper-custom-button-prev {
     display: none;

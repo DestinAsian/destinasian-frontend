@@ -49,11 +49,11 @@
     height: 1.3rem;
 
     @media (min-width: $breakpoint-extra-small) {
-      height: 2rem;
+      height: 1.6rem;
     }
 
     @media (min-width: $breakpoint-medium) {
-      height: 2.3rem;
+      height: 1.8rem;
     }
   }
 }
@@ -79,6 +79,49 @@
 
   button svg {
     height: 3.5rem;
+  }
+}
+
+.menu-icon {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  width: 1.3rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    width: 1.6rem;
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    width: 1.8rem;
+  }
+}
+
+.close-icon {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  width: 1.3rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    width: 1.6rem;
+    height: 3.5rem;
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    width: 1.8rem;
   }
 }
 
@@ -153,7 +196,7 @@
         flex: 1 1 40vw;
 
         @media (min-width: $breakpoint-extra-small) {
-          flex: 1 1 20vw;
+          flex: 1 1 35vw;
         }
       }
     }
@@ -197,17 +240,17 @@
       :is(ul li) {
         flex: 1 1;
 
-          @media (min-width: $breakpoint-extra-small) {
-            flex: 1 1 10vw;
-          }
+        @media (min-width: $breakpoint-extra-small) {
+          flex: 1 1 10vw;
+        }
       }
 
       :is(ul li) :is(ul li) {
         flex: 1 1;
 
-          @media (min-width: $breakpoint-extra-small) {
-            flex: 1 1;
-          }
+        @media (min-width: $breakpoint-extra-small) {
+          flex: 1 1;
+        }
       }
 
       ul {
@@ -220,7 +263,6 @@
         }
 
         li {
-
           ul {
             flex-direction: column;
           }

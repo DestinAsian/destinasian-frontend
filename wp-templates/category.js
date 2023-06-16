@@ -16,6 +16,11 @@ import {
 } from '../components'
 
 export default function Component(props) {
+  // Loading state for previews
+  if (props.loading) {
+    return <>Loading...</>
+  }
+
   const { title: siteTitle, description: siteDescription } =
     props?.data?.generalSettings
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
@@ -38,8 +43,6 @@ export default function Component(props) {
       })
     })
   })
-
-  console.log(posts)
 
   return (
     <>
@@ -72,11 +75,14 @@ export default function Component(props) {
               ? posts.edges.map((post) => (
                   <Post
                     title={post.node.title}
+                    excerpt={post.node.excerpt}
                     content={post.node.content}
                     date={post.node.date}
                     author={post.node.author?.node.name}
                     uri={post.node.uri}
-                    parentCategory={post.node.categories.edges[0].node.parent?.node.name}
+                    parentCategory={
+                      post.node.categories.edges[0].node.parent?.node.name
+                    }
                     category={post.node.categories.edges[0].node.name}
                     categoryUri={post.node.categories.edges[0].node.uri}
                     featuredImage={post.node.featuredImage?.node}
@@ -89,10 +95,13 @@ export default function Component(props) {
                   <div key={post.id}>
                     <Post
                       title={post.title}
+                      excerpt={post.excerpt}
                       content={post.content}
                       date={post.date}
                       uri={post.uri}
-                      parentCategory={post.categories.edges[0].node.parent?.node.name}
+                      parentCategory={
+                        post.categories.edges[0].node.parent?.node.name
+                      }
                       category={post.categories.edges[0].node.name}
                       categoryUri={post.categories.edges[0].node.uri}
                       featuredImage={post.featuredImage?.node}
@@ -224,6 +233,9 @@ Component.query = gql`
             }
           }
         }
+      }
+      ... on Editorial {
+        title
       }
     }
     generalSettings {

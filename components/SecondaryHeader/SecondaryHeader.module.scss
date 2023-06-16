@@ -61,6 +61,20 @@
   }
 }
 
+.single-nav-link {
+  display: flex;
+
+  .active,
+  &:hover,
+  &:focus {
+    color: var(--wpe--color--red);
+
+    @media (min-width: $breakpoint-small) {
+      color: var(--wpe--color--orange);
+    }
+  }
+}
+
 .nav-name {
   font-size: 0.875rem;
   font-weight: 500;

@@ -23,14 +23,14 @@
 }
 
 .category {
-  color: var(--wpe--color--red);
+  color: var(--wpe--color--black);
   font-weight: 600;
   font-size: 0.8rem;
   text-transform: uppercase;
   line-height: 1.2;
 
   @media (min-width: $breakpoint-small) {
-    color: var(--wpe--color--orange);
+    color: var(--wpe--color--black);
     font-size: 0.95rem;
   }
 

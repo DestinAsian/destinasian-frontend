@@ -21,7 +21,7 @@ export default function SecondaryHeader({
     setCurrentUrl(window.location.pathname)
   }, [])
   function isActive(uri) {
-    return currentUrl === uri
+    return (currentUrl + "/") === uri
   }
 
   // Add currentCategoryUrl function
@@ -36,7 +36,7 @@ export default function SecondaryHeader({
   useEffect(() => {
     function handleScroll() {
       const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 100 && currentScrollY < prevScrollY)
+      setIsScrolled(currentScrollY > 200 && currentScrollY < prevScrollY)
       setPrevScrollY(currentScrollY)
     }
 
@@ -52,14 +52,17 @@ export default function SecondaryHeader({
     <nav className={cx('component', { sticky: isScrolled })}>
       <Container>
         <div className={cx('navbar')}>
+
           {/* Single post navigation */}
-          {categories != null ? (
+          {categories != undefined ? (
             <div className={cx('navigation-wrapper')}>
               {categories.node.children.edges.map((post) => (
-                <li key={post.node.uri} className={cx('nav-link')}>
+                <li key={post.node.uri} className={cx('single-nav-link')}>
                   <a
                     href={post.node.uri}
-                    className={cx(isActiveCategory(post.node.uri) ? 'active' : '')}
+                    className={cx(
+                      isActiveCategory(post.node.uri) ? 'active' : '',
+                    )}
                   >
                     <h2 className={cx('nav-name')}>{post.node.name}</h2>
                   </a>
@@ -68,10 +71,10 @@ export default function SecondaryHeader({
             </div>
           ) : null}
 
-          {/* Children category navigation */}
-          {children != null ? (
+          {/* Parent category navigation */}
+          {parent != null || parent != undefined ? (
             <div className={cx('navigation-wrapper')}>
-              {children.edges.map((post) => (
+              {parent.node.children.edges.map((post) => (
                 <li key={post.node.uri} className={cx('nav-link')}>
                   <a
                     href={post.node.uri}
@@ -84,10 +87,10 @@ export default function SecondaryHeader({
             </div>
           ) : null}
 
-          {/* Parent category navigation */}
-          {parent != null ? (
+          {/* Children category navigation */}
+          {children != null || children != undefined ? (
             <div className={cx('navigation-wrapper')}>
-              {parent.node.children.edges.map((post) => (
+              {children.edges.map((post) => (
                 <li key={post.node.uri} className={cx('nav-link')}>
                   <a
                     href={post.node.uri}

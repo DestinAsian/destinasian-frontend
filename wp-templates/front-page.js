@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
+import { useMediaQuery } from 'react-responsive'
 import {
   Header,
   Footer,
@@ -10,9 +11,9 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
-  HomepageSlider,
+  HomepageSliderDesktop,
+  HomepageSliderMobile,
 } from '../components'
-import NavigationHeader from '../components/NavigationHeader/NavigationHeader'
 
 export default function Component(props) {
   // Loading state for previews
@@ -26,20 +27,26 @@ export default function Component(props) {
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const navigationMenu = props?.data?.navigationMenuItems?.nodes ?? []
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
+
+  const isDesktop = useMediaQuery({ minWidth: 640 })
+  const isMobile = useMediaQuery({ maxWidth: 639 })
 
   const images = [
     {
-      src: acfHomepageSlider.slide1.mediaItemUrl,
+      desktopSrc: acfHomepageSlider.desktopSlide1.mediaItemUrl,
+      mobileSrc: acfHomepageSlider.mobileSlide1.mediaItemUrl,
+      // video: acfHomepageSlider.video1.,
       url: acfHomepageSlider.slideLink1,
     },
     {
-      src: acfHomepageSlider.slide2.mediaItemUrl,
+      desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl,
+      mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl,
       url: acfHomepageSlider.slideLink2,
     },
     {
-      src: acfHomepageSlider.slide3.mediaItemUrl,
+      desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl,
+      mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl,
       url: acfHomepageSlider.slideLink3,
     },
   ]
@@ -61,7 +68,16 @@ export default function Component(props) {
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
-          <HomepageSlider images={images} />
+          {isDesktop && (
+            <Container>
+              <HomepageSliderDesktop images={images} />
+            </Container>
+          )}
+          {isMobile && (
+            <Container>
+              <HomepageSliderMobile images={images} />
+            </Container>
+          )}
           <Container>
             <div className="my-12">
               <ContentWrapper content={content} />
@@ -85,7 +101,6 @@ Component.query = gql`
     $secondHeaderLocation: MenuLocationEnum
     $thirdHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
-    $navigationLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
   ) {
@@ -94,13 +109,22 @@ Component.query = gql`
       content
       ...FeaturedImageFragment
       acfHomepageSlider {
-        slide1 {
+        desktopSlide1 {
           mediaItemUrl
         }
-        slide2 {
+        desktopSlide2 {
           mediaItemUrl
         }
-        slide3 {
+        desktopSlide3 {
+          mediaItemUrl
+        }
+        mobileSlide1 {
+          mediaItemUrl
+        }
+        mobileSlide2 {
+          mediaItemUrl
+        }
+        mobileSlide3 {
           mediaItemUrl
         }
         slideLink1
@@ -140,11 +164,6 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    navigationMenuItems: menuItems(where: { location: $navigationLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
-    }
     categories {
       ...SearchQueryFragment
     }
@@ -158,7 +177,6 @@ Component.variables = ({ databaseId }, ctx) => {
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
-    navigationLocation: MENUS.NAVIGATION_LOCATION,
     asPreview: ctx?.asPreview,
   }
 }

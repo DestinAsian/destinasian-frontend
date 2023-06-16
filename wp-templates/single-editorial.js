@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
-import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
   Footer,
@@ -16,47 +15,29 @@ import {
   SecondaryHeader,
 } from '../components'
 
-export default function Component(props) {
-  // Loading state for previews
-  if (props.loading) {
-    return <>Loading...</>
-  }
-
-  const { title: siteTitle, description: siteDescription } =
-    props?.data?.generalSettings
-  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
-  const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
-  const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const {
-    title,
-    content,
-    featuredImage,
-    date,
-    author,
-    acfPostSlider,
-    acfCategoryIcon,
-    acfLocationIcon,
-  } = props?.data?.post
-  const categories = props?.data?.post?.categories?.edges ?? []
-
-  const images = [
-    acfPostSlider.slide1 != null
-      ? acfPostSlider.slide1.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide2 != null
-      ? acfPostSlider.slide2.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide3 != null
-      ? acfPostSlider.slide3.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide4 != null
-      ? acfPostSlider.slide4.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide5 != null
-      ? acfPostSlider.slide5.mediaItemUrl
-      : defaultImage.src,
-  ]
+export default function SingleEditorial(props) {
+    // Loading state for previews
+    if (props.loading) {
+      return <>Loading...</>
+    }
+  
+    const { title: siteTitle, description: siteDescription } =
+      props?.data?.generalSettings
+    const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
+    const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
+    const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
+    const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
+    const {
+      title,
+      content,
+      featuredImage,
+      date,
+      author,
+      acfPostSlider,
+      acfCategoryIcon,
+      acfLocationIcon,
+    } = props?.data?.editorial
+    const categories = props?.data?.editorial?.categories?.edges ?? []
 
   return (
     <>
@@ -73,14 +54,8 @@ export default function Component(props) {
         thirdMenuItems={thirdMenu}
         parentCategoryName={categories[0]?.node?.parent?.node?.name}
       />
-      <SecondaryHeader
-        categoryUri={categories[0]?.node?.uri}
-        categories={categories[0]?.node?.parent}
-        // parent={categories[0]?.node?.parent}
-      />
       <Main>
         <>
-          <SingleSlider images={images} />
           <SingleEntryHeader
             title={title}
             categoryUri={categories[0]?.node?.uri}
@@ -102,7 +77,7 @@ export default function Component(props) {
   )
 }
 
-Component.query = gql`
+SingleEditorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
@@ -115,7 +90,7 @@ Component.query = gql`
     $asPreview: Boolean = false
     $first: Int = 20
   ) {
-    post(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+    editorial(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
       date
@@ -154,32 +129,6 @@ Component.query = gql`
           }
         }
       }
-      acfPostSlider {
-        slide1 {
-          mediaItemUrl
-        }
-        slide2 {
-          mediaItemUrl
-        }
-        slide3 {
-          mediaItemUrl
-        }
-        slide4 {
-          mediaItemUrl
-        }
-        slide5 {
-          mediaItemUrl
-        }
-      }
-      acfCategoryIcon {
-        categoryLabel
-        chooseYourCategory
-      }
-      acfLocationIcon {
-        fieldGroupName
-        locationLabel
-        locationUrl
-      }
       ...FeaturedImageFragment
     }
     generalSettings {
@@ -217,8 +166,8 @@ Component.query = gql`
   }
 `
 
-Component.variables = ({ databaseId }, ctx) => {
-  return {
+SingleEditorial.variables = ({ databaseId }, ctx) => {
+  return { 
     databaseId,
     asPreview: ctx?.asPreview,
     headerLocation: MENUS.PRIMARY_LOCATION,

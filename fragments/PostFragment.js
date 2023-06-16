@@ -7,6 +7,7 @@ export const PostFragment = gql`
     content
     date
     uri
+    excerpt
     ...FeaturedImageFragment
   }
 `

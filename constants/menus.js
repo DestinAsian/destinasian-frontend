@@ -2,4 +2,3 @@ export const PRIMARY_LOCATION = 'PRIMARY';
 export const SECONDARY_LOCATION = 'SECONDARY';
 export const THIRD_LOCATION = 'THIRD';
 export const FOOTER_LOCATION = 'FOOTER';
-export const NAVIGATION_LOCATION = 'NAVIGATION';

@@ -11,7 +11,7 @@ import 'swiper/css/navigation'
 // import required modules
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper'
 
-export default function HomepageSlider({ images }) {
+export default function HomepageSliderDesktop({ images }) {
   const pagination = {
     clickable: true,
   }
@@ -37,7 +37,7 @@ export default function HomepageSlider({ images }) {
         {images?.map((image, index) => (
           <SwiperSlide key={index}>
             <a href={image.url}>
-              <img src={image.src}></img>
+              <img src={image.desktopSrc}></img>
             </a>
           </SwiperSlide>
         ))}

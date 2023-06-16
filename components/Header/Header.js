@@ -56,7 +56,7 @@ export default function Header({
   // Add sticky header on scroll
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 100)
+      setIsScrolled(window.scrollY > 200)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -132,7 +132,7 @@ export default function Header({
                 {/* menu button */}
                 <button
                   type="button"
-                  className="my-0 flex w-4 cursor-pointer select-none items-center bg-transparent text-3xl  sm:w-8"
+                  className={cx('menu-icon')}
                   onClick={() => setIsNavShown(!isNavShown)}
                   aria-label="Toggle navigation"
                   aria-controls={cx('full-menu-wrapper')}
@@ -172,7 +172,7 @@ export default function Header({
                 {/* close button */}
                 <button
                   type="button"
-                  className="my-0 flex w-4 cursor-pointer select-none items-center bg-transparent text-3xl sm:h-14 sm:w-8"
+                  className={cx('close-icon')}
                   onClick={() => setIsNavShown(!isNavShown)}
                   aria-label="Toggle navigation"
                   aria-controls={cx('full-menu-wrapper')}
@@ -215,7 +215,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
             {/* close button */}
             <button
               type="button"
-              className="my-0 flex w-4 cursor-pointer select-none items-center bg-transparent text-3xl sm:h-14 sm:w-8"
+              className={cx('close-icon')}
               onClick={() => setIsNavShown(!isNavShown)}
               aria-label="Toggle navigation"
               aria-controls={cx('primary-navigation')}
