@@ -1,0 +1,27 @@
+@import 'styles/breakpoints';
+@import 'styles/fonts/typography';
+
+.component {
+  background-color: var(--wpe--color--white);
+  color: var(--wpe--color--black);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+
+  @media (min-width: $breakpoint-small) {
+    height: calc(-3.5rem + 100vh);
+  }
+}
+
+.image-wrapper {
+  display: flex;
+  min-width: 100vw;
+  margin: 0 auto;
+  padding: 0;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  @media (min-width: $breakpoint-small) {
+    height: calc(-3.5rem + 100vh);
+  }
+}

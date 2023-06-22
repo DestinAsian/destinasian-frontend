@@ -11,11 +11,7 @@ import 'swiper/css/navigation'
 // import required modules
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper'
 
-export default function HomepageSliderMobile({ images }) {
-  const pagination = {
-    clickable: true,
-  }
-
+export default function SingleEditorialSlider({ images }) {
   return (
     <>
       <Swiper
@@ -26,30 +22,19 @@ export default function HomepageSliderMobile({ images }) {
           delay: 5000,
           disableOnInteraction: true,
         }}
-        pagination={pagination}
+        pagination={{
+          type: 'fraction',
+        }}
         navigation={{
           prevEl: '.swiper-custom-button-prev',
           nextEl: '.swiper-custom-button-next',
         }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
-        className="homepage-swiper"
+        className="post-swiper"
       >
-        {images?.map((media, index) => (
+        {images?.map((image, index) => (
           <SwiperSlide key={index}>
-            {media.type === 'image' && (
-              <a href={media.url}>
-                <img src={media.mobileSrc} alt={`Image ${index}`} />
-              </a>
-            )}
-            {media.type === 'video' && (
-              <video
-                src={media.videoSrc}
-                className="video-js vjs-default-skin"
-                loop
-                autoPlay
-                controls
-              />
-            )}
+            <img src={image}></img>
           </SwiperSlide>
         ))}
         <div className="swiper-custom-button-prev">

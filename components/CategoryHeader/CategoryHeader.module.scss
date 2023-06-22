@@ -8,6 +8,14 @@
   z-index: 50;
 }
 
+.isScrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
 .sticky {
   background-color: var(--wpe--header--background-color);
   position: fixed;
@@ -16,7 +24,7 @@
   width: 100%;
   z-index: 1000;
   transform: translateY(60px);
-  transition: transform 0.3s ease-in-out;
+  // transition: transform 0.3s ease-in-out;
 }
 
 .navbar {

@@ -58,7 +58,7 @@ export default function SingleHeader({
   // Add sticky header on scroll
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 200)
+      setIsScrolled(window.scrollY > 0)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -69,7 +69,7 @@ export default function SingleHeader({
   }, [])
 
   return (
-    <header className={cx('component', { sticky: isScrolled })}>
+    <header className={cx('components', { sticky: isScrolled })}>
       <SkipNavigationLink />
       {/* Responsive header */}
       {isDesktop || (!isDesktop && !isNavShown) ? (

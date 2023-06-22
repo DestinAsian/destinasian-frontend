@@ -34,19 +34,24 @@ export default function Component(props) {
 
   const images = [
     {
+      type: 'image',
       desktopSrc: acfHomepageSlider.desktopSlide1.mediaItemUrl,
       mobileSrc: acfHomepageSlider.mobileSlide1.mediaItemUrl,
-      // video: acfHomepageSlider.video1.,
+      // videoSrc: acfHomepageSlider.video1.mediaItemUrl,
       url: acfHomepageSlider.slideLink1,
     },
     {
-      desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl,
-      mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl,
+      type: 'video',
+      // desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl,
+      // mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl,
+      videoSrc: acfHomepageSlider.video2.mediaItemUrl,
       url: acfHomepageSlider.slideLink2,
     },
     {
+      type: 'image',
       desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl,
       mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl,
+      // videoSrc: acfHomepageSlider.video3.mediaItemUrl,
       url: acfHomepageSlider.slideLink3,
     },
   ]
@@ -125,6 +130,15 @@ Component.query = gql`
           mediaItemUrl
         }
         mobileSlide3 {
+          mediaItemUrl
+        }
+        video1 {
+          mediaItemUrl
+        }
+        video2 {
+          mediaItemUrl
+        }
+        video3 {
           mediaItemUrl
         }
         slideLink1

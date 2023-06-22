@@ -6,38 +6,47 @@ import {
   Footer,
   Main,
   Container,
-  SingleEntryHeader,
+  SingleEditorialEntryHeader,
   NavigationMenu,
-  ContentWrapper,
   FeaturedImage,
   SEO,
-  SingleSlider,
-  SecondaryHeader,
+  SingleEditorialFeaturedImage,
+  ContentWrapperEditorial,
 } from '../components'
 
 export default function SingleEditorial(props) {
-    // Loading state for previews
-    if (props.loading) {
-      return <>Loading...</>
-    }
-  
-    const { title: siteTitle, description: siteDescription } =
-      props?.data?.generalSettings
-    const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
-    const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
-    const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
-    const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-    const {
-      title,
-      content,
-      featuredImage,
-      date,
-      author,
-      acfPostSlider,
-      acfCategoryIcon,
-      acfLocationIcon,
-    } = props?.data?.editorial
-    const categories = props?.data?.editorial?.categories?.edges ?? []
+  // Loading state for previews
+  if (props.loading) {
+    return <>Loading...</>
+  }
+
+  const { title: siteTitle, description: siteDescription } =
+    props?.data?.generalSettings
+  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
+  const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
+  const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
+  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
+  const {
+    title,
+    content,
+    featuredImage,
+    author,
+    date,
+    acfSingleEditorialSlider,
+  } = props?.data?.editorial
+  const categories = props?.data?.editorial?.categories?.edges ?? []
+
+  const images = [
+    acfSingleEditorialSlider.slide1 != null
+      ? acfSingleEditorialSlider.slide1.mediaItemUrl
+      : null,
+    acfSingleEditorialSlider.slide2 != null
+      ? acfSingleEditorialSlider.slide1.mediaItemUrl
+      : null,
+    acfSingleEditorialSlider.slide3 != null
+      ? acfSingleEditorialSlider.slide1.mediaItemUrl
+      : null,
+  ]
 
   return (
     <>
@@ -56,19 +65,18 @@ export default function SingleEditorial(props) {
       />
       <Main>
         <>
-          <SingleEntryHeader
-            title={title}
-            categoryUri={categories[0]?.node?.uri}
-            parentCategory={categories[0]?.node?.parent?.node?.name}
-            categoryName={categories[0]?.node?.name}
-            chooseYourCategory={acfCategoryIcon?.chooseYourCategory}
-            categoryLabel={acfCategoryIcon?.categoryLabel}
-            locationValidation={acfLocationIcon?.fieldGroupName}
-            locationLabel={acfLocationIcon?.locationLabel}
-            locationUrl={acfLocationIcon?.locationUrl}
-          />
           <Container>
-            <ContentWrapper content={content} />
+            <SingleEditorialFeaturedImage image={featuredImage?.node} />
+            <SingleEditorialEntryHeader
+              image={featuredImage?.node}
+              title={title}
+              categoryUri={categories[0]?.node?.uri}
+              parentCategory={categories[0]?.node?.parent?.node?.name}
+              categoryName={categories[0]?.node?.name}
+              author={author.node.name}
+              date={date}
+            />
+            <ContentWrapperEditorial content={content} images={images} />
           </Container>
         </>
       </Main>
@@ -94,9 +102,21 @@ SingleEditorial.query = gql`
       title
       content
       date
+      ...FeaturedImageFragment
       author {
         node {
           name
+        }
+      }
+      acfSingleEditorialSlider {
+        slide1 {
+          mediaItemUrl
+        }
+        slide2 {
+          mediaItemUrl
+        }
+        slide3 {
+          mediaItemUrl
         }
       }
       categories {
@@ -167,7 +187,7 @@ SingleEditorial.query = gql`
 `
 
 SingleEditorial.variables = ({ databaseId }, ctx) => {
-  return { 
+  return {
     databaseId,
     asPreview: ctx?.asPreview,
     headerLocation: MENUS.PRIMARY_LOCATION,

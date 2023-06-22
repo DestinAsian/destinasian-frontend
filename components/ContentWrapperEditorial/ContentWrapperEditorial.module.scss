@@ -8,7 +8,11 @@
   margin-bottom: 5rem;
 
   @media (min-width: $breakpoint-small) {
-    max-width: 50vw;
+    margin: 0 auto 5rem;
+    background-color: var(--wpe--color--white);
+    max-width: 52vw;
+    padding: 1vw;
+    position: relative;
   }
 
   .content-wrapper {
@@ -16,6 +20,10 @@
     flex-direction: column;
     row-gap: 0.25rem;
     padding: 1rem 0;
+
+    @media (min-width: $breakpoint-small) {
+      padding: 0 1rem;
+    }
   }
 
   :global {

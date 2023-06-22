@@ -8,7 +8,7 @@ import {
   Footer,
   Main,
   Container,
-  EntryHeader,
+  CategoryEntryHeader,
   NavigationMenu,
   Post,
   FeaturedImage,
@@ -27,9 +27,25 @@ export default function Component(props) {
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { name, posts, children, parent } = props.data.nodeByUri
+  const {
+    name,
+    description,
+    categoryImages,
+    posts,
+    editorials,
+    children,
+    parent,
+  } = props.data.nodeByUri
 
+  const mainPosts = []
   const childPosts = []
+  const mainEditorialPosts = []
+  const childEditorialPosts = []
+
+  // loop through all the main categories and their posts
+  posts.edges.forEach((post) => {
+    mainPosts.push(post.node)
+  })
 
   // loop through all the child categories and their posts
   children.edges.forEach((childCategory) => {
@@ -43,6 +59,41 @@ export default function Component(props) {
       })
     })
   })
+
+  // loop through all the main categories and their posts
+  editorials.edges.forEach((post) => {
+    mainEditorialPosts.push(post.node)
+  })
+
+  // loop through all the child editorial categories and their posts
+  children.edges.forEach((childCategory) => {
+    childCategory.node.editorials.edges.forEach((post) => {
+      childEditorialPosts.push(post.node)
+    })
+
+    childCategory.node.children.edges.forEach((grandChildCategory) => {
+      grandChildCategory.node.editorials.edges.forEach((post) => {
+        childEditorialPosts.push(post.node)
+      })
+    })
+  })
+
+  // sort posts by date
+  const sortPostsByDate = (a, b) => {
+    const dateA = new Date(a.date)
+    const dateB = new Date(b.date)
+    return dateB - dateA // Sort in descending order
+  }
+
+  // define allPostsCards
+  const allPosts = [
+    ...(mainPosts != null ? mainPosts : []),
+    ...(mainEditorialPosts != null ? mainEditorialPosts : []),
+    ...(childPosts != null ? childPosts : []),
+    ...(childEditorialPosts != null ? childEditorialPosts : []),
+  ]
+
+  const sortedPosts = allPosts.sort(sortPostsByDate)
 
   return (
     <>
@@ -62,53 +113,39 @@ export default function Component(props) {
 
       {/* EntryHeader category name */}
       {children.edges.length != 0 ? (
-        <EntryHeader title={`${name}`} />
+        <CategoryEntryHeader
+          title={`${name}`}
+          image={categoryImages.categoryImages.mediaItemUrl}
+          description={description}
+          children={children.edges}
+        />
       ) : (
-        <EntryHeader parent={parent?.node.name} title={`${name}`} />
+        <CategoryEntryHeader
+          parent={parent?.node.name}
+          title={`${name}`}
+          children={children.edges}
+        />
       )}
 
       <Main>
         <>
           <Container>
-            {/* category post card */}
-            {posts.edges != null
-              ? posts.edges.map((post) => (
-                  <Post
-                    title={post.node.title}
-                    excerpt={post.node.excerpt}
-                    content={post.node.content}
-                    date={post.node.date}
-                    author={post.node.author?.node.name}
-                    uri={post.node.uri}
-                    parentCategory={
-                      post.node.categories.edges[0].node.parent?.node.name
-                    }
-                    category={post.node.categories.edges[0].node.name}
-                    categoryUri={post.node.categories.edges[0].node.uri}
-                    featuredImage={post.node.featuredImage?.node}
-                  />
-                ))
-              : null}
-            {/* childCategory post card */}
-            {childPosts != null
-              ? childPosts.map((post) => (
-                  <div key={post.id}>
-                    <Post
-                      title={post.title}
-                      excerpt={post.excerpt}
-                      content={post.content}
-                      date={post.date}
-                      uri={post.uri}
-                      parentCategory={
-                        post.categories.edges[0].node.parent?.node.name
-                      }
-                      category={post.categories.edges[0].node.name}
-                      categoryUri={post.categories.edges[0].node.uri}
-                      featuredImage={post.featuredImage?.node}
-                    />
-                  </div>
-                ))
-              : null}
+            {/* All posts sorted by date */}
+            {sortedPosts.map((post) => (
+              <Post
+                key={post.id}
+                title={post.title}
+                excerpt={post.excerpt}
+                content={post.content}
+                date={post.date}
+                author={post.author?.node.name}
+                uri={post.uri}
+                parentCategory={post.categories.edges[0].node.parent?.node.name}
+                category={post.categories.edges[0].node.name}
+                categoryUri={post.categories.edges[0].node.uri}
+                featuredImage={post.featuredImage?.node}
+              />
+            ))}
           </Container>
         </>
       </Main>
@@ -133,6 +170,12 @@ Component.query = gql`
     nodeByUri(uri: $uri) {
       ... on Category {
         name
+        description
+        categoryImages {
+          categoryImages {
+            mediaItemUrl
+          }
+        }
         posts {
           edges {
             node {
@@ -141,6 +184,38 @@ Component.query = gql`
               content
               date
               uri
+              excerpt
+              ...FeaturedImageFragment
+              author {
+                node {
+                  name
+                }
+              }
+              categories {
+                edges {
+                  node {
+                    name
+                    uri
+                    parent {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        editorials {
+          edges {
+            node {
+              id
+              title
+              content
+              date
+              uri
+              excerpt
               ...FeaturedImageFragment
               author {
                 node {
@@ -202,6 +277,37 @@ Component.query = gql`
                   }
                 }
               }
+              editorials {
+                edges {
+                  node {
+                    id
+                    title
+                    content
+                    date
+                    uri
+                    excerpt
+                    ...FeaturedImageFragment
+                    author {
+                      node {
+                        name
+                      }
+                    }
+                    categories {
+                      edges {
+                        node {
+                          name
+                          uri
+                          parent {
+                            node {
+                              name
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
               children {
                 edges {
                   node {
@@ -227,15 +333,43 @@ Component.query = gql`
                         }
                       }
                     }
+                    editorials {
+                      edges {
+                        node {
+                          id
+                          title
+                          content
+                          date
+                          uri
+                          excerpt
+                          ...FeaturedImageFragment
+                          author {
+                            node {
+                              name
+                            }
+                          }
+                          categories {
+                            edges {
+                              node {
+                                name
+                                uri
+                                parent {
+                                  node {
+                                    name
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-      ... on Editorial {
-        title
       }
     }
     generalSettings {

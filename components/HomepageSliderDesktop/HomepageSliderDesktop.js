@@ -34,11 +34,22 @@ export default function HomepageSliderDesktop({ images }) {
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
         className="homepage-swiper"
       >
-        {images?.map((image, index) => (
+        {images?.map((media, index) => (
           <SwiperSlide key={index}>
-            <a href={image.url}>
-              <img src={image.desktopSrc}></img>
-            </a>
+            {media.type === 'image' && (
+              <a href={media.url}>
+                <img src={media.desktopSrc} alt={`Image ${index}`} />
+              </a>
+            )}
+            {media.type === 'video' && (
+              <video
+                src={media.videoSrc}
+                className="video-js vjs-default-skin"
+                loop
+                autoPlay
+                controls
+              />
+            )}
           </SwiperSlide>
         ))}
         <div className="swiper-custom-button-prev">
