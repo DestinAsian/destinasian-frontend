@@ -15,17 +15,17 @@ export default function CategoryEntryHeader({
   children
 }) {
   const hasText = title
-  let trimmedDescription = '';
+  // let trimmedDescription = '';
 
-  if (children.length !== 0) {
-    trimmedDescription = description.substring(0, MAX_DESCRIPTION_LENGTH);
-    const lastSpaceIndex = trimmedDescription.lastIndexOf(' ');
+  // if (children.length !== 0) {
+  //   trimmedDescription = description.substring(0, MAX_DESCRIPTION_LENGTH);
+  //   const lastSpaceIndex = trimmedDescription.lastIndexOf(' ');
   
-    if (lastSpaceIndex !== -1) {
-      trimmedDescription = trimmedDescription.substring(0, lastSpaceIndex) + '...';
-    }
+  //   if (lastSpaceIndex !== -1) {
+  //     trimmedDescription = trimmedDescription.substring(0, lastSpaceIndex) + '...';
+  //   }
 
-  }
+  // }
 
   return (
     <div className={cx(['component', className])}>
@@ -39,7 +39,7 @@ export default function CategoryEntryHeader({
             )}
             {image != undefined && <img src={image} className={cx('image')} />}
             {children.length != 0 && (
-              <p className={cx('description')}>{trimmedDescription}</p>
+              <p className={cx('description')}>{description}</p>
             )}
           </Container>
         </div>
