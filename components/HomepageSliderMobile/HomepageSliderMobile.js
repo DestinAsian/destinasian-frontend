@@ -23,7 +23,7 @@ export default function HomepageSliderMobile({ images }) {
         effect={'fade'}
         loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 25000,
           disableOnInteraction: true,
         }}
         pagination={pagination}
@@ -44,10 +44,10 @@ export default function HomepageSliderMobile({ images }) {
             {media.type === 'video' && (
               <video
                 src={media.videoSrc}
-                className="video-js vjs-default-skin"
+                className="video-content"
                 loop
                 autoPlay
-                controls
+                playsInline
               />
             )}
           </SwiperSlide>

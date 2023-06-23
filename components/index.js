@@ -17,6 +17,7 @@ export { HomepageSliderMobile } from './HomepageSliderMobile';
 export { LoadingSearchResult } from './LoadingSearchResult';
 export { LocationIcon } from './LocationIcon';
 export { Main } from './Main';
+export { ModuleAd } from './ModuleAd';
 export { NavigationMenu } from './NavigationMenu';
 export { Post } from './Post';
 export { PostInfo } from './PostInfo';

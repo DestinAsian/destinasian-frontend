@@ -4,7 +4,8 @@ import styles from './CategoryEntryHeader.module.scss'
 
 let cx = className.bind(styles)
 
-const MAX_DESCRIPTION_LENGTH = 300 // Adjust the maximum length as needed
+// Adjust the maximum length as needed
+// const MAX_DESCRIPTION_LENGTH = 300 
 
 export default function CategoryEntryHeader({
   parent,
@@ -15,6 +16,7 @@ export default function CategoryEntryHeader({
   children
 }) {
   const hasText = title
+  // cut description string
   // let trimmedDescription = '';
 
   // if (children.length !== 0) {
@@ -37,8 +39,8 @@ export default function CategoryEntryHeader({
                 {parent || null} {title}
               </Heading>
             )}
-            {image != undefined && <img src={image} className={cx('image')} />}
-            {children.length != 0 && (
+            {image && <img src={image} className={cx('image')} />}
+            {children.length !== 0 && (
               <p className={cx('description')}>{description}</p>
             )}
           </Container>

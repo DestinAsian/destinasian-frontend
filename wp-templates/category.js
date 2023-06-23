@@ -115,8 +115,8 @@ export default function Component(props) {
       {children.edges.length != 0 ? (
         <CategoryEntryHeader
           title={`${name}`}
-          image={categoryImages.categoryImages.mediaItemUrl}
-          description={description}
+          image={categoryImages.categoryImages?.mediaItemUrl || null}
+          description={description || null}
           children={children.edges}
         />
       ) : (
@@ -131,6 +131,7 @@ export default function Component(props) {
         <>
           <Container>
             {/* All posts sorted by date */}
+            <ModuleAd />
             {sortedPosts.map((post) => (
               <Post
                 key={post.id}

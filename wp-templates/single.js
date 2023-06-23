@@ -95,6 +95,7 @@ export default function Component(props) {
           <Container>
             <ContentWrapper content={content} />
           </Container>
+          <ModuleAd />
         </>
       </Main>
       {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}

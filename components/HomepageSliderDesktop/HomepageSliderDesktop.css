@@ -13,12 +13,14 @@
   width: 100vw;
   height: calc(-4.5rem + 100vh);
   object-fit: cover;
+  object-position: center;
 }
 
-.video-js {
+.video-content {
   width: 100vw;
   height: calc(-4.5rem + 100vh);
   object-fit: cover;
+  object-position: center;
 }
 
 .swiper-pagination-bullet {

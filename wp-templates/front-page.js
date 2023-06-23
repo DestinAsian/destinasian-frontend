@@ -8,11 +8,13 @@ import {
   Main,
   Container,
   ContentWrapper,
+  Post,
   NavigationMenu,
   FeaturedImage,
   SEO,
   HomepageSliderDesktop,
   HomepageSliderMobile,
+  ModuleAd,
 } from '../components'
 
 export default function Component(props) {
@@ -28,30 +30,33 @@ export default function Component(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
+  // const { posts } = props?.data?.posts ?? []
+
+  // console.log(posts)
 
   const isDesktop = useMediaQuery({ minWidth: 640 })
   const isMobile = useMediaQuery({ maxWidth: 639 })
 
-  const images = [
+  const featureWell = [
     {
-      type: 'image',
-      desktopSrc: acfHomepageSlider.desktopSlide1.mediaItemUrl,
-      mobileSrc: acfHomepageSlider.mobileSlide1.mediaItemUrl,
-      // videoSrc: acfHomepageSlider.video1.mediaItemUrl,
+      type: acfHomepageSlider.typeSlide1,
+      desktopSrc: acfHomepageSlider.desktopSlide1.mediaItemUrl || null,
+      mobileSrc: acfHomepageSlider.mobileSlide1.mediaItemUrl || null,
+      videoSrc: acfHomepageSlider.video1.mediaItemUrl || null,
       url: acfHomepageSlider.slideLink1,
     },
     {
-      type: 'video',
-      // desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl,
-      // mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl,
-      videoSrc: acfHomepageSlider.video2.mediaItemUrl,
+      type: acfHomepageSlider.typeSlide2,
+      desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl || null,
+      mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl || null,
+      // videoSrc: acfHomepageSlider.video2.mediaItemUrl || null,
       url: acfHomepageSlider.slideLink2,
     },
     {
-      type: 'image',
-      desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl,
-      mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl,
-      // videoSrc: acfHomepageSlider.video3.mediaItemUrl,
+      type: acfHomepageSlider.typeSlide3,
+      desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl || null,
+      mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl || null,
+      // videoSrc: acfHomepageSlider.video3.mediaItemUrl || null,
       url: acfHomepageSlider.slideLink3,
     },
   ]
@@ -75,17 +80,35 @@ export default function Component(props) {
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
           {isDesktop && (
             <Container>
-              <HomepageSliderDesktop images={images} />
+              <HomepageSliderDesktop images={featureWell} />
             </Container>
           )}
           {isMobile && (
             <Container>
-              <HomepageSliderMobile images={images} />
+              <HomepageSliderMobile images={featureWell} />
             </Container>
           )}
           <Container>
             <div className="my-12">
               <ContentWrapper content={content} />
+              <ModuleAd />
+              {/* {posts.map((post) => (
+                <Post
+                  key={post.node.id}
+                  title={post.node.title}
+                  excerpt={post.node.excerpt}
+                  content={post.node.content}
+                  date={post.node.date}
+                  author={post.node.author?.node.name}
+                  uri={post.node.uri}
+                  parentCategory={
+                    post.node.categories.edges[0].node.parent?.node.name
+                  }
+                  category={post.node.categories.edges[0].node.name}
+                  categoryUri={post.node.categories.edges[0].node.uri}
+                  featuredImage={post.node.featuredImage?.node}
+                />
+              ))} */}
             </div>
           </Container>
         </>
@@ -144,6 +167,35 @@ Component.query = gql`
         slideLink1
         slideLink2
         slideLink3
+        typeSlide1
+        typeSlide2
+        typeSlide3
+      }
+    }
+    posts(first: $first) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
     generalSettings {
