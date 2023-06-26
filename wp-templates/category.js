@@ -41,10 +41,36 @@ export default function Component(props) {
   } = props?.data?.nodeByUri ?? []
 
   // Load More Function
-  const [visiblePosts, setVisiblePosts] = useState(8)
+  const [visiblePosts, setVisiblePosts] = useState(4)
   const loadMorePosts = () => {
-    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 8)
+    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
   }
+
+  // load more posts when scrolled to bottom
+  const checkScrollBottom = () => {
+    const scrolledToBottom =
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight
+
+    if (scrolledToBottom) {
+      // Call the loadMorePosts function to load additional posts
+      loadMorePosts()
+    }
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      checkScrollBottom()
+    }
+
+    // Attach the event listener
+    window.addEventListener('scroll', handleScroll)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const mainPosts = []
   const childPosts = []
@@ -181,7 +207,7 @@ export default function Component(props) {
                 <Button onClick={loadMorePosts} className="gap-x-4	">
                   Load More{' '}
                   <svg
-                    className="w-8 origin-center rotate-90 h-auto	"
+                    className="h-auto w-8 origin-center rotate-90	"
                     version="1.0"
                     xmlns="http://www.w3.org/2000/svg"
                     width="512.000000pt"

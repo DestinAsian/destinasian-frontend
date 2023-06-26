@@ -4,7 +4,7 @@ import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import { useMediaQuery } from 'react-responsive'
 import {
-  Header,
+  HomepageHeader,
   Footer,
   Main,
   Container,
@@ -41,6 +41,32 @@ export default function Component(props) {
   const loadMorePosts = () => {
     setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
   }
+
+  // load more posts when scrolled to bottom
+  const checkScrollBottom = () => {
+    const scrolledToBottom =
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight
+
+    if (scrolledToBottom) {
+      // Call the loadMorePosts function to load additional posts
+      loadMorePosts()
+    }
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      checkScrollBottom()
+    }
+
+    // Attach the event listener
+    window.addEventListener('scroll', handleScroll)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const mainPosts = []
   const mainEditorialPosts = []
@@ -94,34 +120,6 @@ export default function Component(props) {
     // },
   ]
 
-  // load more posts when scrolled to bottom
-  const checkScrollBottom = () => {
-    const scrolledToBottom =
-      window.scrollY + window.innerHeight >=
-      document.documentElement.scrollHeight;
-    
-    if (scrolledToBottom) {
-      // Call the loadMorePosts function to load additional posts
-      loadMorePosts();
-    }
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      checkScrollBottom();
-    };
-
-    // Attach the event listener
-    window.addEventListener('scroll', handleScroll);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  
-
   return (
     <>
       <SEO
@@ -129,7 +127,7 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
-      <Header
+      <HomepageHeader
         title={siteTitle}
         description={siteDescription}
         primaryMenuItems={primaryMenu}
@@ -153,7 +151,7 @@ export default function Component(props) {
             <div className="snap-start">
               <FeatureWell featureWell={featureWell} />
             </div>
-            <div className="pt-16 snap-start">
+            <div className="snap-start pt-16">
               {/* <ContentWrapper content={content} /> */}
               {/* All posts sorted by mainPosts & date */}
               {allPosts.length !== 0 &&
@@ -222,7 +220,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${Header.fragments.entry}
+  ${HomepageHeader.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum

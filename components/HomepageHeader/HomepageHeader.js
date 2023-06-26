@@ -9,8 +9,8 @@ import {
   Button,
   SearchInput,
   SearchResults,
-} from '../../components'
-import styles from './Header.module.scss'
+} from '..'
+import styles from './HomepageHeader.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { GetSearchResults } from '../../queries/GetSearchResults'
@@ -18,7 +18,7 @@ import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
-export default function Header({
+export default function HomepageHeader({
   primaryMenuItems,
   secondaryMenuItems,
   thirdMenuItems,
@@ -67,7 +67,7 @@ export default function Header({
   }, [])
 
   return (
-    <header className={cx('component', { sticky: isScrolled})}>
+    <header className={cx('component', { sticky: isScrolled, white: isNavShown })}>
       <SkipNavigationLink />
       {/* Responsive header */}
       {isDesktop || (!isDesktop && !isNavShown) ? (
@@ -285,7 +285,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
   )
 }
 
-Header.fragments = {
+HomepageHeader.fragments = {
   entry: gql`
     fragment SearchQueryFragment on RootQueryToCategoryConnection {
       nodes {

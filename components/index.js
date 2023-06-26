@@ -13,6 +13,7 @@ export { FormatDate } from './FormatDate';
 export { Header } from './Header';
 export { Heading } from './Heading';
 export { Hero } from './Hero';
+export { HomepageHeader } from './HomepageHeader';
 export { HomepageSliderDesktop } from './HomepageSliderDesktop';
 export { HomepageSliderMobile } from './HomepageSliderMobile';
 export { LoadingSearchResult } from './LoadingSearchResult';
