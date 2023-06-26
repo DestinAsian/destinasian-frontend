@@ -77,7 +77,7 @@ export default function SingleEditorial(props) {
               date={date}
             />
             <ContentWrapperEditorial content={content} images={images} />
-            <ModuleAd />
+            {/* <ModuleAd /> */}
           </Container>
         </>
       </Main>

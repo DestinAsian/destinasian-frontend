@@ -15,8 +15,4 @@
   .swiper-custom-button-prev {
     display: none;
   }
-
-  .video-content {
-    height: calc(-3.5rem + 100vh);
-  }  
 }

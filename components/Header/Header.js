@@ -67,7 +67,7 @@ export default function Header({
   }, [])
 
   return (
-    <header className={cx('components', { sticky: isScrolled })}>
+    <header className={cx('component', { sticky: isScrolled, white: isNavShown })}>
       <SkipNavigationLink />
       {/* Responsive header */}
       {isDesktop || (!isDesktop && !isNavShown) ? (

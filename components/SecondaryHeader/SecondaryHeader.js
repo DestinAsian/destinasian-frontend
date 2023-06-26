@@ -36,7 +36,7 @@ export default function SecondaryHeader({
   useEffect(() => {
     function handleScroll() {
       const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 0 && currentScrollY < prevScrollY)
+      setIsScrolled(currentScrollY > 30 && currentScrollY < prevScrollY)
       setPrevScrollY(currentScrollY)
     }
 

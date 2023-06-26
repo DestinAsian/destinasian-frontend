@@ -16,13 +16,6 @@
   object-position: center;
 }
 
-.video-content {
-  width: 100vw;
-  height: calc(-4.5rem + 100vh);
-  object-fit: cover;
-  object-position: center;
-}
-
 .swiper-pagination-bullet {
   width: 14px;
   height: 14px;

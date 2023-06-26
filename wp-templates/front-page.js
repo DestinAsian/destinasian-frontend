@@ -1,3 +1,4 @@
+import React, { useState, useRef } from 'react'
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
@@ -15,6 +16,8 @@ import {
   HomepageSliderDesktop,
   HomepageSliderMobile,
   ModuleAd,
+  FeatureWell,
+  Button,
 } from '../components'
 
 export default function Component(props) {
@@ -30,35 +33,65 @@ export default function Component(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
-  // const { posts } = props?.data?.posts ?? []
+  const posts = props?.data?.posts ?? []
+  const editorials = props?.data?.editorials ?? []
 
-  // console.log(posts)
+  // Load More Function
+  const [visiblePosts, setVisiblePosts] = useState(4)
+  const loadMorePosts = () => {
+    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
+  }
+
+  const mainPosts = []
+  const mainEditorialPosts = []
+
+  // loop through all the main categories posts
+  posts.edges.forEach((post) => {
+    mainPosts.push(post.node)
+  })
+
+  // loop through all the main categories and their posts
+  editorials.edges.forEach((post) => {
+    mainEditorialPosts.push(post.node)
+  })
+
+  // sort posts by date
+  const sortPostsByDate = (a, b) => {
+    const dateA = new Date(a.date)
+    const dateB = new Date(b.date)
+    return dateB - dateA // Sort in descending order
+  }
+
+  // define mainCatPostCards
+  const mainCatPosts = [
+    ...(mainPosts != null ? mainPosts : []),
+    ...(mainEditorialPosts != null ? mainEditorialPosts : []),
+  ]
+
+  // sortByDate mainCat & childCat Posts
+  const allPosts = mainCatPosts.sort(sortPostsByDate)
 
   const isDesktop = useMediaQuery({ minWidth: 640 })
   const isMobile = useMediaQuery({ maxWidth: 639 })
 
   const featureWell = [
     {
-      type: acfHomepageSlider.typeSlide1,
-      desktopSrc: acfHomepageSlider.desktopSlide1.mediaItemUrl || null,
-      mobileSrc: acfHomepageSlider.mobileSlide1.mediaItemUrl || null,
       videoSrc: acfHomepageSlider.video1.mediaItemUrl || null,
-      url: acfHomepageSlider.slideLink1,
     },
-    {
-      type: acfHomepageSlider.typeSlide2,
-      desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl || null,
-      mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl || null,
-      // videoSrc: acfHomepageSlider.video2.mediaItemUrl || null,
-      url: acfHomepageSlider.slideLink2,
-    },
-    {
-      type: acfHomepageSlider.typeSlide3,
-      desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl || null,
-      mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl || null,
-      // videoSrc: acfHomepageSlider.video3.mediaItemUrl || null,
-      url: acfHomepageSlider.slideLink3,
-    },
+    // {
+    //   type: acfHomepageSlider.typeSlide2,
+    //   desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl || null,
+    //   mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl || null,
+    //   // videoSrc: acfHomepageSlider.video2.mediaItemUrl || null,
+    //   url: acfHomepageSlider.slideLink2,
+    // },
+    // {
+    //   type: acfHomepageSlider.typeSlide3,
+    //   desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl || null,
+    //   mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl || null,
+    //   // videoSrc: acfHomepageSlider.video3.mediaItemUrl || null,
+    //   url: acfHomepageSlider.slideLink3,
+    // },
   ]
 
   return (
@@ -78,7 +111,7 @@ export default function Component(props) {
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
-          {isDesktop && (
+          {/* {isDesktop && (
             <Container>
               <HomepageSliderDesktop images={featureWell} />
             </Container>
@@ -87,30 +120,69 @@ export default function Component(props) {
             <Container>
               <HomepageSliderMobile images={featureWell} />
             </Container>
-          )}
-          <Container>
-            <div className="my-12">
-              <ContentWrapper content={content} />
-              <ModuleAd />
-              {/* {posts.map((post) => (
-                <Post
-                  key={post.node.id}
-                  title={post.node.title}
-                  excerpt={post.node.excerpt}
-                  content={post.node.content}
-                  date={post.node.date}
-                  author={post.node.author?.node.name}
-                  uri={post.node.uri}
-                  parentCategory={
-                    post.node.categories.edges[0].node.parent?.node.name
-                  }
-                  category={post.node.categories.edges[0].node.name}
-                  categoryUri={post.node.categories.edges[0].node.uri}
-                  featuredImage={post.node.featuredImage?.node}
-                />
-              ))} */}
+          )} */}
+          <div className="h-screen snap-y snap-proximity overflow-scroll">
+            <div className="flex h-screen w-screen snap-start items-center justify-center">
+              <FeatureWell featureWell={featureWell} />
             </div>
-          </Container>
+            <div className="pt-20 h-screen  w-screen snap-start items-center justify-center">
+              {/* <ContentWrapper content={content} /> */}
+              {/* All posts sorted by mainPosts & date */}
+              {allPosts.length !== 0 &&
+                allPosts.slice(0, visiblePosts).map((post, index) => (
+                  <React.Fragment key={post.id}>
+                    <Post
+                      title={post.title}
+                      excerpt={post.excerpt}
+                      content={post.content}
+                      date={post.date}
+                      author={post.author?.node.name}
+                      uri={post.uri}
+                      parentCategory={
+                        post.categories.edges[0].node.parent?.node.name
+                      }
+                      category={post.categories.edges[0].node.name}
+                      categoryUri={post.categories.edges[0].node.uri}
+                      featuredImage={post.featuredImage?.node}
+                    />
+                    {index === 0 && <ModuleAd moduleAd1 />}
+                    {index === 2 && <ModuleAd moduleAd2 />}
+                    {index === 4 && <ModuleAd moduleAd3 />}
+                    {index === 6 && <ModuleAd moduleAd4 />}
+                  </React.Fragment>
+                ))}
+              {visiblePosts < allPosts.length && (
+                <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+                  <Button onClick={loadMorePosts} className="gap-x-4	">
+                    Load More{' '}
+                    <svg
+                      className="h-auto w-8 origin-center rotate-90	"
+                      version="1.0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="512.000000pt"
+                      height="512.000000pt"
+                      viewBox="0 0 512.000000 512.000000"
+                      preserveAspectRatio="xMidYMid meet"
+                    >
+                      <g
+                        transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                        fill="#000000"
+                        stroke="none"
+                      >
+                        <path
+                          d="M1387 5110 c-243 -62 -373 -329 -272 -560 27 -62 77 -114 989 -1027
+l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
+-289 39 -117 106 -191 220 -245 59 -28 74 -31 160 -30 74 0 108 5 155 23 58
+22 106 70 1198 1160 1304 1302 1202 1185 1202 1371 0 186 102 69 -1202 1371
+-1102 1101 -1140 1137 -1198 1159 -67 25 -189 34 -248 20z"
+                        />
+                      </g>
+                    </svg>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
         </>
       </Main>
       {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
@@ -131,6 +203,8 @@ Component.query = gql`
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
+    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
+    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -172,7 +246,33 @@ Component.query = gql`
         typeSlide3
       }
     }
-    posts(first: $first) {
+    posts(first: $first, where: $where) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    editorials(first: $first, where: $where1) {
       edges {
         node {
           id

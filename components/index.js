@@ -7,6 +7,7 @@ export { ContentWrapper } from './ContentWrapper';
 export { ContentWrapperEditorial } from './ContentWrapperEditorial';
 export { EntryHeader } from './EntryHeader';
 export { FeaturedImage } from './FeaturedImage';
+export { FeatureWell } from './FeatureWell';
 export { Footer } from './Footer';
 export { FormatDate } from './FormatDate';
 export { Header } from './Header';

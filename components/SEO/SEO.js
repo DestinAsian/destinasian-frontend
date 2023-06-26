@@ -60,7 +60,7 @@ export default function SEO({ title, description, imageUrl, url }) {
           href="https://cloud.typography.com/7429004/7933832/css/fonts.css"
         />
 
-        <script
+        {/* <script
           async
           src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
         ></script>
@@ -79,7 +79,7 @@ export default function SEO({ title, description, imageUrl, url }) {
               });
             `,
           }}
-        ></script>
+        ></script> */}
       </Head>
     </>
   )
