@@ -87,10 +87,11 @@
 }
 
 .border-bottom {
-  margin: 0 2vw;
+  width: 95%;
+  margin: 0 auto;
   border-bottom: 1px solid var(--wpe--color--grey);
 
   @media (min-width: $breakpoint-small) {
-    margin: 0;
+    width: 100%;
   }
 }

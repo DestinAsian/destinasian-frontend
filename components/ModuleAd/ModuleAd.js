@@ -8,7 +8,12 @@ import banner4 from '../../assets/images/Banner Blank_4.jpg'
 
 let cx = classNames.bind(styles)
 
-export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 }) {
+export default function ModuleAd({
+  moduleAd1,
+  moduleAd2,
+  moduleAd3,
+  moduleAd4,
+}) {
   const banners = [
     {
       src: banner1.src,
@@ -26,7 +31,6 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
 
   return (
     <div className={cx('component')}>
-      {/* Google Ad Manager Module Ad 1 */}
       {moduleAd1 && (
         <div className={cx('ad-container')}>
           <img className={cx('ad-content')} src={banners[0].src}></img>
@@ -47,6 +51,9 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
           <img className={cx('ad-content')} src={banners[3].src}></img>
         </div>
       )}
+      <div className={cx('border-bottom')}></div>
+      
+      {/* Google Ad Manager Module Ad 1 */}
       {/* <div className={cx('ad-container')}>
         <div
           className={cx('ad-content')}
@@ -60,15 +67,8 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
           }}
         />
       </div> */}
-      {/* )} */}
-      {/* {banners?.map((banner, index) => (
-        <div key={index} className={cx('ad-container')}>
-          <img className={cx('ad-content')} src={banner.src}></img>
-        </div>
-      ))} */}
 
       {/* Google Ad Manager Module Ad 2 */}
-      {/* {moduleAd2 && ( */}
       {/* <div className={cx('ad-container')}>
         <div
           className={cx('ad-content')}
@@ -82,10 +82,8 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
           }}
         />
       </div> */}
-      {/* )} */}
 
       {/* Google Ad Manager Module Ad 3 */}
-      {/* {moduleAd3 && ( */}
       {/* <div className={cx('ad-container')}>
         <div
           className={cx('ad-content')}
@@ -99,10 +97,8 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
           }}
         />
       </div> */}
-      {/* )} */}
 
       {/* Google Ad Manager Module Ad 4 */}
-      {/* {moduleAd4 && ( */}
       {/* <div className={cx('ad-container')}>
         <div
           className={cx('ad-content')}
@@ -116,7 +112,6 @@ export default function ModuleAd({ moduleAd1, moduleAd2, moduleAd3, moduleAd4 })
           }}
         />
       </div> */}
-      {/* )} */}
     </div>
   )
 }

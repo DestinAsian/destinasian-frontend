@@ -102,23 +102,34 @@ export default function Component(props) {
 
   const featureWell = [
     {
-      videoSrc: acfHomepageSlider.video1.mediaItemUrl || null,
+      type: acfHomepageSlider?.typeSlide1,
+      videoSrc: acfHomepageSlider?.video1?.mediaItemUrl,
+      desktopSrc: acfHomepageSlider?.desktopSlide2?.mediaItemUrl,
+      mobileSrc: acfHomepageSlider?.mobileSlide2?.mediaItemUrl,
+      url: acfHomepageSlider?.slideLink1,
     },
-    // {
-    //   type: acfHomepageSlider.typeSlide2,
-    //   desktopSrc: acfHomepageSlider.desktopSlide2.mediaItemUrl || null,
-    //   mobileSrc: acfHomepageSlider.mobileSlide2.mediaItemUrl || null,
-    //   // videoSrc: acfHomepageSlider.video2.mediaItemUrl || null,
-    //   url: acfHomepageSlider.slideLink2,
-    // },
-    // {
-    //   type: acfHomepageSlider.typeSlide3,
-    //   desktopSrc: acfHomepageSlider.desktopSlide3.mediaItemUrl || null,
-    //   mobileSrc: acfHomepageSlider.mobileSlide3.mediaItemUrl || null,
-    //   // videoSrc: acfHomepageSlider.video3.mediaItemUrl || null,
-    //   url: acfHomepageSlider.slideLink3,
-    // },
+    {
+      type: acfHomepageSlider?.typeSlide2,
+      desktopSrc: acfHomepageSlider?.desktopSlide2?.mediaItemUrl,
+      mobileSrc: acfHomepageSlider?.mobileSlide2?.mediaItemUrl,
+      videoSrc: acfHomepageSlider?.video2?.mediaItemUrl,
+      url: acfHomepageSlider?.slideLink2,
+    },
+    {
+      type: acfHomepageSlider?.typeSlide3,
+      desktopSrc: acfHomepageSlider?.desktopSlide3?.mediaItemUrl,
+      mobileSrc: acfHomepageSlider?.mobileSlide3?.mediaItemUrl,
+      videoSrc: acfHomepageSlider?.video3?.mediaItemUrl,
+      url: acfHomepageSlider?.slideLink3,
+    },
   ]
+
+  const [currentFeatureWell, setCurrentFeatureWell] = useState(null)
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * featureWell.length)
+    setCurrentFeatureWell(featureWell[randomIndex])
+  }, [])
 
   return (
     <>
@@ -137,19 +148,29 @@ export default function Component(props) {
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
-          {/* {isDesktop && (
-            <Container>
-              <HomepageSliderDesktop images={featureWell} />
-            </Container>
-          )}
-          {isMobile && (
-            <Container>
-              <HomepageSliderMobile images={featureWell} />
-            </Container>
-          )} */}
+
           <div className="snap-y snap-mandatory">
             <div className="snap-start">
-              <FeatureWell featureWell={featureWell} />
+              {currentFeatureWell && (
+                <Container>
+                  {isDesktop && (
+                    <FeatureWell
+                      type={currentFeatureWell.type}
+                      videoSrc={currentFeatureWell.videoSrc}
+                      desktopSrc={currentFeatureWell.desktopSrc}
+                      url={currentFeatureWell.url}
+                    />
+                  )}
+                  {isMobile && (
+                    <FeatureWell
+                      type={currentFeatureWell.type}
+                      videoSrc={currentFeatureWell.videoSrc}
+                      mobileSrc={currentFeatureWell.mobileSrc}
+                      url={currentFeatureWell.url}
+                    />
+                  )}
+                </Container>
+              )}
             </div>
             <div className="snap-start pt-16">
               {/* <ContentWrapper content={content} /> */}

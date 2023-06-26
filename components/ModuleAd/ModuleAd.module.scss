@@ -24,3 +24,13 @@
   // width: 300px;
   width: 100%;
 }
+
+.border-bottom {
+  width: 95%;
+  margin: 0 auto 2rem;
+  border-bottom: 1px solid var(--wpe--color--grey);
+
+  @media (min-width: $breakpoint-small) {
+    width: 100%;
+  }
+}

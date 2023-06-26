@@ -1,19 +1,40 @@
 import React from 'react'
 import className from 'classnames/bind'
 import styles from './FeatureWell.module.scss'
-import Link from 'next/link'
-import { Button } from '/components'
+import { useMediaQuery } from 'react-responsive'
 
 let cx = className.bind(styles)
 
-export default function FeatureWell({ featureWell }) {
+export default function FeatureWell({
+  type,
+  videoSrc,
+  desktopSrc,
+  mobileSrc,
+  url,
+}) {
+  const isDesktop = useMediaQuery({ minWidth: 640 })
+  const isMobile = useMediaQuery({ maxWidth: 639 })
+
   return (
     <>
-      {featureWell?.map((media, index) => (
-        <div className={cx('component')} key={index}>
-          <video src={media.videoSrc} loop autoPlay playsInline muted />
-        </div>
-      ))}
+      <div className={cx('component')}>
+        {type === 'image' && (
+          <a href={url}>
+            {isDesktop && <img src={desktopSrc} />}
+            {isMobile && <img src={mobileSrc} />}
+          </a>
+        )}
+        {type === 'video' && (
+          <video
+            src={videoSrc}
+            className="video-content"
+            loop
+            autoPlay
+            playsInline
+            muted
+          />
+        )}
+      </div>
     </>
   )
 }

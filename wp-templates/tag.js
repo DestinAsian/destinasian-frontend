@@ -18,7 +18,7 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { name, posts } = props.data.nodeByUri;
+  const { name, posts } = props?.data?.nodeByUri;
 
   return (
     <>
