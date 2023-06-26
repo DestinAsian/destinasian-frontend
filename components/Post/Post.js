@@ -60,6 +60,7 @@ export default function Post({
           dangerouslySetInnerHTML={{ __html: trimmedExcerpt }}
         />
       </div>
+      <div className={cx('border-bottom')}></div>
     </article>
   )
 }

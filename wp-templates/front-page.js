@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
@@ -94,6 +94,34 @@ export default function Component(props) {
     // },
   ]
 
+  // load more posts when scrolled to bottom
+  const checkScrollBottom = () => {
+    const scrolledToBottom =
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight;
+    
+    if (scrolledToBottom) {
+      // Call the loadMorePosts function to load additional posts
+      loadMorePosts();
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      checkScrollBottom();
+    };
+
+    // Attach the event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  
+
   return (
     <>
       <SEO
@@ -121,11 +149,11 @@ export default function Component(props) {
               <HomepageSliderMobile images={featureWell} />
             </Container>
           )} */}
-          <div className="h-screen snap-y snap-proximity overflow-scroll">
-            <div className="flex h-screen w-screen snap-start items-center justify-center">
+          <div className="snap-y snap-mandatory">
+            <div className="snap-start">
               <FeatureWell featureWell={featureWell} />
             </div>
-            <div className="pt-20 h-screen  w-screen snap-start items-center justify-center">
+            <div className="pt-16 snap-start">
               {/* <ContentWrapper content={content} /> */}
               {/* All posts sorted by mainPosts & date */}
               {allPosts.length !== 0 &&
