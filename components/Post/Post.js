@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import classNames from 'classnames/bind'
-import { FeaturedImage } from '../FeaturedImage'
+import { FeaturedImage, CategoryIcon, LocationIcon } from '..'
 import styles from './Post.module.scss'
 
 let cx = classNames.bind(styles)
@@ -15,12 +15,17 @@ export default function Post({
   categoryUri,
   uri,
   featuredImage,
+  categoryLabel,
+  chooseYourCategory,
+  locationLabel,
+  locationUrl,
+  locationValidation,
 }) {
-  let trimmedExcerpt = excerpt.substring(0, MAX_EXCERPT_LENGTH)
-  const lastSpaceIndex = trimmedExcerpt.lastIndexOf(' ')
+  let trimmedExcerpt = excerpt?.substring(0, MAX_EXCERPT_LENGTH)
+  const lastSpaceIndex = trimmedExcerpt?.lastIndexOf(' ')
 
   if (lastSpaceIndex !== -1) {
-    trimmedExcerpt = trimmedExcerpt.substring(0, lastSpaceIndex) + '...'
+    trimmedExcerpt = trimmedExcerpt?.substring(0, lastSpaceIndex) + '...'
   }
 
   return (
@@ -46,6 +51,25 @@ export default function Post({
             </h5>
           </a>
         </Link>
+      </div>
+      <div className={cx('content-wrapper')}>
+        {(chooseYourCategory || locationValidation) && (
+          <div className={cx('icon-wrapper')}>
+            {chooseYourCategory && (
+              <CategoryIcon
+                chooseYourCategory={chooseYourCategory}
+                categoryLabel={categoryLabel}
+              />
+            )}
+            {locationValidation && (
+              <LocationIcon
+                locationValidation={locationValidation}
+                locationLabel={locationLabel}
+                locationUrl={locationUrl}
+              />
+            )}
+          </div>
+        )}
       </div>
       <div className={cx('content-wrapper')}>
         <Link href={uri}>

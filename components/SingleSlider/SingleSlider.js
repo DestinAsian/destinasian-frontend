@@ -12,6 +12,10 @@ import 'swiper/css/navigation'
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper'
 
 export default function SingleSlider({ images }) {
+  const pagination = {
+    clickable: true,
+  }
+
   return (
     <>
       <Swiper
@@ -19,12 +23,10 @@ export default function SingleSlider({ images }) {
         effect={'fade'}
         loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 25000,
           disableOnInteraction: true,
         }}
-        pagination={{
-          type: 'fraction',
-        }}
+        pagination={pagination}
         navigation={{
           prevEl: '.swiper-custom-button-prev',
           nextEl: '.swiper-custom-button-next',

@@ -38,6 +38,9 @@ export default function Component(props) {
     editorials,
     children,
     parent,
+    acfCategoryIcon,
+    acfLocationIcon,
+    z,
   } = props?.data?.nodeByUri ?? []
 
   // Load More Function
@@ -194,6 +197,11 @@ export default function Component(props) {
                     category={post.categories.edges[0].node.name}
                     categoryUri={post.categories.edges[0].node.uri}
                     featuredImage={post.featuredImage?.node}
+                    chooseYourCategory={post.acfCategoryIcon?.chooseYourCategory}
+                    categoryLabel={post.acfCategoryIcon?.categoryLabel}
+                    locationValidation={post.acfLocationIcon?.fieldGroupName}
+                    locationLabel={post.acfLocationIcon?.locationLabel}
+                    locationUrl={post.acfLocationIcon?.locationUrl}
                   />
                   {/* Add moduleAd in between PostCards */}
                   {index === 0 && <ModuleAd moduleAd1 />}
@@ -290,6 +298,15 @@ Component.query = gql`
                   }
                 }
               }
+              acfCategoryIcon {
+                categoryLabel
+                chooseYourCategory
+              }
+              acfLocationIcon {
+                fieldGroupName
+                locationLabel
+                locationUrl
+              }
             }
           }
         }
@@ -360,6 +377,15 @@ Component.query = gql`
                         }
                       }
                     }
+                    acfCategoryIcon {
+                      categoryLabel
+                      chooseYourCategory
+                    }
+                    acfLocationIcon {
+                      fieldGroupName
+                      locationLabel
+                      locationUrl
+                    }
                   }
                 }
               }
@@ -415,6 +441,15 @@ Component.query = gql`
                                 }
                               }
                             }
+                          }
+                          acfCategoryIcon {
+                            categoryLabel
+                            chooseYourCategory
+                          }
+                          acfLocationIcon {
+                            fieldGroupName
+                            locationLabel
+                            locationUrl
                           }
                         }
                       }

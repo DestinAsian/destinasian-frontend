@@ -1,6 +1,6 @@
 import * as MENUS from '../constants/menus'
 import { gql, useQuery } from '@apollo/client'
-import { getNextStaticProps } from '@faustwp/core'
+import { getNextStaticProps, getWordPressProps } from '@faustwp/core'
 import {
   Button,
   Header,
@@ -17,17 +17,17 @@ import { GetSearchResults } from '../queries/GetSearchResults'
 import styles from '../styles/pages/_Search.module.scss'
 import appConfig from '../app.config'
 
-export default function Page() {
+export default function Page(props) {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const { data: pageData } = useQuery(Page.query, {
+  const { data } = useQuery(Page.query, {
     variables: Page.variables(),
   })
 
   const { title: siteTitle, description: siteDescription } =
-    pageData.generalSettings
-  const primaryMenu = pageData.headerMenuItems.nodes ?? []
-  const categories = pageData.categories.nodes
+    data?.generalSettings
+  const primaryMenu = data?.headerMenuItems.nodes ?? []
+  const categories = data?.categories.nodes
 
   const {
     data: searchResultsData,
@@ -147,5 +147,9 @@ Page.query = gql`
 `
 
 export function getStaticProps(ctx) {
-  return getNextStaticProps(ctx, { Page })
+  return getNextStaticProps(ctx, {
+    Page,
+    props: { title: 'Search Pages' },
+    revalidate: 1,
+  })
 }

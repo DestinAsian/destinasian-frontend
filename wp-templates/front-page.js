@@ -10,6 +10,7 @@ import {
   Container,
   ContentWrapper,
   Post,
+  SingleAdvertorialPost,
   NavigationMenu,
   FeaturedImage,
   SEO,
@@ -35,6 +36,7 @@ export default function Component(props) {
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
+  const advertorials = props?.data?.advertorials ?? []
 
   // Load More Function
   const [visiblePosts, setVisiblePosts] = useState(4)
@@ -70,6 +72,7 @@ export default function Component(props) {
 
   const mainPosts = []
   const mainEditorialPosts = []
+  const mainAdvertorialPosts = []
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
@@ -79,6 +82,11 @@ export default function Component(props) {
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
     mainEditorialPosts.push(post.node)
+  })
+
+  // loop through all the main categories and their posts
+  advertorials.edges.forEach((post) => {
+    mainAdvertorialPosts.push(post.node)
   })
 
   // sort posts by date
@@ -92,6 +100,10 @@ export default function Component(props) {
   const mainCatPosts = [
     ...(mainPosts != null ? mainPosts : []),
     ...(mainEditorialPosts != null ? mainEditorialPosts : []),
+  ]
+
+  const advertorialPosts = [
+    ...(mainAdvertorialPosts != null ? mainAdvertorialPosts : []),
   ]
 
   // sortByDate mainCat & childCat Posts
@@ -127,8 +139,12 @@ export default function Component(props) {
   const [currentFeatureWell, setCurrentFeatureWell] = useState(null)
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * featureWell.length)
-    setCurrentFeatureWell(featureWell[randomIndex])
+    const filteredFeatureWell = featureWell.filter((item) => item.type !== null)
+
+    if (filteredFeatureWell.length > 0) {
+      const randomIndex = Math.floor(Math.random() * filteredFeatureWell.length)
+      setCurrentFeatureWell(filteredFeatureWell[randomIndex])
+    }
   }, [])
 
   return (
@@ -192,7 +208,18 @@ export default function Component(props) {
                       categoryUri={post.categories.edges[0].node.uri}
                       featuredImage={post.featuredImage?.node}
                     />
-                    {index === 0 && <ModuleAd moduleAd1 />}
+                    {index === 0 &&
+                      advertorialPosts.length !== 0 &&
+                      advertorialPosts.map((post) => (
+                        <React.Fragment key={post.id}>
+                          <SingleAdvertorialPost
+                            title={post.title}
+                            content={post.content}
+                            uri={post.uri}
+                            featuredImage={post.featuredImage?.node}
+                          />
+                        </React.Fragment>
+                      ))}
                     {index === 2 && <ModuleAd moduleAd2 />}
                     {index === 4 && <ModuleAd moduleAd3 />}
                     {index === 6 && <ModuleAd moduleAd4 />}
@@ -252,6 +279,7 @@ Component.query = gql`
     $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
+    $where2: RootQueryToAdvertorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -342,6 +370,17 @@ Component.query = gql`
               }
             }
           }
+        }
+      }
+    }
+    advertorials(first: $first, where: $where2) {
+      edges {
+        node {
+          id
+          title
+          content
+          uri
+          ...FeaturedImageFragment
         }
       }
     }

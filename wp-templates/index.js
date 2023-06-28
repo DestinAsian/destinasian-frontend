@@ -4,6 +4,7 @@ import frontPage from './front-page';
 import page from './page';
 import single from './single';
 import singleEditorial from './single-editorial';
+import singleAdvertorial from './single-advertorial';
 
 export default {
   category,
@@ -12,4 +13,5 @@ export default {
   page,
   single,
   'single-editorial': singleEditorial,
+  'single-advertorial': singleAdvertorial,
 };

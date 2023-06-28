@@ -6,7 +6,7 @@ import {
   Footer,
   Main,
   Container,
-  ContentWrapper,
+  ContentWrapperPage,
   EntryHeader,
   NavigationMenu,
   FeaturedImage,
@@ -45,7 +45,7 @@ export default function Component(props) {
         <>
           <EntryHeader title={title} image={featuredImage?.node} />
           <Container>
-            <ContentWrapper content={content} />
+            <ContentWrapperPage content={content} />
           </Container>
         </>
       </Main>

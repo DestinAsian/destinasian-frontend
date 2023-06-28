@@ -13,11 +13,12 @@
 }
 
 .content-wrapper {
-  padding: 0.1rem 4vw;
+  padding: 2rem 4vw;
   height: fit-content;
+  background-color: var(--wpe--color--black);
 
   @media (min-width: $breakpoint-small) {
-    padding: 0.2rem 2vw;
+    padding: 2rem 2vw;
   }
 }
 
@@ -38,51 +39,41 @@
   }
 }
 
-.icon-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
+.sponsored {
+  color: var(--wpe--color--white);
+  font-size: 0.8rem;
   font-family: 'Ringside Regular A', 'Ringside Regular B';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1.6;
+  text-transform: uppercase;
+  text-align: center;
 
-  .category-label {
+  @media (min-width: $breakpoint-extra-small) {
     font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
   }
 
-  .location-label {
-    font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
-  }
-
-  .icon {
-    svg {
-      width: 1.8rem;
-      height: 1.8rem;
-    }
+  @media (min-width: $breakpoint-medium) {
+    font-size: 1.4rem;
   }
 }
 
 .title {
-  font-family: 'Unit Slab Pro Black';
-  font-size: 1.65rem;
+  font-family: 'EB Garamond';
+  font-weight: 700;
+  font-size: 2rem;
   line-height: 1.2;
+  letter-spacing: 0.07rem;
+  text-transform: capitalize;
+  color: var(--wpe--color--white);
+  text-align: center;
 
   @media (min-width: $breakpoint-extra-small) {
-    font-size: 1.7rem;
+    font-size: 2.3rem;
   }
 
   @media (min-width: $breakpoint-medium) {
-    font-size: 2.4rem;
+    font-size: 3rem;
   }
 }
 
@@ -97,7 +88,6 @@
 .featuredImage {
   min-width: 100%;
   margin: 0;
-  margin-bottom: 1rem;
 
   span, img {
     min-width: 100%;
@@ -123,6 +113,7 @@
 .border-bottom {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 2rem;
   border-bottom: 1px solid var(--wpe--color--grey);
 
   @media (min-width: $breakpoint-small) {
