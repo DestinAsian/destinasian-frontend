@@ -22,10 +22,6 @@
     }
   }
 
-  br {
-    display: none;
-  }
-
   :global {
     // Scope WordPress block styles within ContentWrapper.
     @import 'styles/blocks';
