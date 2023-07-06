@@ -38,40 +38,6 @@
   }
 }
 
-.icon-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
-  font-family: 'Ringside Regular A', 'Ringside Regular B';
-  font-style: normal;
-  font-weight: 500;
-
-  .category-label {
-    font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
-  }
-
-  .location-label {
-    font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
-  }
-
-  .icon {
-    svg {
-      width: 1.8rem;
-      height: 1.8rem;
-    }
-  }
-}
-
 .title {
   font-family: 'Unit Slab Pro Black';
   font-size: 1.65rem;
@@ -109,7 +75,7 @@
   font-style: normal;
   font-weight: 500;
   font-size: 0.9rem;
-  padding: 0 0 1rem;
+  padding: 0 0 0.25rem;
 
   @media (min-width: $breakpoint-extra-small) {
     font-size: 1.3rem;
@@ -117,6 +83,41 @@
 
   a {
     display: none;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  font-family: 'Ringside Regular A', 'Ringside Regular B';
+  font-style: normal;
+  font-weight: 500;
+  padding-bottom: 0.75rem;
+
+  .category-label {
+    font-size: 1rem;
+    line-height: 1.2;
+
+    @media (min-width: $breakpoint-medium) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .location-label {
+    font-size: 1rem;
+    line-height: 1.2;
+
+    @media (min-width: $breakpoint-medium) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .icon {
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
   }
 }
 

@@ -199,16 +199,23 @@ export default function Component(props) {
                       excerpt={post.excerpt}
                       content={post.content}
                       date={post.date}
-                      author={post.author?.node.name}
+                      author={post.author?.node?.name}
                       uri={post.uri}
                       parentCategory={
-                        post.categories.edges[0].node.parent?.node.name
+                        post.categories?.edges[0]?.node?.parent?.node?.name
                       }
-                      category={post.categories.edges[0].node.name}
-                      categoryUri={post.categories.edges[0].node.uri}
+                      category={post.categories?.edges[0]?.node?.name}
+                      categoryUri={post.categories?.edges[0]?.node?.uri}
                       featuredImage={post.featuredImage?.node}
+                      chooseYourCategory={
+                        post.acfCategoryIcon?.chooseYourCategory
+                      }
+                      categoryLabel={post.acfCategoryIcon?.categoryLabel}
+                      locationValidation={post.acfLocationIcon?.fieldGroupName}
+                      locationLabel={post.acfLocationIcon?.locationLabel}
+                      locationUrl={post.acfLocationIcon?.locationUrl}
                     />
-                    {index === 0 &&
+                    {index === 1 &&
                       advertorialPosts.length !== 0 &&
                       advertorialPosts.map((post) => (
                         <React.Fragment key={post.id}>
@@ -220,9 +227,9 @@ export default function Component(props) {
                           />
                         </React.Fragment>
                       ))}
-                    {index === 2 && <ModuleAd moduleAd2 />}
-                    {index === 4 && <ModuleAd moduleAd3 />}
-                    {index === 6 && <ModuleAd moduleAd4 />}
+                    {index === 5 && <ModuleAd moduleAd2 />}
+                    {index === 9 && <ModuleAd moduleAd3 />}
+                    {index === 13 && <ModuleAd moduleAd4 />}
                   </React.Fragment>
                 ))}
               {visiblePosts < allPosts.length && (
@@ -343,6 +350,15 @@ Component.query = gql`
                 }
               }
             }
+          }
+          acfCategoryIcon {
+            categoryLabel
+            chooseYourCategory
+          }
+          acfLocationIcon {
+            fieldGroupName
+            locationLabel
+            locationUrl
           }
         }
       }

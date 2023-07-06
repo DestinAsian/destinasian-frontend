@@ -32,15 +32,15 @@ export default function Component(props) {
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const {
     name,
+    uri,
     description,
     categoryImages,
     posts,
     editorials,
     children,
     parent,
-    acfCategoryIcon,
-    acfLocationIcon,
-    z,
+    pinPosts,
+    countryCode,
   } = props?.data?.nodeByUri ?? []
 
   // Load More Function
@@ -155,31 +155,75 @@ export default function Component(props) {
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
         categoryName={name}
-        parentCategoryName={parent?.node.name}
-        children={children.edges.length}
+        parentCategoryName={parent?.node?.name}
+        children={children?.edges?.length}
       />
 
-      <SecondaryHeader parent={parent} children={children} />
+      <SecondaryHeader
+        parent={parent}
+        children={children}
+        name={name}
+        uri={uri}
+        countryCode={countryCode}
+        parentUri={parent?.node?.uri ?? uri}
+        parentName={parent?.node?.name ?? name}
+        parentCountryCode={
+          parent?.node?.countryCode?.countryCode ??
+          countryCode?.countryCode
+        }
+      />
 
       {/* EntryHeader category name */}
-      {children.edges.length != 0 ? (
+      {children.edges.length != 0 && (
         <CategoryEntryHeader
-          title={`${name}`}
-          image={categoryImages.categoryImages?.mediaItemUrl || null}
+          title={`The DA Guide to ${name}`}
+          image={categoryImages?.categoryImages?.mediaItemUrl || null}
           description={description || null}
-          children={children.edges}
+          children={children?.edges}
         />
-      ) : (
+      )}
+      {children.edges.length == 0 && (
         <CategoryEntryHeader
-          parent={parent?.node.name}
+          parent={parent?.node?.name}
           title={`${name}`}
-          children={children.edges}
+          children={children?.edges}
         />
       )}
 
       <Main>
         <>
           <Container>
+            {/* PinPosts on category pages */}
+            {pinPosts?.pinPost !== null && (
+              <Post
+                title={pinPosts?.pinPost?.title}
+                excerpt={pinPosts?.pinPost?.excerpt}
+                content={pinPosts?.pinPost?.content}
+                date={pinPosts?.pinPost?.date}
+                author={pinPosts?.pinPost?.author?.node?.name}
+                uri={pinPosts?.pinPost?.uri}
+                parentCategory={
+                  pinPosts?.pinPost?.categories?.edges[0]?.node?.parent?.node
+                    ?.name
+                }
+                category={pinPosts?.pinPost?.categories?.edges[0]?.node?.name}
+                categoryUri={pinPosts?.pinPost?.categories?.edges[0]?.node?.uri}
+                featuredImage={pinPosts?.pinPost?.featuredImage?.node}
+                chooseYourCategory={
+                  pinPosts?.pinPost?.acfCategoryIcon?.chooseYourCategory
+                }
+                categoryLabel={
+                  pinPosts?.pinPost?.acfCategoryIcon?.categoryLabel
+                }
+                locationValidation={
+                  pinPosts?.pinPost?.acfLocationIcon?.fieldGroupName
+                }
+                locationLabel={
+                  pinPosts?.pinPost?.acfLocationIcon?.locationLabel
+                }
+                locationUrl={pinPosts?.pinPost?.acfLocationIcon?.locationUrl}
+              />
+            )}
             {/* All posts sorted by mainPosts & date */}
             {allPosts.length !== 0 &&
               allPosts.slice(0, visiblePosts).map((post, index) => (
@@ -189,25 +233,27 @@ export default function Component(props) {
                     excerpt={post.excerpt}
                     content={post.content}
                     date={post.date}
-                    author={post.author?.node.name}
+                    author={post.author?.node?.name}
                     uri={post.uri}
                     parentCategory={
-                      post.categories.edges[0].node.parent?.node.name
+                      post.categories?.edges[0]?.node?.parent?.node?.name
                     }
-                    category={post.categories.edges[0].node.name}
-                    categoryUri={post.categories.edges[0].node.uri}
+                    category={post.categories?.edges[0]?.node?.name}
+                    categoryUri={post.categories?.edges[0]?.node?.uri}
                     featuredImage={post.featuredImage?.node}
-                    chooseYourCategory={post.acfCategoryIcon?.chooseYourCategory}
+                    chooseYourCategory={
+                      post.acfCategoryIcon?.chooseYourCategory
+                    }
                     categoryLabel={post.acfCategoryIcon?.categoryLabel}
                     locationValidation={post.acfLocationIcon?.fieldGroupName}
                     locationLabel={post.acfLocationIcon?.locationLabel}
                     locationUrl={post.acfLocationIcon?.locationUrl}
                   />
                   {/* Add moduleAd in between PostCards */}
-                  {index === 0 && <ModuleAd moduleAd1 />}
-                  {index === 2 && <ModuleAd moduleAd2 />}
-                  {index === 4 && <ModuleAd moduleAd3 />}
-                  {index === 6 && <ModuleAd moduleAd4 />}
+                  {index === 1 && <ModuleAd moduleAd1 />}
+                  {index === 5 && <ModuleAd moduleAd2 />}
+                  {index === 9 && <ModuleAd moduleAd3 />}
+                  {index === 13 && <ModuleAd moduleAd4 />}
                 </React.Fragment>
               ))}
             {visiblePosts < allPosts.length && (
@@ -264,10 +310,94 @@ Component.query = gql`
     nodeByUri(uri: $uri) {
       ... on Category {
         name
+        uri
         description
         categoryImages {
           categoryImages {
             mediaItemUrl
+          }
+        }
+        countryCode {
+          countryCode
+        }
+        pinPosts {
+          pinPost {
+            ... on Post {
+              id
+              title
+              content
+              date
+              uri
+              excerpt
+              ...FeaturedImageFragment
+              author {
+                node {
+                  name
+                }
+              }
+              categories {
+                edges {
+                  node {
+                    name
+                    uri
+                    parent {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+              acfCategoryIcon {
+                categoryLabel
+                chooseYourCategory
+              }
+              acfLocationIcon {
+                fieldGroupName
+                locationLabel
+                locationUrl
+              }
+            }
+            ... on Editorial {
+              id
+              title
+              content
+              date
+              uri
+              excerpt
+              ...FeaturedImageFragment
+              author {
+                node {
+                  name
+                }
+              }
+              categories {
+                edges {
+                  node {
+                    name
+                    uri
+                    parent {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            ... on Advertorial {
+              id
+              title
+              content
+              date
+              uri
+              ...FeaturedImageFragment
+              author {
+                node {
+                  name
+                }
+              }
+            }
           }
         }
         posts {
@@ -352,6 +482,9 @@ Component.query = gql`
                   uri
                 }
               }
+            }
+            countryCode {
+              countryCode
             }
           }
         }

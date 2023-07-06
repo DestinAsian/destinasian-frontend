@@ -76,7 +76,6 @@ export default function Component(props) {
       <SecondaryHeader
         categoryUri={categories[0]?.node?.uri}
         categories={categories[0]?.node?.parent}
-        // parent={categories[0]?.node?.parent}
       />
       <Main>
         <>
@@ -134,6 +133,9 @@ Component.query = gql`
               node {
                 name
                 uri
+                countryCode {
+                  countryCode
+                }
                 children {
                   edges {
                     node {

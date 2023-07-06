@@ -37,15 +37,9 @@ export default function SingleEditorial(props) {
   const categories = props?.data?.editorial?.categories?.edges ?? []
 
   const images = [
-    acfSingleEditorialSlider.slide1 != null
-      ? acfSingleEditorialSlider.slide1.mediaItemUrl
-      : null,
-    acfSingleEditorialSlider.slide2 != null
-      ? acfSingleEditorialSlider.slide1.mediaItemUrl
-      : null,
-    acfSingleEditorialSlider.slide3 != null
-      ? acfSingleEditorialSlider.slide1.mediaItemUrl
-      : null,
+    acfSingleEditorialSlider?.slide1?.mediaItemUrl,
+    acfSingleEditorialSlider?.slide2?.mediaItemUrl,
+    acfSingleEditorialSlider?.slide3?.mediaItemUrl,
   ]
 
   return (

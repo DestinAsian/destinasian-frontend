@@ -2,14 +2,14 @@
 @import 'styles/fonts/typography';
 
 .component {
-  background-color: var(--wpe--color--white);
+  background-color: var(--wpe--main--background-color);
   color: var(--wpe--color--black);
   position: relative;
   overflow: hidden;
-  margin: 1rem 0;
+  margin: 1rem 0 0;
 
   @media (min-width: $breakpoint-small) {
-    margin: 2rem 0;
+    margin: 2rem 0 0;
   }
 }
 
@@ -19,7 +19,7 @@
   margin: 0 auto;
   padding: 0 1rem;
   flex-direction: column;
-  row-gap: 0.5rem;
+  row-gap: 0;
 
   @media (min-width: $breakpoint-small) {
     max-width: 50vw;
@@ -46,10 +46,14 @@
 .parent {
   font-family: 'Unit Slab Pro Black';
   line-height: 1.2;
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   font-weight: 900;
   color: var(--wpe--color--title);
   text-transform: uppercase;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 2.25rem;
+  }
 
   @media (min-width: $breakpoint-medium) {
     font-size: 3rem;

@@ -11,7 +11,11 @@ import 'swiper/css/navigation'
 // import required modules
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper'
 
-export default function SingleEditorialSlider({ images }) {
+export default function SingleAdvertorialSlider({ images }) {
+  const pagination = {
+    clickable: true,
+  }
+
   return (
     <>
       <Swiper
@@ -19,18 +23,16 @@ export default function SingleEditorialSlider({ images }) {
         effect={'fade'}
         loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 25000,
           disableOnInteraction: true,
         }}
-        pagination={{
-          type: 'fraction',
-        }}
+        pagination={pagination}
         navigation={{
           prevEl: '.swiper-custom-button-prev',
           nextEl: '.swiper-custom-button-next',
         }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
-        className="post-editorial-swiper"
+        className="post-advertorial-swiper"
       >
         {images?.map((image, index) => (
           <SwiperSlide key={index}>

@@ -2,7 +2,7 @@
 
 .component {
   color: var(--wpe--header--color);
-  background-color: var(--wpe--header--background-color);
+  background-color: var(--wpe--main--background-color);
   position: relative;
   width: 100%;
   z-index: 50;
@@ -17,7 +17,7 @@
 }
 
 .sticky {
-  background-color: var(--wpe--header--background-color);
+  background-color: var(--wpe--main--background-color);
   position: fixed;
   top: -60px;
   left: 0;
@@ -34,7 +34,7 @@
   padding: 0;
   gap: 1rem;
   height: 3.5rem;
-  background-color: var(--wpe--color--white);
+  background-color: var(--wpe--main--background-color);
 
   @media (min-width: $breakpoint-extra-small) {
     padding: 0.5rem 0;
@@ -177,7 +177,7 @@
   z-index: 51;
   transition: transform 0.4s ease-in-out;
   transform: translateY(-150vh);
-  background-color: var(--wpe--color--white);
+  background-color: var(--wpe--main--background-color);
   color: var(--wpe--color--black);
 
   &.show {

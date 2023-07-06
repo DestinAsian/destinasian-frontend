@@ -9,7 +9,7 @@
 }
 
 .sticky {
-  background-color: var(--wpe--header--background-color);
+  background-color: var(--wpe--main--background-color);
   position: fixed;
   top: -60px;
   left: 0;
@@ -20,7 +20,7 @@
 }
 
 .white {
-  background-color: var(--wpe--header--background-color);
+  background-color: var(--wpe--main--background-color);
 } 
 
 .navbar {
@@ -152,7 +152,7 @@
   z-index: 51;
   transition: transform 0.4s ease-in-out;
   transform: translateY(-150vh);
-  background-color: var(--wpe--color--white);
+  background-color: var(--wpe--main--background-color);
   color: var(--wpe--color--black);
 
   &.show {

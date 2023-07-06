@@ -11,7 +11,7 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
-  SingleSlider,
+  SingleAdvertorialSlider,
   ContentWrapper,
 } from '../components'
 
@@ -65,7 +65,7 @@ export default function SingleAdvertorial(props) {
       <Main>
         <>
           <SingleAdvertorialContainer>
-            <SingleSlider images={images} />
+            <SingleAdvertorialSlider images={images} />
             <SingleAdvertorialEntryHeader title={title} />
             <ContentWrapper content={content} />
             {/* <ModuleAd /> */}

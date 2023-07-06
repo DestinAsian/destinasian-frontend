@@ -13,7 +13,7 @@ export default function SingleEditorialFeaturedImage({
         {image && (
           <FeaturedImage
             image={image}
-            layout={'responsive'}
+            layout={'fill'}
             className={cx('image')}
             priority
           />

@@ -53,6 +53,19 @@ export default function Post({
         </Link>
       </div>
       <div className={cx('content-wrapper')}>
+        <Link href={uri}>
+          <a>
+            <h2 className={cx('title')}>{title}</h2>
+          </a>
+        </Link>
+      </div>
+      <div className={cx('content-wrapper')}>
+        <div
+          className={cx('excerpt')}
+          dangerouslySetInnerHTML={{ __html: trimmedExcerpt }}
+        />
+      </div>
+      <div className={cx('content-wrapper')}>
         {(chooseYourCategory || locationValidation) && (
           <div className={cx('icon-wrapper')}>
             {chooseYourCategory && (
@@ -70,19 +83,6 @@ export default function Post({
             )}
           </div>
         )}
-      </div>
-      <div className={cx('content-wrapper')}>
-        <Link href={uri}>
-          <a>
-            <h2 className={cx('title')}>{title}</h2>
-          </a>
-        </Link>
-      </div>
-      <div className={cx('content-wrapper')}>
-        <div
-          className={cx('excerpt')}
-          dangerouslySetInnerHTML={{ __html: trimmedExcerpt }}
-        />
       </div>
       <div className={cx('border-bottom')}></div>
     </article>
