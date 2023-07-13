@@ -19,13 +19,14 @@ export default function FeatureWell({
     <>
       <div className={cx('component')}>
         {type === 'image' && (
-          <a href={url}>
+          <a href={url}> 
             {isDesktop && <img src={desktopSrc} />}
             {isMobile && <img src={mobileSrc} />}
           </a>
         )}
         {type === 'video' && (
-          <video
+          <a href={url}>
+            <video
             src={videoSrc}
             className="video-content"
             loop
@@ -33,6 +34,7 @@ export default function FeatureWell({
             playsInline
             muted
           />
+          </a>
         )}
       </div>
     </>
