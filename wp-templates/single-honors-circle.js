@@ -18,6 +18,7 @@ import {
   SingleHCSlider,
   Post,
   SingleHCPost,
+  Button,
 } from '../components'
 
 export default function SingleHonorsCircle(props) {
@@ -211,7 +212,7 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
           </>
         </Main>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

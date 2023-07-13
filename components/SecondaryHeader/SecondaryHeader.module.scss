@@ -87,11 +87,11 @@
   .active,
   &:hover,
   &:focus {
-    color: var(--wpe--color--red);
+    color: var(--wpe--color--orange);
 
-    @media (min-width: $breakpoint-small) {
-      color: var(--wpe--color--orange);
-    }
+    // @media (min-width: $breakpoint-small) {
+    //   color: var(--wpe--color--orange);
+    // }
   }
 }
 
@@ -101,11 +101,11 @@
   .active,
   &:hover,
   &:focus {
-    color: var(--wpe--color--red);
+    color: var(--wpe--color--orange);
 
-    @media (min-width: $breakpoint-small) {
-      color: var(--wpe--color--orange);
-    }
+    // @media (min-width: $breakpoint-small) {
+    //   color: var(--wpe--color--orange);
+    // }
   }
 }
 

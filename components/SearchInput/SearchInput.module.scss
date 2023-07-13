@@ -1,3 +1,5 @@
+@import 'styles/breakpoints';
+
 $input-border-color: rgb(221, 221, 221);
 
 .wrapper {
@@ -7,16 +9,16 @@ $input-border-color: rgb(221, 221, 221);
 .icon {
   position: absolute;
   font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   top: 50%;
-  right: 1.5rem;
+  left: 1.5rem;
   transform: translateY(-50%);
   color: var(--color-black);
 }
 
 .input {
-  width: 25rem;
+  width: calc(-2rem + 100vw);
   appearance: none;
   background-color: var(--color-white);
   box-sizing: border-box;
@@ -25,8 +27,8 @@ $input-border-color: rgb(221, 221, 221);
   font-size: 1.5rem;
   line-height: 1.2;
   margin: 0;
-  padding: 1rem 4.5rem 1rem 1rem;
-  border: 2px solid #d9d9d9;
+  padding: 1rem;
+  border: 2px solid #000000;
   border-radius: 50px;
   text-align: center;
   font-size: 16px;
@@ -36,8 +38,9 @@ $input-border-color: rgb(221, 221, 221);
   outline: none;
 }
 
-@media only screen and (max-width: 640px) {
-  .wrapper {
-    display: none;
+@media (min-width: $breakpoint-extra-small) {
+  .input {
+    width: 75vw;
+    padding: 1rem 4.5rem 1rem 1rem;
   }
 }

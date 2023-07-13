@@ -6,6 +6,7 @@ export { Container } from './Container';
 export { ContentWrapper } from './ContentWrapper';
 export { ContentWrapperEditorial } from './ContentWrapperEditorial';
 export { ContentWrapperHC } from './ContentWrapperHC';
+export { ContentWrapperHCFrontPage } from './ContentWrapperHCFrontPage';
 export { ContentWrapperPage } from './ContentWrapperPage';
 export { DaGuideMenu } from './DaGuideMenu';
 export { EntryHeader } from './EntryHeader';

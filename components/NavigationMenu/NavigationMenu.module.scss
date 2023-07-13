@@ -19,7 +19,7 @@
 
 .menu-name {
   padding: 1rem 0;
-  color: var(--wpe--color--red);
+  color: var(--wpe--color--orange);
   display: block;
   transition: all 0.2s ease-out;
   width: 100%;
@@ -27,9 +27,9 @@
   text-align: left;
   font-weight: 700;
 
-  @media (min-width: $breakpoint-small) {
-    color: var(--wpe--color--orange);
-  }
+  // @media (min-width: $breakpoint-small) {
+  //   color: var(--wpe--color--orange);
+  // }
 }
 
 .menu {
@@ -54,11 +54,11 @@
 
     &:hover,
     &:focus {
-      color: var(--wpe--color--red);
+      color: var(--wpe--color--orange);
 
-      @media (min-width: $breakpoint-small) {
-        color: var(--wpe--color--orange);
-      }
+      // @media (min-width: $breakpoint-small) {
+      //   color: var(--wpe--color--orange);
+      // }
     }
 
     // Remove link underline when component is inside header.

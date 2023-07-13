@@ -82,50 +82,6 @@ export default function Header({
               </Link>
             </div>
 
-            {/* Search bar */}
-            {/* <div className={cx('search-bar')}>
-              <div className="absolute flex flex-col">
-                <div className="bg-white">
-                  <SearchInput
-                    value={searchQuery}
-                    onChange={(newValue) => setSearchQuery(newValue)}
-                  />
-                </div>
-                <div className="z-10 bg-white">
-                  {searchResultsError && (
-                    <div className="alert-error">
-                      An error has occurred. Please refresh and try again.
-                    </div>
-                  )}
-
-                  <SearchResults
-                    searchResults={searchResultsData?.contentNodes?.edges?.map(
-                      ({ node }) => node,
-                    )}
-                    isLoading={searchResultsLoading}
-                  />
-
-                  {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
-                    <div className={styles['load-more']}>
-                      <Button
-                        onClick={() => {
-                          fetchMoreSearchResults({
-                            variables: {
-                              after:
-                                searchResultsData?.contentNodes?.pageInfo
-                                  ?.endCursor,
-                            },
-                          })
-                        }}
-                      >
-                        Load more
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div> */}
-
             {/* Menu Button */}
             {isNavShown == false ? (
               <div className={cx('menu-button')}>
@@ -258,6 +214,49 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
       >
         {/* Full menu */}
         <div className={cx('full-menu-content')}>
+          {/* Search Bar */}
+          <div className={cx('search-bar-wrapper')}>
+            <div className={cx('search-bar')}>
+              <div className={cx('search-input-wrapper')}>
+                <SearchInput
+                  value={searchQuery}
+                  onChange={(newValue) => setSearchQuery(newValue)}
+                />
+                {/* <div className={cx('search-result-wrapper')}>
+                  {searchResultsError && (
+                    <div className="alert-error">
+                      An error has occurred. Please refresh and try again.
+                    </div>
+                  )}
+
+                  <SearchResults
+                    searchResults={searchResultsData?.contentNodes?.edges?.map(
+                      ({ node }) => node,
+                    )}
+                    isLoading={searchResultsLoading}
+                  />
+
+                  {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
+                    <div className={styles['load-more']}>
+                      <Button
+                        onClick={() => {
+                          fetchMoreSearchResults({
+                            variables: {
+                              after:
+                                searchResultsData?.contentNodes?.pageInfo
+                                  ?.endCursor,
+                            },
+                          })
+                        }}
+                      >
+                        Load more
+                      </Button>
+                    </div>
+                  )}
+                </div> */}
+              </div>
+            </div>
+          </div>
           <div className={cx('first-wrapper')}>
             {/* Primary Menu {City Guides Menu} */}
             <NavigationMenu
