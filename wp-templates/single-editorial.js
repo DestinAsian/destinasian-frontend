@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
+import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
   Footer,
@@ -37,9 +38,21 @@ export default function SingleEditorial(props) {
   const categories = props?.data?.editorial?.categories?.edges ?? []
 
   const images = [
-    acfSingleEditorialSlider?.slide1?.mediaItemUrl,
-    acfSingleEditorialSlider?.slide2?.mediaItemUrl,
-    acfSingleEditorialSlider?.slide3?.mediaItemUrl,
+    acfSingleEditorialSlider.slide1 != null
+      ? acfSingleEditorialSlider.slide1.mediaItemUrl
+      : defaultImage.src,
+    acfSingleEditorialSlider.slide2 != null
+      ? acfSingleEditorialSlider.slide2.mediaItemUrl
+      : defaultImage.src,
+    acfSingleEditorialSlider.slide3 != null
+      ? acfSingleEditorialSlider.slide3.mediaItemUrl
+      : defaultImage.src,
+    acfSingleEditorialSlider.slide4 != null
+      ? acfSingleEditorialSlider.slide4.mediaItemUrl
+      : defaultImage.src,
+    acfSingleEditorialSlider.slide5 != null
+      ? acfSingleEditorialSlider.slide5.mediaItemUrl
+      : defaultImage.src,
   ]
 
   return (
@@ -75,7 +88,7 @@ export default function SingleEditorial(props) {
           </Container>
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
+      <Footer />
     </>
   )
 }

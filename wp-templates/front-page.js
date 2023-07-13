@@ -5,7 +5,6 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import { useMediaQuery } from 'react-responsive'
 import {
   HomepageHeader,
-  Footer,
   Main,
   Container,
   ContentWrapper,
@@ -215,18 +214,7 @@ export default function Component(props) {
                       locationLabel={post.acfLocationIcon?.locationLabel}
                       locationUrl={post.acfLocationIcon?.locationUrl}
                     />
-                    {index === 1 &&
-                      advertorialPosts.length !== 0 &&
-                      advertorialPosts.map((post) => (
-                        <React.Fragment key={post.id}>
-                          <SingleAdvertorialPost
-                            title={post.title}
-                            content={post.content}
-                            uri={post.uri}
-                            featuredImage={post.featuredImage?.node}
-                          />
-                        </React.Fragment>
-                      ))}
+                    {index === 1 && <ModuleAd moduleAd1 />}
                     {index === 5 && <ModuleAd moduleAd2 />}
                     {index === 9 && <ModuleAd moduleAd3 />}
                     {index === 13 && <ModuleAd moduleAd4 />}
@@ -266,7 +254,6 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
           </div>
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
     </>
   )
 }

@@ -72,7 +72,7 @@ export default function SingleAdvertorial(props) {
           </SingleAdvertorialContainer>
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
+      <Footer />
     </>
   )
 }

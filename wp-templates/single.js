@@ -74,8 +74,11 @@ export default function Component(props) {
         parentCategoryName={categories[0]?.node?.parent?.node?.name}
       />
       <SecondaryHeader
-        categoryUri={categories[0]?.node?.uri}
         categories={categories[0]?.node?.parent}
+        categoryCountryCode={categories[0]?.node?.parent?.node?.countryCode?.countryCode}
+        categoryUri={categories[0]?.node?.parent?.node?.uri}
+        categoryName={categories[0]?.node?.parent?.node?.name}
+        categoryDestinationGuides={categories[0]?.node?.parent?.node?.destinationGuides?.destinationGuides}
       />
       <Main>
         <>
@@ -97,7 +100,7 @@ export default function Component(props) {
           {/* <ModuleAd /> */}
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
+      <Footer />
     </>
   )
 }
@@ -135,6 +138,9 @@ Component.query = gql`
                 uri
                 countryCode {
                   countryCode
+                }
+                destinationGuides {
+                  destinationGuides
                 }
                 children {
                   edges {

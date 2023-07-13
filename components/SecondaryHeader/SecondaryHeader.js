@@ -12,11 +12,15 @@ export default function SecondaryHeader({
   parentCountryCode,
   children,
   categories,
-  categoryUri,
-  name,
-  countryCode,
+  titleCountryCode,
+  titleName,
+  titleUri,
+  destinationGuides,
+  parentDestinationGuides,
+  categoryDestinationGuides,
+  categoryName,
   categoryCountryCode,
-  uri,
+  categoryUri,
 }) {
   const [currentUrl, setCurrentUrl] = useState('')
   const [categoryUrl, setCategoryUrl] = useState('')
@@ -66,12 +70,14 @@ export default function SecondaryHeader({
               <div className={cx('navbar-wrapper')}>
                 {/* {'parent'} */}
                 <div className={cx('da-guide-wrapper')}>
-                  <DaGuideMenu
-                    parent={parentCountryCode}
-                    parentUri={parentUri}
-                    parentName={parentName}
-                    children={children}
-                  />
+                  {destinationGuides == 'yes' && (
+                    <DaGuideMenu
+                      title={titleCountryCode}
+                      titleName={titleName}
+                      titleUri={titleUri}
+                    />
+                  )}
+                  {destinationGuides == null && null}
                 </div>
                 <div className={cx('navigation-wrapper')}>
                   {children?.edges?.map((post) => (
@@ -95,12 +101,15 @@ export default function SecondaryHeader({
               <div className={cx('navbar-wrapper')}>
                 {/* {'children'} */}
                 <div className={cx('da-guide-wrapper')}>
-                  <DaGuideMenu
-                    parent={parentCountryCode}
-                    parentUri={parentUri}
-                    parentName={parentName}
-
-                  />
+                  {parentDestinationGuides == 'yes' && (
+                    <DaGuideMenu
+                      parent={parentCountryCode}
+                      parentUri={parentUri}
+                      parentName={parentName}
+                      parentDestinationGuides={parentDestinationGuides}
+                    />
+                  )}
+                  {parentDestinationGuides == null && null}
                 </div>
                 <div className={cx('navigation-wrapper')}>
                   {parent?.node?.children?.edges?.map((post) => (
@@ -122,11 +131,14 @@ export default function SecondaryHeader({
             <div className={cx('navbar-wrapper')}>
               {/* {'categories'} */}
               <div className={cx('da-guide-wrapper')}>
-                <DaGuideMenu
-                  categories={categories?.node?.countryCode?.countryCode}
-                  categoryUri={categories?.node?.uri}
-                  categoryName={categories?.node?.name}
-                />
+                {categoryDestinationGuides == 'yes' && (
+                  <DaGuideMenu
+                    categories={categoryCountryCode}
+                    categoryUri={categoryUri}
+                    categoryName={categoryName}
+                  />
+                )}
+                {categoryDestinationGuides == null && null}
               </div>
               <div className={cx('navigation-wrapper')}>
                 {categories?.node?.children?.edges?.map((post) => (

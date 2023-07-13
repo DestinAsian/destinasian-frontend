@@ -6,7 +6,6 @@ import { PostFragment } from '../fragments/PostFragment'
 import {
   CategoryHeader,
   SecondaryHeader,
-  Footer,
   Main,
   Container,
   CategoryEntryHeader,
@@ -41,6 +40,7 @@ export default function Component(props) {
     parent,
     pinPosts,
     countryCode,
+    destinationGuides,
   } = props?.data?.nodeByUri ?? []
 
   // Load More Function
@@ -165,16 +165,18 @@ export default function Component(props) {
         name={name}
         uri={uri}
         countryCode={countryCode}
-        parentUri={parent?.node?.uri ?? uri}
-        parentName={parent?.node?.name ?? name}
-        parentCountryCode={
-          parent?.node?.countryCode?.countryCode ??
-          countryCode?.countryCode
-        }
+        parentUri={parent?.node?.uri}
+        parentName={parent?.node?.name}
+        parentCountryCode={parent?.node?.countryCode?.countryCode}
+        titleUri={uri}
+        titleName={name}
+        titleCountryCode={countryCode?.countryCode}
+        destinationGuides={destinationGuides?.destinationGuides}
+        parentDestinationGuides={parent?.node?.destinationGuides?.destinationGuides}
       />
 
       {/* EntryHeader category name */}
-      {children.edges.length != 0 && (
+      {destinationGuides?.destinationGuides == 'yes' && (
         <CategoryEntryHeader
           title={`The DA Guide to ${name}`}
           image={categoryImages?.categoryImages?.mediaItemUrl || null}
@@ -182,7 +184,7 @@ export default function Component(props) {
           children={children?.edges}
         />
       )}
-      {children.edges.length == 0 && (
+      {destinationGuides?.destinationGuides == null && (
         <CategoryEntryHeader
           parent={parent?.node?.name}
           title={`${name}`}
@@ -289,7 +291,6 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
           </Container>
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
     </>
   )
 }
@@ -319,6 +320,9 @@ Component.query = gql`
         }
         countryCode {
           countryCode
+        }
+        destinationGuides {
+          destinationGuides
         }
         pinPosts {
           pinPost {
@@ -485,6 +489,9 @@ Component.query = gql`
             }
             countryCode {
               countryCode
+            }
+            destinationGuides {
+              destinationGuides
             }
           }
         }

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import styles from './ModuleAd.module.scss'
 
-import banner1 from '../../assets/images/Banner Blank_1.jpg'
+import banner1 from '../../assets/images/BannerAd_FourSeasonsKyoto.jpg'
 import banner2 from '../../assets/images/Banner Blank_2.jpg'
 import banner3 from '../../assets/images/Banner Blank_3.jpg'
 import banner4 from '../../assets/images/Banner Blank_4.jpg'

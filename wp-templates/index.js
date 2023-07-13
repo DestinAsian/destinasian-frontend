@@ -5,6 +5,7 @@ import page from './page';
 import single from './single';
 import singleEditorial from './single-editorial';
 import singleAdvertorial from './single-advertorial';
+import singleHonorsCircle from './single-honors-circle';
 
 export default {
   category,
@@ -14,4 +15,5 @@ export default {
   single,
   'single-editorial': singleEditorial,
   'single-advertorial': singleAdvertorial,
+  'single-honors-circle': singleHonorsCircle,
 };

@@ -1,8 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import classNames from 'classnames/bind'
 import Link from 'next/link'
-import destinasianLogoBlk from '../../assets/logo/destinasian-logo.png'
-import destinasianLogoWht from '../../assets/logo/destinasianLogoWht.png'
+import hcLogo from '../../assets/logo/honors-circle-logo.png'
 import {
   Container,
   NavigationMenu,
@@ -11,7 +10,7 @@ import {
   SearchInput,
   SearchResults,
 } from '..'
-import styles from './HomepageHeader.module.scss'
+import styles from './HCHeader.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { GetSearchResults } from '../../queries/GetSearchResults'
@@ -19,7 +18,7 @@ import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
-export default function HomepageHeader({
+export default function HCHeader({
   primaryMenuItems,
   secondaryMenuItems,
   thirdMenuItems,
@@ -68,9 +67,7 @@ export default function HomepageHeader({
   }, [])
 
   return (
-    <header
-      className={cx('component', { sticky: isScrolled, white: isNavShown })}
-    >
+    <header className={cx('component', { sticky: isScrolled})}>
       <SkipNavigationLink />
       {/* Responsive header */}
       {isDesktop || (!isDesktop && !isNavShown) ? (
@@ -78,13 +75,10 @@ export default function HomepageHeader({
           <div className={cx('navbar')}>
             {/* DA logo */}
             <div className={cx('brand')}>
-              <Link href="/">
+              <Link href="/honors-circle">
                 <a className={cx('title')}>
-                  {isScrolled ? (
-                    <img src={destinasianLogoBlk.src} alt="Destinasian Logo" />
-                  ) : (
-                    <img src={destinasianLogoWht.src} alt="Destinasian Logo" />
-                  )}
+                  <img src={hcLogo.src} />
+                  {'Honors Circle'}
                 </a>
               </Link>
             </div>
@@ -137,81 +131,42 @@ export default function HomepageHeader({
             {isNavShown == false ? (
               <div className={cx('menu-button')}>
                 {/* menu button */}
-                {isScrolled ? (
-                  <button
-                    type="button"
-                    className={cx('menu-icon')}
-                    onClick={() => setIsNavShown(!isNavShown)}
-                    aria-label="Toggle navigation"
-                    aria-controls={cx('full-menu-wrapper')}
-                    aria-expanded={!isNavShown}
+                <button
+                  type="button"
+                  className={cx('menu-icon')}
+                  onClick={() => setIsNavShown(!isNavShown)}
+                  aria-label="Toggle navigation"
+                  aria-controls={cx('full-menu-wrapper')}
+                  aria-expanded={!isNavShown}
+                >
+                  <svg
+                    version="1.0"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40.000000pt"
+                    height="40.000000pt"
+                    viewBox="0 0 40.000000 40.000000"
+                    preserveAspectRatio="xMidYMid meet"
                   >
-                    <svg
-                      version="1.0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="40.000000pt"
-                      height="40.000000pt"
-                      viewBox="0 0 40.000000 40.000000"
-                      preserveAspectRatio="xMidYMid meet"
+                    <g
+                      transform="translate(0.000000,40.000000) scale(0.100000,-0.100000)"
+                      fill="#000000"
+                      stroke="none"
                     >
-                      <g
-                        transform="translate(0.000000,40.000000) scale(0.100000,-0.100000)"
-                        fill="#000000"
-                        stroke="none"
-                      >
-                        <path
-                          d="M12 368 c-18 -18 -14 -46 7 -58 26 -13 336 -13 362 0 21 12 25 40 7
+                      <path
+                        d="M12 368 c-18 -18 -14 -46 7 -58 26 -13 336 -13 362 0 21 12 25 40 7
 58 -17 17 -359 17 -376 0z"
-                        />
-                        <path
-                          d="M12 228 c-7 -7 -12 -20 -12 -29 0 -35 23 -40 205 -37 157 3 179 5
+                      />
+                      <path
+                        d="M12 228 c-7 -7 -12 -20 -12 -29 0 -35 23 -40 205 -37 157 3 179 5
 189 21 8 12 8 22 0 35 -10 15 -32 17 -190 20 -131 2 -183 -1 -192 -10z"
-                        />
-                        <path
-                          d="M17 89 c-20 -12 -22 -40 -5 -57 17 -17 359 -17 376 0 18 18 14 46 -7
+                      />
+                      <path
+                        d="M17 89 c-20 -12 -22 -40 -5 -57 17 -17 359 -17 376 0 18 18 14 46 -7
 58 -26 13 -340 13 -364 -1z"
-                        />
-                      </g>
-                    </svg>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className={cx('menu-icon')}
-                    onClick={() => setIsNavShown(!isNavShown)}
-                    aria-label="Toggle navigation"
-                    aria-controls={cx('full-menu-wrapper')}
-                    aria-expanded={!isNavShown}
-                  >
-                    <svg
-                      version="1.0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="40.000000pt"
-                      height="40.000000pt"
-                      viewBox="0 0 40.000000 40.000000"
-                      preserveAspectRatio="xMidYMid meet"
-                    >
-                      <g
-                        transform="translate(0.000000,40.000000) scale(0.100000,-0.100000)"
-                        fill="#ffffff"
-                        stroke="none"
-                      >
-                        <path
-                          d="M12 368 c-18 -18 -14 -46 7 -58 26 -13 336 -13 362 0 21 12 25 40 7
-58 -17 17 -359 17 -376 0z"
-                        />
-                        <path
-                          d="M12 228 c-7 -7 -12 -20 -12 -29 0 -35 23 -40 205 -37 157 3 179 5
-189 21 8 12 8 22 0 35 -10 15 -32 17 -190 20 -131 2 -183 -1 -192 -10z"
-                        />
-                        <path
-                          d="M17 89 c-20 -12 -22 -40 -5 -57 17 -17 359 -17 376 0 18 18 14 46 -7
-58 -26 13 -340 13 -364 -1z"
-                        />
-                      </g>
-                    </svg>
-                  </button>
-                )}
+                      />
+                    </g>
+                  </svg>
+                </button>
               </div>
             ) : (
               <div className={cx('menu-button')}>
@@ -331,7 +286,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
   )
 }
 
-HomepageHeader.fragments = {
+HCHeader.fragments = {
   entry: gql`
     fragment SearchQueryFragment on RootQueryToCategoryConnection {
       nodes {

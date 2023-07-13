@@ -23,21 +23,10 @@
     display: flex;
     flex-direction: column;
     row-gap: 0.25rem;
-    padding: 1rem 0;
+    padding: 1rem 1rem;
 
     @media (min-width: $breakpoint-medium) {
       padding: 0 1rem;
-    }
-  }
-
-  .content-wrapper > em:first-child {
-    padding: 0 1rem;
-    font-weight: 400;
-    letter-spacing: 1.15px;
-    line-height: 1.6;
-
-    @media (min-width: $breakpoint-medium) {
-      padding: 0;
     }
   }
 
@@ -46,12 +35,14 @@
     @import 'styles/blocks';
 
     * {
+      font-family: 'EB Garamond';
+      font-size: 1.25rem;
       max-width: 100%;
-      padding: 0 1rem 1rem;
+      padding: 0 0 0.5rem;
       line-height: 1.5;
 
-      @media (min-width: $breakpoint-medium) {
-        padding: 0 0 1.5rem;
+      @media (min-width: $breakpoint-small) {
+        padding: 0 0 1rem;
       }
     }
 
@@ -59,9 +50,9 @@
       min-width: 100%;
       padding: 0;
 
-      // figcaption {
-      //   display: none;
-      // }
+      figcaption {
+        display: none;
+      }
     }
 
     h1,
@@ -77,15 +68,21 @@
     }
 
     p:has(img),
-    p > em:first-of-type,
     img,
-    a,
-    em {
+    a {
       padding: 0.5rem 0 0.5rem;
 
-      @media (min-width: $breakpoint-medium) {
+      @media (min-width: $breakpoint-small) {
         padding: 0.75rem 0 0.75rem;
       }
+    }
+
+    em {
+      padding: 0;
+    }
+
+    p:empty {
+      display: none;
     }
 
     strong {
@@ -94,7 +91,7 @@
     }
 
     a {
-      font-family: 'Chronicle Display A', 'Chronicle Display B';
+      font-family: 'EB Garamond';
       font-style: normal;
       font-weight: 600;
       color: var(--wpe--link--color);
@@ -111,10 +108,13 @@
       font-size: 1.6rem;
     }
 
+    ul > li {
+      padding: 0;
+    }
+
     img {
-      display: block;
+      display: inline-flex;
       height: auto;
-      min-width: 100%;
     }
 
     .alignleft {
@@ -181,7 +181,7 @@
     }
 
     thead th {
-      border-bottom: 1px solid var(--wpe--color--border);
+      border-bottom: 1px solid var(--wpe--color--slate);
       padding-bottom: 0.5em;
     }
 
@@ -191,11 +191,15 @@
     }
 
     tr {
-      border-bottom: 1px solid var(--wpe--color--border);
+      border-bottom: 1px solid var(--wpe--color--slate);
     }
 
     td {
-      padding: 0.4em;
+      padding: 1.25rem 0;
+
+      @media (min-width: $breakpoint-small) {
+        padding: 1rem 0;
+      }
     }
   }
 }

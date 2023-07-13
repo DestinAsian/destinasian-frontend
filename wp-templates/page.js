@@ -49,7 +49,7 @@ export default function Component(props) {
           </Container>
         </>
       </Main>
-      {/* <Footer title={siteTitle} menuItems={footerMenu} /> */}
+      <Footer />
     </>
   );
 }
