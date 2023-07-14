@@ -89,6 +89,7 @@
 .icon-wrapper {
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
   gap: 0.5rem;
   font-family: 'Ringside Regular A', 'Ringside Regular B';
   font-style: normal;

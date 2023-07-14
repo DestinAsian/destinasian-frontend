@@ -14,6 +14,7 @@ export { FeaturedImage } from './FeaturedImage';
 export { FeatureWell } from './FeatureWell';
 export { Footer } from './Footer';
 export { FormatDate } from './FormatDate';
+export { FullMenu } from './FullMenu';
 export { HCHeader } from './HCHeader';
 export { Header } from './Header';
 export { Heading } from './Heading';

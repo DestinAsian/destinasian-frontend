@@ -7,8 +7,7 @@ import {
   NavigationMenu,
   SkipNavigationLink,
   Button,
-  SearchInput,
-  SearchResults,
+  FullMenu,
 } from '../../components'
 import styles from './CategoryHeader.module.scss'
 import { useState, useEffect } from 'react'
@@ -22,9 +21,8 @@ export default function CategoryHeader({
   primaryMenuItems,
   secondaryMenuItems,
   thirdMenuItems,
-  categoryName,
-  parentCategoryName,
-  children,
+  fourthMenuItems,
+  fifthMenuItems,
 }) {
   const isDesktop = useMediaQuery({ minWidth: 768 })
   const [isNavShown, setIsNavShown] = useState(false)
@@ -215,73 +213,13 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
       <div
         className={cx(['full-menu-wrapper', isNavShown ? 'show' : undefined])}
       >
-        {/* Full menu */}
-        <div className={cx('full-menu-content')}>
-          {/* Search Bar */}
-          <div className={cx('search-bar-wrapper')}>
-            <div className={cx('search-bar')}>
-              <div className={cx('search-input-wrapper')}>
-                <SearchInput
-                  value={searchQuery}
-                  onChange={(newValue) => setSearchQuery(newValue)}
-                />
-                {/* <div className={cx('search-result-wrapper')}>
-                  {searchResultsError && (
-                    <div className="alert-error">
-                      An error has occurred. Please refresh and try again.
-                    </div>
-                  )}
-
-                  <SearchResults
-                    searchResults={searchResultsData?.contentNodes?.edges?.map(
-                      ({ node }) => node,
-                    )}
-                    isLoading={searchResultsLoading}
-                  />
-
-                  {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
-                    <div className={styles['load-more']}>
-                      <Button
-                        onClick={() => {
-                          fetchMoreSearchResults({
-                            variables: {
-                              after:
-                                searchResultsData?.contentNodes?.pageInfo
-                                  ?.endCursor,
-                            },
-                          })
-                        }}
-                      >
-                        Load more
-                      </Button>
-                    </div>
-                  )}
-                </div> */}
-              </div>
-            </div>
-          </div>
-          <div className={cx('first-wrapper')}>
-            {/* Primary Menu {City Guides Menu} */}
-            <NavigationMenu
-              className={cx('primary-navigation')}
-              menuItems={primaryMenuItems}
-            />
-          </div>
-          <div className={cx('second-wrapper')}>
-            {/* Secondary Menu {Destinations Menu} */}
-            <NavigationMenu
-              className={cx('secondary-navigation')}
-              menuItems={secondaryMenuItems}
-            />
-          </div>
-          <div className={cx('third-wrapper')}>
-            {/* Third Menu {Static Pages Menu} */}
-            <NavigationMenu
-              className={cx(['third-navigation'])}
-              menuItems={thirdMenuItems}
-            />
-          </div>
-        </div>
+        <FullMenu
+          primaryMenuItems={primaryMenuItems}
+          secondaryMenuItems={secondaryMenuItems}
+          thirdMenuItems={thirdMenuItems}
+          fourthMenuItems={fourthMenuItems}
+          fifthMenuItems={fifthMenuItems}
+        />
       </div>
     </header>
   )

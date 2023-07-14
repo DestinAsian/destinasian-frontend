@@ -44,14 +44,14 @@
   color: #000000;
   opacity: 1;
   background: #000000;
-  border: 0.1px solid #ffffff;
+  border: 1px solid #000000;
   border-radius: 45%;
 }
 
 .swiper-pagination-bullet-active {
   color: #ffffff;
   background: #ffffff;
-  border: 0.1px solid #ffffff;
+  border: 1px solid #000000;
 }
 
 /* @media only screen and (min-width: 640px) {

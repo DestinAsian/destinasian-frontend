@@ -11,8 +11,6 @@ let cxFromWp = classNames.bind(stylesFromWP)
 export default function NavigationMenu({
   menuItems,
   className,
-  setIsNavShown,
-  isNavShown,
 }) {
   if (!menuItems) {
     return null
@@ -20,7 +18,7 @@ export default function NavigationMenu({
 
   // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems)
-  const menuName = menuItems[0].menu?.node?.name
+  const menuName = menuItems[0]?.menu?.node?.name
 
   function renderMenu(items) {
     return (

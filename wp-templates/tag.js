@@ -26,7 +26,11 @@ export default function Component(props) {
       <Header
         title={siteTitle}
         description={siteDescription}
-        menuItems={primaryMenu}
+        primaryMenuItems={primaryMenu}
+        secondaryMenuItems={secondaryMenu}
+        thirdMenuItems={thirdMenu}
+        fourthMenuItems={fourthMenu}
+        fifthMenuItems={fifthMenu}
       />
       <Main>
         <>

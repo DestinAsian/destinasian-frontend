@@ -26,6 +26,8 @@ export default function SingleEditorial(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
+  const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
+  const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const {
     title,
@@ -68,7 +70,8 @@ export default function SingleEditorial(props) {
         primaryMenuItems={primaryMenu}
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
-        parentCategoryName={categories[0]?.node?.parent?.node?.name}
+        fourthMenuItems={fourthMenu}
+        fifthMenuItems={fifthMenu}
       />
       <Main>
         <>
@@ -102,6 +105,8 @@ SingleEditorial.query = gql`
     $headerLocation: MenuLocationEnum
     $secondHeaderLocation: MenuLocationEnum
     $thirdHeaderLocation: MenuLocationEnum
+    $fourthHeaderLocation: MenuLocationEnum
+    $fifthHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
@@ -186,6 +191,22 @@ SingleEditorial.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    fourthHeaderMenuItems: menuItems(
+      where: { location: $fourthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    fifthHeaderMenuItems: menuItems(
+      where: { location: $fifthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
@@ -201,6 +222,8 @@ SingleEditorial.variables = ({ databaseId }, ctx) => {
     headerLocation: MENUS.PRIMARY_LOCATION,
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
+    fourthHeaderLocation: MENUS.FOURTH_LOCATION,
+    fifthHeaderLocation: MENUS.FIFTH_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

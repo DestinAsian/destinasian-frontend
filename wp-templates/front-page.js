@@ -31,6 +31,8 @@ export default function Component(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
+  const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
+  const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
@@ -159,6 +161,8 @@ export default function Component(props) {
         primaryMenuItems={primaryMenu}
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
+        fourthMenuItems={fourthMenu}
+        fifthMenuItems={fifthMenu}
       />
       <Main>
         <>
@@ -170,18 +174,18 @@ export default function Component(props) {
                 <Container>
                   {isDesktop && (
                     <FeatureWell
-                      type={currentFeatureWell.type}
-                      videoSrc={currentFeatureWell.videoSrc}
-                      desktopSrc={currentFeatureWell.desktopSrc}
-                      url={currentFeatureWell.url}
+                      type={currentFeatureWell?.type}
+                      videoSrc={currentFeatureWell?.videoSrc}
+                      desktopSrc={currentFeatureWell?.desktopSrc}
+                      url={currentFeatureWell?.url}
                     />
                   )}
                   {isMobile && (
                     <FeatureWell
-                      type={currentFeatureWell.type}
-                      videoSrc={currentFeatureWell.videoSrc}
-                      mobileSrc={currentFeatureWell.mobileSrc}
-                      url={currentFeatureWell.url}
+                      type={currentFeatureWell?.type}
+                      videoSrc={currentFeatureWell?.videoSrc}
+                      mobileSrc={currentFeatureWell?.mobileSrc}
+                      url={currentFeatureWell?.url}
                     />
                   )}
                 </Container>
@@ -268,6 +272,8 @@ Component.query = gql`
     $headerLocation: MenuLocationEnum
     $secondHeaderLocation: MenuLocationEnum
     $thirdHeaderLocation: MenuLocationEnum
+    $fourthHeaderLocation: MenuLocationEnum
+    $fifthHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
@@ -419,6 +425,22 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    fourthHeaderMenuItems: menuItems(
+      where: { location: $fourthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    fifthHeaderMenuItems: menuItems(
+      where: { location: $fifthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     categories {
       ...SearchQueryFragment
     }
@@ -431,6 +453,8 @@ Component.variables = ({ databaseId }, ctx) => {
     headerLocation: MENUS.PRIMARY_LOCATION,
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
+    fourthHeaderLocation: MENUS.FOURTH_LOCATION,
+    fifthHeaderLocation: MENUS.FIFTH_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
   }

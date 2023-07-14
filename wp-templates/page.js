@@ -40,6 +40,8 @@ export default function Component(props) {
         primaryMenuItems={primaryMenu}
         secondaryMenuItems={secondaryMenu}
         thirdMenuItems={thirdMenu}
+        fourthMenuItems={fourthMenu}
+        fifthMenuItems={fifthMenu}
       />
       <Main>
         <>
@@ -63,6 +65,8 @@ Component.query = gql`
     $headerLocation: MenuLocationEnum
     $secondHeaderLocation: MenuLocationEnum
     $thirdHeaderLocation: MenuLocationEnum
+    $fourthHeaderLocation: MenuLocationEnum
+    $fifthHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 200
@@ -101,6 +105,22 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    fourthHeaderMenuItems: menuItems(
+      where: { location: $fourthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    fifthHeaderMenuItems: menuItems(
+      where: { location: $fifthHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
   }
 `;
 
@@ -110,6 +130,8 @@ Component.variables = ({ databaseId }, ctx) => {
     headerLocation: MENUS.PRIMARY_LOCATION,
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
+    fourthHeaderLocation: MENUS.FOURTH_LOCATION,
+    fifthHeaderLocation: MENUS.FIFTH_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
   };
