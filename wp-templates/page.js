@@ -11,6 +11,7 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
+  FullMenu,
 } from '../components';
 
 export default function Component(props) {
@@ -96,6 +97,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -228,6 +230,9 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `;

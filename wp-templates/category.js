@@ -15,6 +15,7 @@ import {
   SEO,
   ModuleAd,
   Button,
+  FullMenu,
 } from '../components'
 
 export default function Component(props) {
@@ -320,6 +321,7 @@ Component.query = gql`
   ${PostFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetCategoryPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
@@ -774,6 +776,9 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `

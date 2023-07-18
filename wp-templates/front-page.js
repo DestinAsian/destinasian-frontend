@@ -18,6 +18,7 @@ import {
   ModuleAd,
   FeatureWell,
   Button,
+  FullMenu,
 } from '../components'
 
 export default function Component(props) {
@@ -289,7 +290,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${HomepageHeader.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum

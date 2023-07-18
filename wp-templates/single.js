@@ -13,6 +13,7 @@ import {
   SEO,
   SingleSlider,
   SecondaryHeader,
+  FullMenu,
 } from '../components'
 // import defaultImage from '../assets/images/example-image.png'
 
@@ -147,6 +148,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -350,6 +352,9 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `

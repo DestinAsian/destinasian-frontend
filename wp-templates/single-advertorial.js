@@ -12,6 +12,7 @@ import {
   SEO,
   SingleAdvertorialSlider,
   ContentWrapper,
+  FullMenu,
 } from '../components'
 
 export default function SingleAdvertorial(props) {
@@ -118,6 +119,7 @@ SingleAdvertorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -277,6 +279,9 @@ SingleAdvertorial.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `

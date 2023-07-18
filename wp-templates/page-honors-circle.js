@@ -9,6 +9,7 @@ import {
   FeaturedImage,
   SEO,
   ContentWrapperHCFrontPage,
+  FullMenu,
 } from '../components'
 
 export default function Component(props) {
@@ -91,6 +92,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPageData(
     $databaseId: ID = "131573"
     $headerLocation: MenuLocationEnum
@@ -226,6 +228,9 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `

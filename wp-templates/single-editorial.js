@@ -12,6 +12,7 @@ import {
   SEO,
   SingleEditorialFeaturedImage,
   ContentWrapperEditorial,
+  FullMenu,
 } from '../components'
 
 export default function SingleEditorial(props) {
@@ -133,6 +134,7 @@ SingleEditorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${FullMenu.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -316,6 +318,9 @@ SingleEditorial.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
+    }
+    categories {
+      ...SearchQueryFragment
     }
   }
 `
