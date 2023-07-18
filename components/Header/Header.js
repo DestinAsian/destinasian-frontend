@@ -197,7 +197,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
       <div
         className={cx(['full-menu-wrapper', isNavShown ? 'show' : undefined])}
       >
-        {/* <FullMenu
+        <FullMenu
           primaryMenuItems={primaryMenuItems}
           secondaryMenuItems={secondaryMenuItems}
           thirdMenuItems={thirdMenuItems}
@@ -205,7 +205,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
           fifthMenuItems={fifthMenuItems}
           featureMenuItems={featureMenuItems}
           latestStories={latestStories}
-        /> */}
+        /> 
       </div>
     </header>
   )
