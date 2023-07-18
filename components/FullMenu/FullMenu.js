@@ -43,7 +43,7 @@ export default function FullMenu({
         {/* Search Bar */}
         <div className={cx('search-bar-wrapper')}>
           <div className={cx('search-input-wrapper')}>
-            {/* <SearchInput
+            <SearchInput
               value={searchQuery}
               onChange={(newValue) => setSearchQuery(newValue)}
             />
@@ -60,7 +60,7 @@ export default function FullMenu({
                 ({ node }) => node,
               )}
               isLoading={searchResultsLoading}
-            /> */}
+            />
 
             {/* {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
               <div className={styles['load-more']}>
@@ -74,7 +74,7 @@ export default function FullMenu({
                     })
                   }}
                 >
-                  Load more
+                  Load More
                 </Button>
               </div>
             )} */}
@@ -138,16 +138,4 @@ export default function FullMenu({
       </div>
     </div>
   )
-}
-
-FullMenu.fragments = {
-  entry: gql`
-    fragment SearchQueryFragment on RootQueryToCategoryConnection {
-      nodes {
-        databaseId
-        uri
-        name
-      }
-    }
-  `,
 }

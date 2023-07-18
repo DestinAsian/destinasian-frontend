@@ -12,7 +12,6 @@ import {
   SEO,
   SingleEditorialFeaturedImage,
   ContentWrapperEditorial,
-  FullMenu,
 } from '../components'
 
 export default function SingleEditorial(props) {
@@ -47,12 +46,12 @@ export default function SingleEditorial(props) {
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
-    mainPosts.push(post?.node)
+    mainPosts.push(post.node)
   })
 
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
-    mainEditorialPosts.push(post?.node)
+    mainEditorialPosts.push(post.node)
   })
 
   // sort posts by date
@@ -134,7 +133,7 @@ SingleEditorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${FullMenu.fragments.entry}
+  ${SingleHeader.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum

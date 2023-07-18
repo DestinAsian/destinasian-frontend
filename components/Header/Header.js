@@ -12,8 +12,6 @@ import {
 import styles from './Header.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { GetSearchResults } from '../../queries/GetSearchResults'
-import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
@@ -39,22 +37,6 @@ export default function Header({
       document.body.style.overflow = 'visible'
     }
   }, [isNavShown])
-
-  // Add search query function
-  const {
-    data: searchResultsData,
-    loading: searchResultsLoading,
-    error: searchResultsError,
-    fetchMore: fetchMoreSearchResults,
-  } = useQuery(GetSearchResults, {
-    variables: {
-      first: appConfig.postsPerPage,
-      after: '',
-      search: searchQuery,
-    },
-    skip: searchQuery === '',
-    fetchPolicy: 'network-only',
-  })
 
   // Add sticky header on scroll
   useEffect(() => {
@@ -227,4 +209,16 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
       </div>
     </header>
   )
+}
+
+Header.fragments = {
+  entry: gql`
+    fragment SearchQueryFragment on RootQueryToCategoryConnection {
+      nodes {
+        databaseId
+        uri
+        name
+      }
+    }
+  `,
 }

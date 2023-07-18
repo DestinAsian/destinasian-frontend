@@ -11,7 +11,6 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
-  FullMenu,
 } from '../components';
 
 export default function Component(props) {
@@ -38,12 +37,12 @@ export default function Component(props) {
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
-    mainPosts.push(post?.node)
+    mainPosts.push(post.node)
   })
 
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
-    mainEditorialPosts.push(post?.node)
+    mainEditorialPosts.push(post.node)
   })
 
   // sort posts by date
@@ -97,7 +96,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${FullMenu.fragments.entry}
+  ${Header.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum

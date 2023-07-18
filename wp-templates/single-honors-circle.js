@@ -19,7 +19,6 @@ import {
   Post,
   SingleHCPost,
   Button,
-  FullMenu,
 } from '../components'
 
 export default function SingleHonorsCircle(props) {
@@ -257,7 +256,7 @@ SingleHonorsCircle.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${FullMenu.fragments.entry}
+  ${HCHeader.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum

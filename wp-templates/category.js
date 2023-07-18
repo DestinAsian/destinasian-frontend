@@ -15,7 +15,6 @@ import {
   SEO,
   ModuleAd,
   Button,
-  FullMenu,
 } from '../components'
 
 export default function Component(props) {
@@ -62,12 +61,12 @@ export default function Component(props) {
 
   // loop through all the latest categories posts
   latestPosts.edges.forEach((post) => {
-    latestMainPosts.push(post?.node)
+    latestMainPosts.push(post.node)
   })
 
   // loop through all the latest categories and their posts
   latestEditorials.edges.forEach((post) => {
-    latestMainEditorialPosts.push(post?.node)
+    latestMainEditorialPosts.push(post.node)
   })
 
   // define latestCatPostCards
@@ -115,36 +114,36 @@ export default function Component(props) {
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
-    mainPosts.push(post?.node)
+    mainPosts.push(post.node)
   })
 
   // loop through all the child categories and their posts
   children.edges.forEach((childCategory) => {
     childCategory.node.posts.edges.forEach((post) => {
-      childPosts.push(post?.node)
+      childPosts.push(post.node)
     })
 
     childCategory.node.children.edges.forEach((grandChildCategory) => {
       grandChildCategory.node.posts.edges.forEach((post) => {
-        childPosts.push(post?.node)
+        childPosts.push(post.node)
       })
     })
   })
 
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
-    mainEditorialPosts.push(post?.node)
+    mainEditorialPosts.push(post.node)
   })
 
   // loop through all the child editorial categories and their posts
   children.edges.forEach((childCategory) => {
     childCategory.node.editorials.edges.forEach((post) => {
-      childEditorialPosts.push(post?.node)
+      childEditorialPosts.push(post.node)
     })
 
     childCategory.node.children.edges.forEach((grandChildCategory) => {
       grandChildCategory.node.editorials.edges.forEach((post) => {
-        childEditorialPosts.push(post?.node)
+        childEditorialPosts.push(post.node)
       })
     })
   })
@@ -242,6 +241,8 @@ export default function Component(props) {
             <CategoryEntryHeader
               parent={parent?.node?.name}
               title={`${name}`}
+              image={categoryImages?.categoryImages?.mediaItemUrl || null}
+              description={description || null}
               children={children?.edges}
             />
           )}
@@ -321,7 +322,7 @@ Component.query = gql`
   ${PostFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${FullMenu.fragments.entry}
+  ${CategoryHeader.fragments.entry}
   query GetCategoryPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
