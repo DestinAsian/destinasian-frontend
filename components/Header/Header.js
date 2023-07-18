@@ -228,15 +228,3 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
     </header>
   )
 }
-
-Header.fragments = {
-  entry: gql`
-    fragment SearchQueryFragment on RootQueryToCategoryConnection {
-      nodes {
-        databaseId
-        uri
-        name
-      }
-    }
-  `,
-}

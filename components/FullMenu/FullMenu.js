@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import classNames from 'classnames/bind'
 import { NavigationMenu, SearchInput, SearchResults, Button } from '..'
 import styles from './FullMenu.module.scss'
@@ -140,14 +140,14 @@ export default function FullMenu({
   )
 }
 
-// FullMenu.fragments = {
-//   entry: gql`
-//     fragment SearchQueryFragment on RootQueryToCategoryConnection {
-//       nodes {
-//         databaseId
-//         uri
-//         name
-//       }
-//     }
-//   `,
-// }
+FullMenu.fragments = {
+  entry: gql`
+    fragment SearchQueryFragment on RootQueryToCategoryConnection {
+      nodes {
+        databaseId
+        uri
+        name
+      }
+    }
+  `,
+}
