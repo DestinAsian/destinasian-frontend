@@ -410,32 +410,6 @@ Component.query = gql`
               }
             }
           }
-          ... on Advertorial {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
-          ... on HonorsCircle {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
         }
         pinPost2 {
           ... on Post {
@@ -498,32 +472,6 @@ Component.query = gql`
                     }
                   }
                 }
-              }
-            }
-          }
-          ... on Advertorial {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
-          ... on HonorsCircle {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
               }
             }
           }
@@ -592,32 +540,6 @@ Component.query = gql`
               }
             }
           }
-          ... on Advertorial {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
-          ... on HonorsCircle {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
         }
         pinPost4 {
           ... on Post {
@@ -683,32 +605,6 @@ Component.query = gql`
               }
             }
           }
-          ... on Advertorial {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
-          ... on HonorsCircle {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
         }
         pinPost5 {
           ... on Post {
@@ -771,32 +667,6 @@ Component.query = gql`
                     }
                   }
                 }
-              }
-            }
-          }
-          ... on Advertorial {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
-              }
-            }
-          }
-          ... on HonorsCircle {
-            id
-            title
-            content
-            date
-            uri
-            ...FeaturedImageFragment
-            author {
-              node {
-                name
               }
             }
           }
