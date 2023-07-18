@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
-import defaultImage from '../assets/images/example-image.png'
 import {
   HCHeader,
   Footer,
@@ -14,6 +13,7 @@ import {
   SEO,
   SingleHCFeaturedImage,
   SingleHCEntryHeader,
+  SingleHCContainer,
   ContentWrapperHC,
   SingleHCSlider,
   Post,
@@ -34,6 +34,7 @@ export default function SingleHonorsCircle(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
+  const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const {
     title,
@@ -45,6 +46,28 @@ export default function SingleHonorsCircle(props) {
     hcLocation,
     hcCaption,
   } = props?.data?.honorsCircle
+  // Latest Travel Stories
+  const latestPosts = props?.data?.posts ?? []
+  const latestEditorials = props?.data?.editorials ?? []
+
+  const latestMainPosts = []
+  const latestMainEditorialPosts = []
+
+  // loop through all the latest categories posts
+  latestPosts.edges.forEach((post) => {
+    latestMainPosts.push(post.node)
+  })
+
+  // loop through all the latest categories and their posts
+  latestEditorials.edges.forEach((post) => {
+    latestMainEditorialPosts.push(post.node)
+  })
+
+  // define latestCatPostCards
+  const latestMainCatPosts = [
+    ...(latestMainPosts != null ? latestMainPosts : []),
+    ...(latestMainEditorialPosts != null ? latestMainEditorialPosts : []),
+  ]
 
   // Load More Function
   const [visiblePosts, setVisiblePosts] = useState(4)
@@ -98,23 +121,25 @@ export default function SingleHonorsCircle(props) {
   // define allPosts
   const allPosts = [...(sortedMainPosts != null ? sortedMainPosts : [])]
 
+  // sortByDate latestCat & childCat Posts
+  const latestAllPosts = latestMainCatPosts.sort(sortPostsByDate)
 
   const images = [
     acfHCSlider.slide1 != null
       ? acfHCSlider.slide1.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfHCSlider.slide2 != null
       ? acfHCSlider.slide2.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfHCSlider.slide3 != null
       ? acfHCSlider.slide3.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfHCSlider.slide4 != null
       ? acfHCSlider.slide4.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfHCSlider.slide5 != null
       ? acfHCSlider.slide5.mediaItemUrl
-      : defaultImage.src,
+      : null,
   ]
 
   return (
@@ -133,8 +158,10 @@ export default function SingleHonorsCircle(props) {
           primaryMenuItems={primaryMenu}
           secondaryMenuItems={secondaryMenu}
           thirdMenuItems={thirdMenu}
-        fourthMenuItems={fourthMenu}
-        fifthMenuItems={fifthMenu}
+          fourthMenuItems={fourthMenu}
+          fifthMenuItems={fifthMenu}
+          featureMenuItems={featureMenu}
+          latestStories={latestAllPosts}
         />
       )}
       {parent == null && (
@@ -197,24 +224,26 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
           primaryMenuItems={primaryMenu}
           secondaryMenuItems={secondaryMenu}
           thirdMenuItems={thirdMenu}
-        fourthMenuItems={fourthMenu}
-        fifthMenuItems={fifthMenu}
+          fourthMenuItems={fourthMenu}
+          fifthMenuItems={fifthMenu}
+          featureMenuItems={featureMenu}
+          latestStories={latestAllPosts}
         />
       )}
       {parent != null && (
         <Main>
           <>
-            <Container>
+            <SingleHCContainer>
               {/* {'hotel'} */}
               <SingleHCFeaturedImage image={featuredImage?.node} />
               <SingleHCEntryHeader
                 title={title}
                 locationLabel={hcLocation?.hcLocation}
-                caption={hcCaption?.hcCaption}
+                // caption={hcCaption?.hcCaption}
               />
               {/* <SingleHCSlider images={images} /> */}
               <ContentWrapperHC content={content} images={images} />
-            </Container>
+            </SingleHCContainer>
           </>
         </Main>
       )}
@@ -234,9 +263,12 @@ SingleHonorsCircle.query = gql`
     $thirdHeaderLocation: MenuLocationEnum
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
+    $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
+    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
+    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     honorsCircle(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -294,6 +326,67 @@ SingleHonorsCircle.query = gql`
         }
       }
     }
+    posts(first: $first, where: $where) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          acfCategoryIcon {
+            categoryLabel
+            chooseYourCategory
+          }
+          acfLocationIcon {
+            fieldGroupName
+            locationLabel
+            locationUrl
+          }
+        }
+      }
+    }
+    editorials(first: $first, where: $where1) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     generalSettings {
       ...BlogInfoFragment
     }
@@ -337,6 +430,14 @@ SingleHonorsCircle.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    featureHeaderMenuItems: menuItems(
+      where: { location: $featureHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
@@ -354,6 +455,7 @@ SingleHonorsCircle.variables = ({ databaseId }, ctx) => {
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
+    featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

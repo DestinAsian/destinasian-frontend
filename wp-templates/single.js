@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
-import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
   Footer,
@@ -15,6 +14,7 @@ import {
   SingleSlider,
   SecondaryHeader,
 } from '../components'
+// import defaultImage from '../assets/images/example-image.png'
 
 export default function Component(props) {
   // Loading state for previews
@@ -29,6 +29,7 @@ export default function Component(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
+  const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const {
     title,
@@ -40,24 +41,49 @@ export default function Component(props) {
     acfCategoryIcon,
     acfLocationIcon,
   } = props?.data?.post
-  const categories = props?.data?.post?.categories?.edges ?? []
+  const categories = props?.data?.post.categories?.edges ?? []
+  const posts = props?.data?.posts ?? []
+  const editorials = props?.data?.editorials ?? []
+
+  // Rest of World validation
+  const rowValidation =
+    categories[0]?.node?.parent?.node?.name !== 'Rest of World' ? true : null
+
+  const mainPosts = []
+  const mainEditorialPosts = []
+
+  // loop through all the main categories posts
+  posts.edges.forEach((post) => {
+    mainPosts.push(post.node)
+  })
+
+  // loop through all the main categories and their posts
+  editorials.edges.forEach((post) => {
+    mainEditorialPosts.push(post.node)
+  })
+
+  // sort posts by date
+  const sortPostsByDate = (a, b) => {
+    const dateA = new Date(a.date)
+    const dateB = new Date(b.date)
+    return dateB - dateA // Sort in descending order
+  }
+
+  // define mainCatPostCards
+  const mainCatPosts = [
+    ...(mainPosts != null ? mainPosts : []),
+    ...(mainEditorialPosts != null ? mainEditorialPosts : []),
+  ]
+
+  // sortByDate mainCat & childCat Posts
+  const allPosts = mainCatPosts.sort(sortPostsByDate)
 
   const images = [
-    acfPostSlider.slide1 != null
-      ? acfPostSlider.slide1.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide2 != null
-      ? acfPostSlider.slide2.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide3 != null
-      ? acfPostSlider.slide3.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide4 != null
-      ? acfPostSlider.slide4.mediaItemUrl
-      : defaultImage.src,
-    acfPostSlider.slide5 != null
-      ? acfPostSlider.slide5.mediaItemUrl
-      : defaultImage.src,
+    acfPostSlider.slide1 != null ? acfPostSlider.slide1.mediaItemUrl : null,
+    acfPostSlider.slide2 != null ? acfPostSlider.slide2.mediaItemUrl : null,
+    acfPostSlider.slide3 != null ? acfPostSlider.slide3.mediaItemUrl : null,
+    acfPostSlider.slide4 != null ? acfPostSlider.slide4.mediaItemUrl : null,
+    acfPostSlider.slide5 != null ? acfPostSlider.slide5.mediaItemUrl : null,
   ]
 
   return (
@@ -75,14 +101,23 @@ export default function Component(props) {
         thirdMenuItems={thirdMenu}
         fourthMenuItems={fourthMenu}
         fifthMenuItems={fifthMenu}
+        featureMenuItems={featureMenu}
+        latestStories={allPosts}
       />
-      <SecondaryHeader
-        categories={categories[0]?.node?.parent}
-        categoryCountryCode={categories[0]?.node?.parent?.node?.countryCode?.countryCode}
-        categoryUri={categories[0]?.node?.parent?.node?.uri}
-        categoryName={categories[0]?.node?.parent?.node?.name}
-        categoryDestinationGuides={categories[0]?.node?.parent?.node?.destinationGuides?.destinationGuides}
-      />
+      {rowValidation && (
+        <SecondaryHeader
+          categories={categories[0]?.node?.parent}
+          categoryCountryCode={
+            categories[0]?.node?.parent?.node?.countryCode?.countryCode
+          }
+          categoryUri={categories[0]?.node?.parent?.node?.uri}
+          categoryName={categories[0]?.node?.parent?.node?.name}
+          categoryDestinationGuides={
+            categories[0]?.node?.parent?.node?.destinationGuides
+              ?.destinationGuides
+          }
+        />
+      )}
       <Main>
         <>
           <SingleSlider images={images} />
@@ -119,9 +154,12 @@ Component.query = gql`
     $thirdHeaderLocation: MenuLocationEnum
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
+    $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
+    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
+    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     post(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -196,6 +234,67 @@ Component.query = gql`
       }
       ...FeaturedImageFragment
     }
+    posts(first: $first, where: $where) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          acfCategoryIcon {
+            categoryLabel
+            chooseYourCategory
+          }
+          acfLocationIcon {
+            fieldGroupName
+            locationLabel
+            locationUrl
+          }
+        }
+      }
+    }
+    editorials(first: $first, where: $where1) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     generalSettings {
       ...BlogInfoFragment
     }
@@ -239,6 +338,14 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    featureHeaderMenuItems: menuItems(
+      where: { location: $featureHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
@@ -256,6 +363,7 @@ Component.variables = ({ databaseId }, ctx) => {
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
+    featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

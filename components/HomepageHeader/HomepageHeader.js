@@ -13,8 +13,6 @@ import {
 import styles from './HomepageHeader.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { GetSearchResults } from '../../queries/GetSearchResults'
-import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
@@ -24,10 +22,11 @@ export default function HomepageHeader({
   thirdMenuItems,
   fourthMenuItems,
   fifthMenuItems,
+  featureMenuItems,
+  latestStories,
 }) {
   const isDesktop = useMediaQuery({ minWidth: 768 })
   const [isNavShown, setIsNavShown] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
 
   // Stop scrolling pages when isNavShown
@@ -38,22 +37,6 @@ export default function HomepageHeader({
       document.body.style.overflow = 'visible'
     }
   }, [isNavShown])
-
-  // Add search query function
-  const {
-    data: searchResultsData,
-    loading: searchResultsLoading,
-    error: searchResultsError,
-    fetchMore: fetchMoreSearchResults,
-  } = useQuery(GetSearchResults, {
-    variables: {
-      first: appConfig.postsPerPage,
-      after: '',
-      search: searchQuery,
-    },
-    skip: searchQuery === '',
-    fetchPolicy: 'network-only',
-  })
 
   // Add sticky header on scroll
   useEffect(() => {
@@ -265,6 +248,8 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
           thirdMenuItems={thirdMenuItems}
           fourthMenuItems={fourthMenuItems}
           fifthMenuItems={fifthMenuItems}
+          featureMenuItems={featureMenuItems}
+          latestStories={latestStories}
         />
       </div>
     </header>

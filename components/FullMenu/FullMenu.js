@@ -1,6 +1,6 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import classNames from 'classnames/bind'
-import { NavigationMenu, SearchInput, SearchResults } from '..'
+import { NavigationMenu, SearchInput, SearchResults, Button } from '..'
 import styles from './FullMenu.module.scss'
 import { useState } from 'react'
 import { GetSearchResults } from '../../queries/GetSearchResults'
@@ -14,7 +14,10 @@ export default function FullMenu({
   thirdMenuItems,
   fourthMenuItems,
   fifthMenuItems,
+  featureMenuItems,
+  latestStories,
 }) {
+  const [visiblePosts] = useState(3)
   const [searchQuery, setSearchQuery] = useState('')
 
   // Add search query function
@@ -35,51 +38,48 @@ export default function FullMenu({
 
   return (
     <div className={cx('component')}>
-      {/* Search Bar */}
-      <div className={cx('search-bar-wrapper')}>
-        <div className={cx('search-bar')}>
+      {/* Full menu */}
+      <div className={cx('full-menu-content')}>
+        {/* Search Bar */}
+        <div className={cx('search-bar-wrapper')}>
           <div className={cx('search-input-wrapper')}>
             <SearchInput
               value={searchQuery}
               onChange={(newValue) => setSearchQuery(newValue)}
             />
-            {/* <div className={cx('search-result-wrapper')}>
-                  {searchResultsError && (
-                    <div className="alert-error">
-                      An error has occurred. Please refresh and try again.
-                    </div>
-                  )}
+          </div>
+          <div className={cx('search-result-wrapper')}>
+            {searchResultsError && (
+              <div className="alert-error">
+                {'An error has occurred. Please refresh and try again.'}
+              </div>
+            )}
 
-                  <SearchResults
-                    searchResults={searchResultsData?.contentNodes?.edges?.map(
-                      ({ node }) => node,
-                    )}
-                    isLoading={searchResultsLoading}
-                  />
+            <SearchResults
+              searchResults={searchResultsData?.contentNodes?.edges?.map(
+                ({ node }) => node,
+              )}
+              isLoading={searchResultsLoading}
+            />
 
-                  {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
-                    <div className={styles['load-more']}>
-                      <Button
-                        onClick={() => {
-                          fetchMoreSearchResults({
-                            variables: {
-                              after:
-                                searchResultsData?.contentNodes?.pageInfo
-                                  ?.endCursor,
-                            },
-                          })
-                        }}
-                      >
-                        Load more
-                      </Button>
-                    </div>
-                  )}
-                </div> */}
+            {/* {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
+              <div className={styles['load-more']}>
+                <Button
+                  onClick={() => {
+                    fetchMoreSearchResults({
+                      variables: {
+                        after:
+                          searchResultsData?.contentNodes?.pageInfo?.endCursor,
+                      },
+                    })
+                  }}
+                >
+                  Load more
+                </Button>
+              </div>
+            )} */}
           </div>
         </div>
-      </div>
-      {/* Full menu */}
-      <div className={cx('full-menu-content')}>
         <div className={cx('first-wrapper')}>
           {/* Secondary Menu {Destinations Menu} */}
           <NavigationMenu
@@ -97,10 +97,21 @@ export default function FullMenu({
         <div className={cx('third-wrapper')}>
           {/* Feature Stories & Latest Travel Stories */}
           <nav className={cx('feature-stories')}>
-            <ul className={cx('menu-name')}>{'Feature Stories'}</ul>
+            <NavigationMenu
+              className={cx('feature-navigation')}
+              menuItems={featureMenuItems}
+            />
           </nav>
-          <nav className={cx('latest-travel-stories')}>
+          <nav className={cx('latest-stories')}>
             <ul className={cx('menu-name')}>{'Latest Travel Stories'}</ul>
+            <ul className={cx('menu-content')}>
+              {latestStories.length !== 0 &&
+                latestStories.slice(0, visiblePosts).map((post) => (
+                  <li key={post?.id}>
+                    <a href={post?.uri}>{post?.title}</a>
+                  </li>
+                ))}
+            </ul>
           </nav>
         </div>
         <div className={cx('fourth-wrapper')}>
@@ -129,14 +140,14 @@ export default function FullMenu({
   )
 }
 
-FullMenu.fragments = {
-  entry: gql`
-    fragment SearchQueryFragment on RootQueryToCategoryConnection {
-      nodes {
-        databaseId
-        uri
-        name
-      }
-    }
-  `,
-}
+// FullMenu.fragments = {
+//   entry: gql`
+//     fragment SearchQueryFragment on RootQueryToCategoryConnection {
+//       nodes {
+//         databaseId
+//         uri
+//         name
+//       }
+//     }
+//   `,
+// }

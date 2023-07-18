@@ -16,7 +16,7 @@ export default function ContentWrapperHC({ content, children, images }) {
 
   return (
     <article className={cx('component')}>
-      {images != undefined && (
+      {images[0] != null && (
         <div className={cx('with-slider-wrapper')}>
           <SingleHCSlider images={images} />
           <div
@@ -27,7 +27,7 @@ export default function ContentWrapperHC({ content, children, images }) {
           
         </div>
       )}
-      {images == undefined && (
+      {images[0] == null && (
         <div className={cx('with-slider-wrapper')}>
           <div
             className={cx('content-wrapper')}

@@ -81,12 +81,12 @@ export default function SecondaryHeader({
                 </div>
                 <div className={cx('navigation-wrapper')}>
                   {children?.edges?.map((post) => (
-                    <li key={post.node.uri} className={cx('nav-link')}>
+                    <li key={post?.node?.uri} className={cx('nav-link')}>
                       <a
-                        href={post.node.uri}
-                        className={cx(isActive(post.node.uri) ? 'active' : '')}
+                        href={post?.node?.uri}
+                        className={cx(isActive(post?.node?.uri) ? 'active' : '')}
                       >
-                        <h2 className={cx('nav-name')}>{post.node.name}</h2>
+                        <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
                       </a>
                     </li>
                   ))}
@@ -113,12 +113,12 @@ export default function SecondaryHeader({
                 </div>
                 <div className={cx('navigation-wrapper')}>
                   {parent?.node?.children?.edges?.map((post) => (
-                    <li key={post.node.uri} className={cx('nav-link')}>
+                    <li key={post?.node?.uri} className={cx('nav-link')}>
                       <a
-                        href={post.node.uri}
-                        className={cx(isActive(post.node.uri) ? 'active' : '')}
+                        href={post?.node?.uri}
+                        className={cx(isActive(post?.node?.uri) ? 'active' : '')}
                       >
-                        <h2 className={cx('nav-name')}>{post.node.name}</h2>
+                        <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
                       </a>
                     </li>
                   ))}
@@ -142,14 +142,14 @@ export default function SecondaryHeader({
               </div>
               <div className={cx('navigation-wrapper')}>
                 {categories?.node?.children?.edges?.map((post) => (
-                  <li key={post.node.uri} className={cx('single-nav-link')}>
+                  <li key={post?.node?.uri} className={cx('single-nav-link')}>
                     <a
-                      href={post.node.uri}
+                      href={post?.node?.uri}
                       className={cx(
-                        isActiveCategory(post.node.uri) ? 'active' : '',
+                        isActiveCategory(post?.node?.uri) ? 'active' : '',
                       )}
                     >
-                      <h2 className={cx('nav-name')}>{post.node.name}</h2>
+                      <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
                     </a>
                   </li>
                 ))}

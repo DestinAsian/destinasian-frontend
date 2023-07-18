@@ -33,8 +33,11 @@ export default function Component(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
+  const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
+  const latestMenu = props?.data?.latestHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { content, featuredImage, acfHomepageSlider } = props?.data?.page ?? []
+  const { content, featuredImage, acfHomepageSlider, homepagePinPosts } =
+    props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
   const advertorials = props?.data?.advertorials ?? []
@@ -77,17 +80,17 @@ export default function Component(props) {
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
-    mainPosts.push(post.node)
+    mainPosts.push(post?.node)
   })
 
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
-    mainEditorialPosts.push(post.node)
+    mainEditorialPosts.push(post?.node)
   })
 
   // loop through all the main categories and their posts
   advertorials.edges.forEach((post) => {
-    mainAdvertorialPosts.push(post.node)
+    mainAdvertorialPosts.push(post?.node)
   })
 
   // sort posts by date
@@ -148,6 +151,23 @@ export default function Component(props) {
     }
   }, [])
 
+  // Declare Pin Posts
+  const allPinPosts = [
+    homepagePinPosts?.pinPost1,
+    homepagePinPosts?.pinPost2,
+    homepagePinPosts?.pinPost3,
+    homepagePinPosts?.pinPost4,
+    homepagePinPosts?.pinPost5,
+  ]
+
+  // Merge All posts and Pin posts
+  const mergedPosts = [
+    ...allPinPosts,
+    ...allPosts.filter(
+      (post) => !allPinPosts.some((pinPost) => pinPost?.id === post?.id),
+    ),
+  ]
+
   return (
     <>
       <SEO
@@ -163,6 +183,8 @@ export default function Component(props) {
         thirdMenuItems={thirdMenu}
         fourthMenuItems={fourthMenu}
         fifthMenuItems={fifthMenu}
+        featureMenuItems={featureMenu}
+        latestStories={allPosts}
       />
       <Main>
         <>
@@ -193,30 +215,32 @@ export default function Component(props) {
             </div>
             <div className="snap-start pt-16">
               {/* <ContentWrapper content={content} /> */}
-              {/* All posts sorted by mainPosts & date */}
-              {allPosts.length !== 0 &&
-                allPosts.slice(0, visiblePosts).map((post, index) => (
-                  <React.Fragment key={post.id}>
+
+              {/* All posts sorted by pinPosts then mainPosts & date */}
+              {mergedPosts.length !== 0 &&
+                mergedPosts.slice(0, visiblePosts).map((post, index) => (
+                  // Render the merged posts here
+                  <React.Fragment key={post?.id}>
                     <Post
-                      title={post.title}
-                      excerpt={post.excerpt}
-                      content={post.content}
-                      date={post.date}
-                      author={post.author?.node?.name}
-                      uri={post.uri}
+                      title={post?.title}
+                      excerpt={post?.excerpt}
+                      content={post?.content}
+                      date={post?.date}
+                      author={post?.author?.node?.name}
+                      uri={post?.uri}
                       parentCategory={
-                        post.categories?.edges[0]?.node?.parent?.node?.name
+                        post?.categories?.edges[0]?.node?.parent?.node?.name
                       }
-                      category={post.categories?.edges[0]?.node?.name}
-                      categoryUri={post.categories?.edges[0]?.node?.uri}
-                      featuredImage={post.featuredImage?.node}
+                      category={post?.categories?.edges[0]?.node?.name}
+                      categoryUri={post?.categories?.edges[0]?.node?.uri}
+                      featuredImage={post?.featuredImage?.node}
                       chooseYourCategory={
-                        post.acfCategoryIcon?.chooseYourCategory
+                        post?.acfCategoryIcon?.chooseYourCategory
                       }
-                      categoryLabel={post.acfCategoryIcon?.categoryLabel}
-                      locationValidation={post.acfLocationIcon?.fieldGroupName}
-                      locationLabel={post.acfLocationIcon?.locationLabel}
-                      locationUrl={post.acfLocationIcon?.locationUrl}
+                      categoryLabel={post?.acfCategoryIcon?.categoryLabel}
+                      locationValidation={post?.acfLocationIcon?.fieldGroupName}
+                      locationLabel={post?.acfLocationIcon?.locationLabel}
+                      locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
                     {index === 1 && <ModuleAd moduleAd1 />}
                     {index === 5 && <ModuleAd moduleAd2 />}
@@ -224,7 +248,7 @@ export default function Component(props) {
                     {index === 13 && <ModuleAd moduleAd4 />}
                   </React.Fragment>
                 ))}
-              {visiblePosts < allPosts.length && (
+              {visiblePosts < mergedPosts.length && (
                 <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
                   <Button onClick={loadMorePosts} className="gap-x-4	">
                     Load More{' '}
@@ -274,6 +298,7 @@ Component.query = gql`
     $thirdHeaderLocation: MenuLocationEnum
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
+    $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
@@ -319,6 +344,463 @@ Component.query = gql`
         typeSlide1
         typeSlide2
         typeSlide3
+      }
+      homepagePinPosts {
+        pinPost1 {
+          ... on Post {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            acfCategoryIcon {
+              categoryLabel
+              chooseYourCategory
+            }
+            acfLocationIcon {
+              fieldGroupName
+              locationLabel
+              locationUrl
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on Advertorial {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
+        pinPost2 {
+          ... on Post {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            acfCategoryIcon {
+              categoryLabel
+              chooseYourCategory
+            }
+            acfLocationIcon {
+              fieldGroupName
+              locationLabel
+              locationUrl
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on Advertorial {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
+        pinPost3 {
+          ... on Post {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            acfCategoryIcon {
+              categoryLabel
+              chooseYourCategory
+            }
+            acfLocationIcon {
+              fieldGroupName
+              locationLabel
+              locationUrl
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on Advertorial {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
+        pinPost4 {
+          ... on Post {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            acfCategoryIcon {
+              categoryLabel
+              chooseYourCategory
+            }
+            acfLocationIcon {
+              fieldGroupName
+              locationLabel
+              locationUrl
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on Advertorial {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
+        pinPost5 {
+          ... on Post {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            acfCategoryIcon {
+              categoryLabel
+              chooseYourCategory
+            }
+            acfLocationIcon {
+              fieldGroupName
+              locationLabel
+              locationUrl
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            content
+            date
+            uri
+            excerpt
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                  parent {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ... on Advertorial {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            content
+            date
+            uri
+            ...FeaturedImageFragment
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
       }
     }
     posts(first: $first, where: $where) {
@@ -441,6 +923,14 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    featureHeaderMenuItems: menuItems(
+      where: { location: $featureHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     categories {
       ...SearchQueryFragment
     }
@@ -455,6 +945,7 @@ Component.variables = ({ databaseId }, ctx) => {
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
+    featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
   }

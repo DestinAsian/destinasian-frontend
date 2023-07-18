@@ -30,6 +30,7 @@ export default function Component(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
+  const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const {
     name,
@@ -44,6 +45,35 @@ export default function Component(props) {
     countryCode,
     destinationGuides,
   } = props?.data?.nodeByUri ?? []
+
+  // Rest of World validation
+  const rowValidation =
+    name !== 'Rest of World' && parent?.node?.name !== 'Rest of World'
+      ? true
+      : null
+
+  // Latest Travel Stories
+  const latestPosts = props?.data?.posts ?? []
+  const latestEditorials = props?.data?.editorials ?? []
+
+  const latestMainPosts = []
+  const latestMainEditorialPosts = []
+
+  // loop through all the latest categories posts
+  latestPosts.edges.forEach((post) => {
+    latestMainPosts.push(post?.node)
+  })
+
+  // loop through all the latest categories and their posts
+  latestEditorials.edges.forEach((post) => {
+    latestMainEditorialPosts.push(post?.node)
+  })
+
+  // define latestCatPostCards
+  const latestMainCatPosts = [
+    ...(latestMainPosts != null ? latestMainPosts : []),
+    ...(latestMainEditorialPosts != null ? latestMainEditorialPosts : []),
+  ]
 
   // Load More Function
   const [visiblePosts, setVisiblePosts] = useState(4)
@@ -84,36 +114,36 @@ export default function Component(props) {
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
-    mainPosts.push(post.node)
+    mainPosts.push(post?.node)
   })
 
   // loop through all the child categories and their posts
   children.edges.forEach((childCategory) => {
     childCategory.node.posts.edges.forEach((post) => {
-      childPosts.push(post.node)
+      childPosts.push(post?.node)
     })
 
     childCategory.node.children.edges.forEach((grandChildCategory) => {
       grandChildCategory.node.posts.edges.forEach((post) => {
-        childPosts.push(post.node)
+        childPosts.push(post?.node)
       })
     })
   })
 
   // loop through all the main categories and their posts
   editorials.edges.forEach((post) => {
-    mainEditorialPosts.push(post.node)
+    mainEditorialPosts.push(post?.node)
   })
 
   // loop through all the child editorial categories and their posts
   children.edges.forEach((childCategory) => {
     childCategory.node.editorials.edges.forEach((post) => {
-      childEditorialPosts.push(post.node)
+      childEditorialPosts.push(post?.node)
     })
 
     childCategory.node.children.edges.forEach((grandChildCategory) => {
       grandChildCategory.node.editorials.edges.forEach((post) => {
-        childEditorialPosts.push(post.node)
+        childEditorialPosts.push(post?.node)
       })
     })
   })
@@ -147,6 +177,20 @@ export default function Component(props) {
     ...(sortedChildPosts != null ? sortedChildPosts : []),
   ]
 
+  // sortByDate latestCat & childCat Posts
+  const latestAllPosts = latestMainCatPosts.sort(sortPostsByDate)
+
+  // Declare Pin Posts
+  const allPinPosts = [pinPosts?.pinPost]
+
+  // Merge All posts and Pin posts
+  const mergedPosts = [
+    ...allPinPosts,
+    ...allPosts.filter(
+      (post) => !allPinPosts.some((pinPost) => pinPost?.id === post?.id),
+    ),
+  ]
+
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
@@ -158,108 +202,87 @@ export default function Component(props) {
         thirdMenuItems={thirdMenu}
         fourthMenuItems={fourthMenu}
         fifthMenuItems={fifthMenu}
+        featureMenuItems={featureMenu}
+        latestStories={latestAllPosts}
       />
 
-      <SecondaryHeader
-        parent={parent}
-        children={children}
-        name={name}
-        uri={uri}
-        countryCode={countryCode}
-        parentUri={parent?.node?.uri}
-        parentName={parent?.node?.name}
-        parentCountryCode={parent?.node?.countryCode?.countryCode}
-        titleUri={uri}
-        titleName={name}
-        titleCountryCode={countryCode?.countryCode}
-        destinationGuides={destinationGuides?.destinationGuides}
-        parentDestinationGuides={parent?.node?.destinationGuides?.destinationGuides}
-      />
-
-      {/* EntryHeader category name */}
-      {destinationGuides?.destinationGuides == 'yes' && (
-        <CategoryEntryHeader
-          title={`The DA Guide to ${name}`}
-          image={categoryImages?.categoryImages?.mediaItemUrl || null}
-          description={description || null}
-          children={children?.edges}
+      {rowValidation && (
+        <SecondaryHeader
+          parent={parent}
+          children={children}
+          name={name}
+          uri={uri}
+          countryCode={countryCode}
+          parentUri={parent?.node?.uri}
+          parentName={parent?.node?.name}
+          parentCountryCode={parent?.node?.countryCode?.countryCode}
+          titleUri={uri}
+          titleName={name}
+          titleCountryCode={countryCode?.countryCode}
+          destinationGuides={destinationGuides?.destinationGuides}
+          parentDestinationGuides={
+            parent?.node?.destinationGuides?.destinationGuides
+          }
         />
       )}
-      {destinationGuides?.destinationGuides == null && (
-        <CategoryEntryHeader
-          parent={parent?.node?.name}
-          title={`${name}`}
-          children={children?.edges}
-        />
+
+      {/* EntryHeader category name */}
+      {rowValidation && (
+        <Container>
+          {destinationGuides?.destinationGuides == 'yes' && (
+            <CategoryEntryHeader
+              title={`The DA Guide to ${name}`}
+              image={categoryImages?.categoryImages?.mediaItemUrl || null}
+              description={description || null}
+              children={children?.edges}
+            />
+          )}
+          {destinationGuides?.destinationGuides == null && (
+            <CategoryEntryHeader
+              parent={parent?.node?.name}
+              title={`${name}`}
+              children={children?.edges}
+            />
+          )}
+        </Container>
       )}
 
       <Main>
         <>
           <Container>
-            {/* PinPosts on category pages */}
-            {pinPosts?.pinPost !== null && (
-              <Post
-                title={pinPosts?.pinPost?.title}
-                excerpt={pinPosts?.pinPost?.excerpt}
-                content={pinPosts?.pinPost?.content}
-                date={pinPosts?.pinPost?.date}
-                author={pinPosts?.pinPost?.author?.node?.name}
-                uri={pinPosts?.pinPost?.uri}
-                parentCategory={
-                  pinPosts?.pinPost?.categories?.edges[0]?.node?.parent?.node
-                    ?.name
-                }
-                category={pinPosts?.pinPost?.categories?.edges[0]?.node?.name}
-                categoryUri={pinPosts?.pinPost?.categories?.edges[0]?.node?.uri}
-                featuredImage={pinPosts?.pinPost?.featuredImage?.node}
-                chooseYourCategory={
-                  pinPosts?.pinPost?.acfCategoryIcon?.chooseYourCategory
-                }
-                categoryLabel={
-                  pinPosts?.pinPost?.acfCategoryIcon?.categoryLabel
-                }
-                locationValidation={
-                  pinPosts?.pinPost?.acfLocationIcon?.fieldGroupName
-                }
-                locationLabel={
-                  pinPosts?.pinPost?.acfLocationIcon?.locationLabel
-                }
-                locationUrl={pinPosts?.pinPost?.acfLocationIcon?.locationUrl}
-              />
-            )}
-            {/* All posts sorted by mainPosts & date */}
-            {allPosts.length !== 0 &&
-              allPosts.slice(0, visiblePosts).map((post, index) => (
-                <React.Fragment key={post.id}>
+            {/* All posts sorted by pinPosts then mainPosts & date */}
+            {mergedPosts.length !== 0 &&
+              mergedPosts.slice(0, visiblePosts).map((post, index) => (
+                // Render the merged posts here
+                <React.Fragment key={post?.id}>
                   <Post
-                    title={post.title}
-                    excerpt={post.excerpt}
-                    content={post.content}
-                    date={post.date}
-                    author={post.author?.node?.name}
-                    uri={post.uri}
+                    title={post?.title}
+                    excerpt={post?.excerpt}
+                    content={post?.content}
+                    date={post?.date}
+                    author={post?.author?.node?.name}
+                    uri={post?.uri}
                     parentCategory={
-                      post.categories?.edges[0]?.node?.parent?.node?.name
+                      post?.categories?.edges[0]?.node?.parent?.node?.name
                     }
-                    category={post.categories?.edges[0]?.node?.name}
-                    categoryUri={post.categories?.edges[0]?.node?.uri}
-                    featuredImage={post.featuredImage?.node}
+                    category={post?.categories?.edges[0]?.node?.name}
+                    categoryUri={post?.categories?.edges[0]?.node?.uri}
+                    featuredImage={post?.featuredImage?.node}
                     chooseYourCategory={
-                      post.acfCategoryIcon?.chooseYourCategory
+                      post?.acfCategoryIcon?.chooseYourCategory
                     }
-                    categoryLabel={post.acfCategoryIcon?.categoryLabel}
-                    locationValidation={post.acfLocationIcon?.fieldGroupName}
-                    locationLabel={post.acfLocationIcon?.locationLabel}
-                    locationUrl={post.acfLocationIcon?.locationUrl}
+                    categoryLabel={post?.acfCategoryIcon?.categoryLabel}
+                    locationValidation={post?.acfLocationIcon?.fieldGroupName}
+                    locationLabel={post?.acfLocationIcon?.locationLabel}
+                    locationUrl={post?.acfLocationIcon?.locationUrl}
                   />
-                  {/* Add moduleAd in between PostCards */}
                   {index === 1 && <ModuleAd moduleAd1 />}
                   {index === 5 && <ModuleAd moduleAd2 />}
                   {index === 9 && <ModuleAd moduleAd3 />}
                   {index === 13 && <ModuleAd moduleAd4 />}
                 </React.Fragment>
               ))}
-            {visiblePosts < allPosts.length && (
+            {visiblePosts < mergedPosts.length && (
               <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
                 <Button onClick={loadMorePosts} className="gap-x-4	">
                   Load More{' '}
@@ -308,8 +331,11 @@ Component.query = gql`
     $thirdHeaderLocation: MenuLocationEnum
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
+    $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $first: Int = 20
+    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
+    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     nodeByUri(uri: $uri) {
       ... on Category {
@@ -636,6 +662,67 @@ Component.query = gql`
         }
       }
     }
+    posts(first: $first, where: $where) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          acfCategoryIcon {
+            categoryLabel
+            chooseYourCategory
+          }
+          acfLocationIcon {
+            fieldGroupName
+            locationLabel
+            locationUrl
+          }
+        }
+      }
+    }
+    editorials(first: $first, where: $where1) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     generalSettings {
       ...BlogInfoFragment
     }
@@ -679,6 +766,14 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    featureHeaderMenuItems: menuItems(
+      where: { location: $featureHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
@@ -695,6 +790,7 @@ Component.variables = ({ uri }) => {
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
+    featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

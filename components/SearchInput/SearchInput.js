@@ -38,10 +38,10 @@ export default function SearchInput({ value, onChange, ...props }) {
             onChange(e.target.value);
           }
         }}
-        autoFocus
-        onFocus={(e) => e.target.select()}
+        // autoFocus
+        // onFocus={(e) => e.target.select()}
         type="text"
-        placeholder="YOUR JOURNEY BEGINS HERE"
+        // placeholder="YOUR JOURNEY BEGINS HERE"
         {...props}
       />
     </div>

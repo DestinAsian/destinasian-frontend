@@ -22,6 +22,11 @@ export default function SingleHCEntryHeader({ title, locationLabel, caption }) {
 
   return (
     <div className={cx('component', { maximized: isMaximized })}>
+      {/* HC Icon */}
+      <div className={cx('hc-wrapper')}>
+        <div className={cx('hc-label')}>{'Honors Circle'}</div>
+        <div class={cx('hc-border')}></div>
+      </div>
       <div className={cx('header-wrapper')}>
         <Heading className={cx('title')}>{title}</Heading>
       </div>
@@ -34,22 +39,13 @@ export default function SingleHCEntryHeader({ title, locationLabel, caption }) {
           {/* Location label */}
           <div className={cx('icon-label')}>{locationLabel}</div>
         </div>
-        <div className={cx('icon-wrapper')}>
-          {/* Caption Icon */}
+        {/* Caption Icon */}
+        {/* <div className={cx('icon-wrapper')}>
           <div className={cx('caption-icon')}>
             <img src={captionIcon.src} />
           </div>
-          {/* Caption label */}
           <div className={cx('icon-label')}>{caption}</div>
-        </div>
-        <div className={cx('hc-icon-wrapper')}>
-          {/* Caption Icon */}
-          <div className={cx('hc-icon')}>
-            <img src={hcLogo.src} />
-          </div>
-          {/* Caption label */}
-          <div className={cx('hc-icon-label')}>{'Honors Circle'}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

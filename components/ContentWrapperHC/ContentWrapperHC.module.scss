@@ -9,7 +9,7 @@
 
   @media (min-width: $breakpoint-medium) {
     margin: 0 auto 5rem;
-    background-color: var(--wpe--main--background-color);
+    background-color: var(--wpe--hc--background-color);
     max-width: 52vw;
     padding: 1vw;
     position: relative;
@@ -35,7 +35,7 @@
     @import 'styles/blocks';
 
     * {
-      font-family: 'EB Garamond';
+      font-family: 'Gotham A', 'Gotham B';
       font-size: 1.25rem;
       max-width: 100%;
       padding: 0 0 0.5rem;
@@ -91,7 +91,7 @@
     }
 
     a {
-      font-family: 'EB Garamond';
+      font-family: 'Gotham A', 'Gotham B';
       font-style: normal;
       font-weight: 600;
       color: var(--wpe--link--color);

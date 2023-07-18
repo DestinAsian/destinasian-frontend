@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import classNames from 'classnames/bind'
 import { FeaturedImage, CategoryIcon, LocationIcon } from '..'
-import styles from './SingleHCPost.module.scss'
+import styles from './SingleHCpost.module.scss'
 
 let cx = classNames.bind(styles)
 

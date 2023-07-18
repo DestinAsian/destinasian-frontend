@@ -2,7 +2,7 @@
 @import 'styles/fonts/typography';
 
 .component {
-  background-color: var(--wpe--main--background-color);
+  background-color: var(--wpe--hc--background-color);
   color: var(--wpe--color--black);
   position: relative;
   overflow: hidden;
@@ -11,7 +11,7 @@
   @media (min-width: $breakpoint-medium) {
     // margin: 0 auto;
     margin: -32.5rem auto 0;
-    background-color: var(--wpe--main--background-color);
+    background-color: var(--wpe--hc--background-color);
     max-width: 52vw;
     padding: 1rem 0;
   }
@@ -32,16 +32,58 @@
   padding: 0 1rem 1rem;
   flex-direction: column;
   row-gap: 0.25rem;
-  border-bottom: 0.44rem solid var(--wpe--color--yellow);
 
   @media (min-width: $breakpoint-medium) {
     padding: 0 2rem 1rem;
   }
 }
 
+.hc-wrapper {
+  display: flex;
+  font-family: 'Gotham A', 'Gotham B';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8rem;
+  max-width: 100vw;
+  padding: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 2vw;
+  padding: 1rem 0 1rem;
+
+  @media (min-width: $breakpoint-large) {
+    width: 100%;
+    font-size: 1.25rem;
+    row-gap: 1rem;
+  }
+
+  .hc-label {
+    font-size: 1rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--wpe--color--yellow);
+
+    @media (min-width: $breakpoint-medium) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .hc-border {
+    background: var(--wpe--color--yellow);
+    width: 58vw;
+    height: 0.35rem;
+
+    @media (min-width: $breakpoint-medium) {
+      width: 34.5vw;
+    }
+  }
+}
+
 .meta-wrapper {
   display: flex;
-  font-family: 'EB Garamond';
+  font-family: 'Gotham A', 'Gotham B';
   font-style: normal;
   font-weight: 400;
   font-size: 0.8rem;
@@ -49,12 +91,12 @@
   padding: 0;
   flex-direction: column;
   row-gap: 0.5rem;
-  padding: 1rem 1rem 0;
+  padding: 0 1rem 0;
 
   @media (min-width: $breakpoint-large) {
     max-width: 50vw;
     font-size: 1.25rem;
-    padding: 1rem 2rem 0;
+    padding: 0 2rem 0;
     row-gap: 1rem;
   }
 
@@ -98,40 +140,6 @@
       }
     }
   }
-
-  .hc-icon-wrapper {
-    margin: 1rem 0 0;
-    display: flex;
-    align-items: center;
-    column-gap: 1rem;
-    font-family: 'Ringside Regular A', 'Ringside Regular B';
-    font-style: normal;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--wpe--color--yellow);
-
-    @media (min-width: $breakpoint-medium) {
-      column-gap: 1.5rem;
-    }
-
-    .hc-icon-label {
-      font-size: 1rem;
-      line-height: 1.2;
-
-      @media (min-width: $breakpoint-medium) {
-        font-size: 1.25rem;
-      }
-    }
-
-    .hc-icon {
-      height: 2.75rem;
-      width: 2.75rem;
-      @media (min-width: $breakpoint-small) {
-        height: 4.125rem;
-        width: 4.125rem;
-      }
-    }
-  }
 }
 
 .category-name {
@@ -151,13 +159,14 @@
 
 .title,
 .parent {
-  font-family: 'Ringside Regular A', 'Ringside Regular B';
+  font-family: 'Hoefler Text A', 'Hoefler Text B';
   font-style: normal;
   font-weight: 700;
   line-height: 1.2;
   font-size: 1.75rem;
   color: var(--wpe--color--title);
   text-transform: capitalize;
+  font-variant: small-caps;
 
   @media (min-width: $breakpoint-extra-small) {
     font-size: 2.25rem;

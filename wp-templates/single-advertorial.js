@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
-import defaultImage from '../assets/images/example-image.png'
 import {
   SingleHeader,
   Footer,
@@ -28,26 +27,58 @@ export default function SingleAdvertorial(props) {
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
+  const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const { title, content, featuredImage, author, date, acfPostSlider } =
     props?.data?.advertorial
+  const posts = props?.data?.posts ?? []
+  const editorials = props?.data?.editorials ?? []
+
+  const mainPosts = []
+  const mainEditorialPosts = []
+
+  // loop through all the main categories posts
+  posts.edges.forEach((post) => {
+    mainPosts.push(post?.node)
+  })
+
+  // loop through all the main categories and their posts
+  editorials.edges.forEach((post) => {
+    mainEditorialPosts.push(post?.node)
+  })
+
+  // sort posts by date
+  const sortPostsByDate = (a, b) => {
+    const dateA = new Date(a.date)
+    const dateB = new Date(b.date)
+    return dateB - dateA // Sort in descending order
+  }
+
+  // define mainCatPostCards
+  const mainCatPosts = [
+    ...(mainPosts != null ? mainPosts : []),
+    ...(mainEditorialPosts != null ? mainEditorialPosts : []),
+  ]
+
+  // sortByDate mainCat & childCat Posts
+  const allPosts = mainCatPosts.sort(sortPostsByDate)
 
   const images = [
     acfPostSlider.slide1 != null
       ? acfPostSlider.slide1.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfPostSlider.slide2 != null
       ? acfPostSlider.slide2.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfPostSlider.slide3 != null
       ? acfPostSlider.slide3.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfPostSlider.slide4 != null
       ? acfPostSlider.slide4.mediaItemUrl
-      : defaultImage.src,
+      : null,
     acfPostSlider.slide5 != null
       ? acfPostSlider.slide5.mediaItemUrl
-      : defaultImage.src,
+      : null,
   ]
 
   return (
@@ -65,6 +96,8 @@ export default function SingleAdvertorial(props) {
         thirdMenuItems={thirdMenu}
         fourthMenuItems={fourthMenu}
         fifthMenuItems={fifthMenu}
+        featureMenuItems={featureMenu}
+        latestStories={allPosts}
       />
       <Main>
         <>
@@ -92,9 +125,12 @@ SingleAdvertorial.query = gql`
     $thirdHeaderLocation: MenuLocationEnum
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
+    $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
+    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
+    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
     advertorial(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -124,6 +160,67 @@ SingleAdvertorial.query = gql`
         }
       }
       ...FeaturedImageFragment
+    }
+    posts(first: $first, where: $where) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          acfCategoryIcon {
+            categoryLabel
+            chooseYourCategory
+          }
+          acfLocationIcon {
+            fieldGroupName
+            locationLabel
+            locationUrl
+          }
+        }
+      }
+    }
+    editorials(first: $first, where: $where1) {
+      edges {
+        node {
+          id
+          title
+          content
+          date
+          uri
+          excerpt
+          ...FeaturedImageFragment
+          categories {
+            edges {
+              node {
+                name
+                uri
+                parent {
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
     generalSettings {
       ...BlogInfoFragment
@@ -168,6 +265,14 @@ SingleAdvertorial.query = gql`
         ...NavigationMenuItemFragment
       }
     }
+    featureHeaderMenuItems: menuItems(
+      where: { location: $featureHeaderLocation }
+      first: $first
+    ) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
     footerMenuItems: menuItems(where: { location: $footerLocation }) {
       nodes {
         ...NavigationMenuItemFragment
@@ -185,6 +290,7 @@ SingleAdvertorial.variables = ({ databaseId }, ctx) => {
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
+    featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

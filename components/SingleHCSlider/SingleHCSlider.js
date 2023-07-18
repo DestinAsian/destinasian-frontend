@@ -35,9 +35,13 @@ export default function SingleHCSlider({ images }) {
         className="post-hc-swiper"
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={index}>
-            <img src={image}></img>
-          </SwiperSlide>
+          <div className="post-swiper-slide">
+            {image && (
+              <SwiperSlide key={index}>
+                <img src={image} />
+              </SwiperSlide>
+            )}
+          </div>
         ))}
         <div className="swiper-custom-button-prev">
           <svg

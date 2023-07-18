@@ -15,17 +15,20 @@ export default function SingleEntryHeader({
   chooseYourCategory,
   locationLabel,
   locationUrl,
-  locationValidation
+  locationValidation,
 }) {
   return (
     <div className={cx(['component', className])}>
       <Container>
         <div className={cx('header-wrapper')}>
-          <a href={categoryUri}>
-            <div className={cx('category-name')}>
-              {parentCategory} {categoryName}
-            </div>
-          </a>
+          {parentCategory !== 'Rest of World' &&
+            categoryName !== 'Rest of World' && (
+              <a href={categoryUri}>
+                <div className={cx('category-name')}>
+                  {parentCategory} {categoryName}
+                </div>
+              </a>
+            )}
           <Heading className={cx('title')}>
             {parent || null} {title}
           </Heading>

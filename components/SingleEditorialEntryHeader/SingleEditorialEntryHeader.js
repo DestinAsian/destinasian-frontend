@@ -28,11 +28,14 @@ export default function SingleEditorialEntryHeader({
   return (
     <div className={cx('component', { maximized: isMaximized })}>
       <div className={cx('header-wrapper')}>
-        <a href={categoryUri}>
-          <div className={cx('category-name')}>
-            {parentCategory} {categoryName}
-          </div>
-        </a>
+        {parentCategory !== 'Rest of World' &&
+          categoryName !== 'Rest of World' && (
+            <a href={categoryUri}>
+              <div className={cx('category-name')}>
+                {parentCategory} {categoryName}
+              </div>
+            </a>
+          )}
         <Heading className={cx('title')}>
           {parent || null} {title}
         </Heading>

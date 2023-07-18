@@ -1,8 +1,11 @@
-import Link from 'next/link';
-import { FormatDate, LoadingSearchResult } from '../../components';
-import { FaSearch } from 'react-icons/fa';
+import Link from 'next/link'
+import classNames from 'classnames/bind'
+import { FormatDate, LoadingSearchResult } from '../../components'
+import { FaSearch } from 'react-icons/fa'
 
-import styles from './SearchResults.module.scss';
+import styles from './SearchResults.module.scss'
+
+let cx = classNames.bind(styles)
 
 /**
  * Renders the search results list.
@@ -15,7 +18,7 @@ import styles from './SearchResults.module.scss';
 export default function SearchResults({ searchResults, isLoading }) {
   // If there are no results, or are loading, return null.
   if (!isLoading && searchResults === undefined) {
-    return null;
+    return null
   }
 
   // If there are no results, return a message.
@@ -25,38 +28,40 @@ export default function SearchResults({ searchResults, isLoading }) {
         <FaSearch className={styles['no-results-icon']} />
         <div className={styles['no-results-text']}>No results</div>
       </div>
-    );
+    )
   }
 
   return (
     <>
-      {searchResults?.map((node) => (
-        <div key={node.databaseId} className={styles.result}>
-          <Link href={node.uri}>
-            <a>
-              <h2 className={styles.title}>{node.title}</h2>
-            </a>
-          </Link>
-          <div className={styles.meta}>
-            <time className={styles.date} dateTime={node.date}>
-              <FormatDate date={node.date} />
-            </time>
+      <div className={cx('component')}>
+        {searchResults?.map((node) => (
+          <div key={node.databaseId} className={styles.result}>
+            <Link href={node.uri}>
+              <a>
+                <h2 className={styles.title}>{node.title}</h2>
+              </a>
+            </Link>
+            {/* <div className={styles.meta}>
+              <time className={styles.date} dateTime={node.date}>
+                <FormatDate date={node.date} />
+              </time>
+            </div> */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: node.excerpt,
+              }}
+            />
           </div>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: node.excerpt,
-            }}
-          ></div>
-        </div>
-      ))}
+        ))}
 
-      {isLoading === true && (
-        <>
-          <LoadingSearchResult />
-          <LoadingSearchResult />
-          <LoadingSearchResult />
-        </>
-      )}
+        {isLoading === true && (
+          <>
+            <LoadingSearchResult />
+            <LoadingSearchResult />
+            <LoadingSearchResult />
+          </>
+        )}
+      </div>
     </>
-  );
+  )
 }

@@ -16,7 +16,7 @@ export default function ContentWrapperEditorial({ content, children, images }) {
 
   return (
     <article className={cx('component')}>
-      {images != undefined && (
+      {images[0] != null && (
         <div className={cx('with-slider-wrapper')}>
           <SingleEditorialSlider images={images} />
           <div
@@ -28,7 +28,7 @@ export default function ContentWrapperEditorial({ content, children, images }) {
         </div>
       )}
 
-      {images == undefined && (
+      {images[0] == null && (
         <div className={cx('with-slider-wrapper')}>
           <div
             className={cx('content-wrapper')}

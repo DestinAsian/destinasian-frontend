@@ -31,6 +31,7 @@ export default function Component(props) {
         thirdMenuItems={thirdMenu}
         fourthMenuItems={fourthMenu}
         fifthMenuItems={fifthMenu}
+        featureMenuItems={featureMenu}
       />
       <Main>
         <>

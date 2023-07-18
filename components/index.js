@@ -40,6 +40,7 @@ export { SingleEditorialEntryHeader } from './SingleEditorialEntryHeader';
 export { SingleEditorialFeaturedImage } from './SingleEditorialFeaturedImage';
 export { SingleEditorialSlider } from './SingleEditorialSlider';
 export { SingleEntryHeader } from './SingleEntryHeader';
+export { SingleHCContainer } from './SingleHCContainer';
 export { SingleHCEntryHeader } from './SingleHCEntryHeader';
 export { SingleHCFeaturedImage } from './SingleHCFeaturedImage';
 export { SingleHCPost } from './SingleHCPost';
