@@ -189,7 +189,6 @@ export default function Component(props) {
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
-
           <div className="snap-y snap-mandatory">
             <div className="snap-start">
               {currentFeatureWell && (
