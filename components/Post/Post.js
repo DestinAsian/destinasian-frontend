@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import { FeaturedImage, CategoryIcon, LocationIcon, Container } from '..'
-import styles from './post.module.scss'
+import styles from './Post.module.scss'
 
 let cx = classNames.bind(styles)
 
