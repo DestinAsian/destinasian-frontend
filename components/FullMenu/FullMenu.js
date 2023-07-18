@@ -41,7 +41,7 @@ export default function FullMenu({
       {/* Full menu */}
       <div className={cx('full-menu-content')}>
         {/* Search Bar */}
-        <div className={cx('search-bar-wrapper')}>
+        {/* <div className={cx('search-bar-wrapper')}>
           <div className={cx('search-input-wrapper')}>
             <SearchInput
               value={searchQuery}
@@ -62,7 +62,7 @@ export default function FullMenu({
               isLoading={searchResultsLoading}
             />
 
-            {/* {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
+            {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
               <div className={styles['load-more']}>
                 <Button
                   onClick={() => {
@@ -77,9 +77,9 @@ export default function FullMenu({
                   Load More
                 </Button>
               </div>
-            )} */}
+            )}
           </div>
-        </div>
+        </div> */}
         <div className={cx('first-wrapper')}>
           {/* Secondary Menu {Destinations Menu} */}
           <NavigationMenu
