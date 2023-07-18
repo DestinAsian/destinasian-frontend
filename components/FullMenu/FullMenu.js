@@ -43,7 +43,7 @@ export default function FullMenu({
         {/* Search Bar */}
         <div className={cx('search-bar-wrapper')}>
           <div className={cx('search-input-wrapper')}>
-            <SearchInput
+            {/* <SearchInput
               value={searchQuery}
               onChange={(newValue) => setSearchQuery(newValue)}
             />
@@ -60,7 +60,7 @@ export default function FullMenu({
                 ({ node }) => node,
               )}
               isLoading={searchResultsLoading}
-            />
+            /> */}
 
             {/* {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
               <div className={styles['load-more']}>
