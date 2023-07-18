@@ -107,8 +107,8 @@ export default function FullMenu({
             <ul className={cx('menu-content')}>
               {latestStories.length !== 0 &&
                 latestStories.slice(0, visiblePosts).map((post) => (
-                  <li key={post?.id}>
-                    <a href={post?.uri}>{post?.title}</a>
+                  <li key={post.id}>
+                    <a href={post.uri}>{post.title}</a>
                   </li>
                 ))}
             </ul>
