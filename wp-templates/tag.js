@@ -59,7 +59,6 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${Header.fragments.entry}
   query GetTagPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
@@ -99,9 +98,6 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `;

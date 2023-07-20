@@ -289,7 +289,6 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${HomepageHeader.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -799,9 +798,6 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `

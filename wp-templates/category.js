@@ -322,7 +322,6 @@ Component.query = gql`
   ${PostFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${CategoryHeader.fragments.entry}
   query GetCategoryPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
@@ -777,9 +776,6 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `

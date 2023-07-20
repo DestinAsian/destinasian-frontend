@@ -91,7 +91,6 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${HCHeader.fragments.entry}
   query GetPageData(
     $databaseId: ID = "131573"
     $headerLocation: MenuLocationEnum
@@ -227,9 +226,6 @@ Component.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `

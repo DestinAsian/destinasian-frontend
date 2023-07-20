@@ -133,7 +133,6 @@ SingleEditorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${SingleHeader.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -317,9 +316,6 @@ SingleEditorial.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `

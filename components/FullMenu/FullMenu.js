@@ -25,7 +25,6 @@ export default function FullMenu({
     data: searchResultsData,
     loading: searchResultsLoading,
     error: searchResultsError,
-    fetchMore: fetchMoreSearchResults,
   } = useQuery(GetSearchResults, {
     variables: {
       first: appConfig.postsPerPage,
@@ -41,7 +40,7 @@ export default function FullMenu({
       {/* Full menu */}
       <div className={cx('full-menu-content')}>
         {/* Search Bar */}
-        {/* <div className={cx('search-bar-wrapper')}>
+        <div className={cx('search-bar-wrapper')}>
           <div className={cx('search-input-wrapper')}>
             <SearchInput
               value={searchQuery}
@@ -61,25 +60,8 @@ export default function FullMenu({
               )}
               isLoading={searchResultsLoading}
             />
-
-            {searchResultsData?.contentNodes?.pageInfo?.hasNextPage && (
-              <div className={styles['load-more']}>
-                <Button
-                  onClick={() => {
-                    fetchMoreSearchResults({
-                      variables: {
-                        after:
-                          searchResultsData?.contentNodes?.pageInfo?.endCursor,
-                      },
-                    })
-                  }}
-                >
-                  Load More
-                </Button>
-              </div>
-            )}
           </div>
-        </div> */}
+        </div>
         <div className={cx('first-wrapper')}>
           {/* Secondary Menu {Destinations Menu} */}
           <NavigationMenu

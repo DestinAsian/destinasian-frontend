@@ -256,7 +256,6 @@ SingleHonorsCircle.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${HCHeader.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -443,9 +442,6 @@ SingleHonorsCircle.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `

@@ -118,7 +118,6 @@ SingleAdvertorial.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${SingleHeader.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -278,9 +277,6 @@ SingleAdvertorial.query = gql`
       nodes {
         ...NavigationMenuItemFragment
       }
-    }
-    categories {
-      ...SearchQueryFragment
     }
   }
 `
