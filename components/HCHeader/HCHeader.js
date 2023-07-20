@@ -27,7 +27,6 @@ export default function HCHeader({
 }) {
   const isDesktop = useMediaQuery({ minWidth: 768 })
   const [isNavShown, setIsNavShown] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [isScrolled, setIsScrolled] = useState(false)
 
   // Stop scrolling pages when isNavShown

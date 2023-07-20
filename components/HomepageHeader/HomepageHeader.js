@@ -15,8 +15,6 @@ import {
 import styles from './HomepageHeader.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { GetSearchResults } from '../../queries/GetSearchResults'
-import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
@@ -32,23 +30,6 @@ export default function HomepageHeader({
   const isDesktop = useMediaQuery({ minWidth: 768 })
   const [isNavShown, setIsNavShown] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-
-  // Add search query function
-  const {
-    data: searchResultsData,
-    loading: searchResultsLoading,
-    error: searchResultsError,
-    fetchMore: fetchMoreSearchResults,
-  } = useQuery(GetSearchResults, {
-    variables: {
-      first: appConfig.postsPerPage,
-      after: '',
-      search: searchQuery,
-    },
-    skip: searchQuery === '',
-    fetchPolicy: 'network-only',
-  })
 
   // Stop scrolling pages when isNavShown
   useEffect(() => {

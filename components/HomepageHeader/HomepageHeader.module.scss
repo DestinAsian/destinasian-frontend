@@ -166,41 +166,4 @@
       height: calc(-4.5rem + 100vh);
     }
   }
-
-  // Search Bar
-  .search-bar-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: auto;
-    width: 100%;
-    padding: 1rem 0 2rem;
-    background-color: var(--wpe--main--background-color);
-
-    * {
-      text-transform: none;
-    }
-
-    @media (min-width: $breakpoint-extra-small) {
-      padding: 1rem 0 3.5rem;
-    }
-
-    .search-input-wrapper {
-      position: relative;
-    }
-
-    .search-result-wrapper {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      top: 4.5rem;
-      left: 0;
-      width: 100%;
-
-      @media (min-width: $breakpoint-extra-small) {
-        top: 6.5rem;
-      }
-    }
-  }
 }
