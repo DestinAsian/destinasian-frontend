@@ -123,6 +123,7 @@ export default function Component(props) {
       desktopSrc: acfHomepageSlider?.desktopSlide2?.mediaItemUrl,
       mobileSrc: acfHomepageSlider?.mobileSlide2?.mediaItemUrl,
       url: acfHomepageSlider?.slideLink1,
+      caption: acfHomepageSlider?.slideCaption1,
     },
     {
       type: acfHomepageSlider?.typeSlide2,
@@ -130,6 +131,7 @@ export default function Component(props) {
       mobileSrc: acfHomepageSlider?.mobileSlide2?.mediaItemUrl,
       videoSrc: acfHomepageSlider?.video2?.mediaItemUrl,
       url: acfHomepageSlider?.slideLink2,
+      caption: acfHomepageSlider?.slideCaption2,
     },
     {
       type: acfHomepageSlider?.typeSlide3,
@@ -137,6 +139,7 @@ export default function Component(props) {
       mobileSrc: acfHomepageSlider?.mobileSlide3?.mediaItemUrl,
       videoSrc: acfHomepageSlider?.video3?.mediaItemUrl,
       url: acfHomepageSlider?.slideLink3,
+      caption: acfHomepageSlider?.slideCaption3,
     },
   ]
 
@@ -199,6 +202,7 @@ export default function Component(props) {
                       videoSrc={currentFeatureWell?.videoSrc}
                       desktopSrc={currentFeatureWell?.desktopSrc}
                       url={currentFeatureWell?.url}
+                      caption={currentFeatureWell?.caption}
                     />
                   )}
                   {isMobile && (
@@ -207,6 +211,7 @@ export default function Component(props) {
                       videoSrc={currentFeatureWell?.videoSrc}
                       mobileSrc={currentFeatureWell?.mobileSrc}
                       url={currentFeatureWell?.url}
+                      caption={currentFeatureWell?.caption}
                     />
                   )}
                 </Container>
@@ -336,6 +341,9 @@ Component.query = gql`
         video3 {
           mediaItemUrl
         }
+        slideCaption1
+        slideCaption2
+        slideCaption3
         slideLink1
         slideLink2
         slideLink3

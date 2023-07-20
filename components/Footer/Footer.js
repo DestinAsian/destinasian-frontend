@@ -8,7 +8,7 @@ export default function Footer() {
 
   const aboutUri = '/about'
   const contactUri = '/contact'
-  const socialUri = 'https://www.instagram.com/destinasianmagazine/'
+  const socialUri = '/socials'
 
   return (
     <footer className={cx('component')}>

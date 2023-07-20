@@ -4,11 +4,53 @@
   width: 100vw;
   height: 100vh;
 
-  img,
-  video {
+  .video-wrapper {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+
+    img,
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .caption-wrapper {
+      display: flex;
+      justify-content: center;
+      color: var(--wpe--color--white);
+      top: 85vh;
+      width: 100%;
+      position: absolute;
+      font-family: 'Unit Slab Pro Black';
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+
+      @media (min-width: $breakpoint-extra-small) {
+        top: 85vh;
+        font-size: 3rem;
+      }
+    }
+
+    .chevron-wrapper {
+      display: flex;
+      justify-content: center;
+      color: var(--wpe--color--white);
+      top: 95vh;
+      width: 100%;
+      position: absolute;
+      transform: rotate(90deg);
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        @media (min-width: $breakpoint-extra-small) {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
   }
 }
