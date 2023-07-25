@@ -89,8 +89,7 @@ export default function SEO({ title, description, imageUrl, url }) {
                 // Define the ad unit size mapping for responsive ads
                 var mapping1 = googletag.sizeMapping()
                   .addSize([0, 0], [300, 250])
-                  .addSize([640, 0], [640, 535])
-                  .addSize([1024, 0], [512, 428])
+                  .addSize([510, 0], [510, 425])
                   .build();
 
                   googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [510, 425]], 'div-gpt-ad-1690283074657-0')
