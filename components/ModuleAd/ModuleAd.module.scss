@@ -21,9 +21,43 @@
 }
 
 .ad-content {
-  // width: 300px;
+  display: block;
   width: 100%;
+
+  @media (min-width: $breakpoint-extra-small) {
+    display: none;
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    display: none;
+  }
 }
+
+// .tablet-ad-content {
+//   display: none;
+//   width: 100%;
+
+//   @media (min-width: $breakpoint-extra-small) {
+//     display: block;
+//   }
+
+//   @media (min-width: $breakpoint-medium) {
+//     display: none;
+//   }
+// }
+
+// .desktop-ad-content {
+//   display: none;
+//   width: 100%;
+
+//   @media (min-width: $breakpoint-extra-small) {
+//     display: none;
+//   }
+
+//   @media (min-width: $breakpoint-medium) {
+//     display: block;
+//   }
+// }
 
 .border-bottom {
   width: 95%;

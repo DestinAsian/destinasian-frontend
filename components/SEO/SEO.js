@@ -62,7 +62,11 @@ export default function SEO({ title, description, imageUrl, url }) {
 
         {/* Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
 
         <link
           href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
@@ -77,14 +81,23 @@ export default function SEO({ title, description, imageUrl, url }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Define the ad unit size mapping for responsive ads
+              var mapping1 = googletag.sizeMapping()
+                .addSize([0, 0], [300, 250]) // Default ad size for smaller screens
+                .addSize([640, 0], [640, 535]) // Ad size for screens with width >= 640
+                .addSize([1024, 0], [512, 428]) // Ad size for screens with width >= 1024
+                .build();
+
+              // Initialize Google Ad Manager
               window.googletag = window.googletag || {cmd: []};
               googletag.cmd.push(function() {
-                googletag.defineSlot('/34877012/DA_Module_Ad_1', [300, 250], 'div-gpt-ad-1687504295147-0').addService(googletag.pubads());
-                googletag.defineSlot('/34877012/DA_Module_Ad_2', [300, 250], 'div-gpt-ad-1687504934896-0').addService(googletag.pubads());
+                var slot = googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [640, 535], [512, 428]], 'div-gpt-ad-1')
+                  .defineSizeMapping(mapping1)
+                  .addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_3', [300, 250], 'div-gpt-ad-1687505544870-0').addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_4', [300, 250], 'div-gpt-ad-1687505709352-0').addService(googletag.pubads());
+                
                 googletag.pubads().enableSingleRequest();
-                googletag.pubads().collapseEmptyDivs();
                 googletag.enableServices();
               });
             `,

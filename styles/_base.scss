@@ -59,6 +59,11 @@ img {
   height: auto;
 }
 
+// Advertisement
+iframe {
+  margin: 0 auto;
+}
+
 ::-moz-selection {
   color: var(--wpe--color--white);
   background-color: var(--wpe--color--accent);
