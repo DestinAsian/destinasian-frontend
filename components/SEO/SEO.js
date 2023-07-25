@@ -21,6 +21,7 @@ export default function SEO({ title, description, imageUrl, url }) {
       <Head>
         <meta property="og:type" content="website" />
         <meta property="twitter:card" content="summary_large_image" />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
 
         {title && (
           <>
