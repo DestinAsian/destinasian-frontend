@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: $breakpoint-small) {
+  @media (min-width: $breakpoint-medium) {
     width: 50vw;
   }
 }
