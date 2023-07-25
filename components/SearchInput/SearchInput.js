@@ -17,7 +17,7 @@ export default function SearchInput({ value, onChange, ...props }) {
   // Clear and focus the input on initial render
   useEffect(() => {
     input.current.value = '';
-    input.current.focus();
+    // input.current.focus();
   }, []);
 
   return (
