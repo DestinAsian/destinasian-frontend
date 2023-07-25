@@ -6,6 +6,7 @@ import { CategoryEntryHeader, DaGuideMenu } from '..'
 let cx = classNames.bind(styles)
 
 export default function SecondaryHeader({
+  home,
   parent,
   parentName,
   parentUri,
@@ -47,7 +48,10 @@ export default function SecondaryHeader({
   useEffect(() => {
     function handleScroll() {
       const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 30 && currentScrollY < prevScrollY)
+      setIsScrolled(
+        currentScrollY > 0,
+        // && currentScrollY < prevScrollY
+      )
       setPrevScrollY(currentScrollY)
     }
 
@@ -59,105 +63,148 @@ export default function SecondaryHeader({
   }, [prevScrollY])
 
   return (
-    // <nav className={cx('sticky-header', { 'sticky-header-hidden': (!isScrolled && prevScrollY!=0) })}>
-    <nav className={cx('component', { sticky: isScrolled })}>
-      <div className={cx('container-wrapper')}>
-        <div className={cx('navbar')}>
-          {/* Parent category navigation */}
-          {children?.edges?.length != 0 &&
-            children != null &&
-            children != undefined && (
-              <div className={cx('navbar-wrapper')}>
-                {/* {'parent'} */}
-                <div className={cx('da-guide-wrapper')}>
-                  {destinationGuides == 'yes' && (
-                    <DaGuideMenu
-                      title={titleCountryCode}
-                      titleName={titleName}
-                      titleUri={titleUri}
-                    />
-                  )}
-                  {destinationGuides == null && null}
-                </div>
-                <div className={cx('navigation-wrapper')}>
-                  {children?.edges?.map((post) => (
-                    <li key={post?.node?.uri} className={cx('nav-link')}>
-                      <a
-                        href={post?.node?.uri}
-                        className={cx(isActive(post?.node?.uri) ? 'active' : '')}
-                      >
-                        <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
-                      </a>
-                    </li>
-                  ))}
-                </div>
-              </div>
-            )}
+    <nav className={cx('component')}>
+      {home == '/' && (
+        <div
+          className={cx('home-container-wrapper', { homeSticky: isScrolled })}
+        >
+          <div className={cx('home-navbar')}>
+            {/* Homepage navigation */}
 
-          {/* Children category navigation */}
-          {parent?.node?.children?.edges?.length != 0 &&
-            parent != null &&
-            parent != undefined && (
-              <div className={cx('navbar-wrapper')}>
-                {/* {'children'} */}
-                <div className={cx('da-guide-wrapper')}>
-                  {parentDestinationGuides == 'yes' && (
-                    <DaGuideMenu
-                      parent={parentCountryCode}
-                      parentUri={parentUri}
-                      parentName={parentName}
-                      parentDestinationGuides={parentDestinationGuides}
-                    />
-                  )}
-                  {parentDestinationGuides == null && null}
-                </div>
-                <div className={cx('navigation-wrapper')}>
-                  {parent?.node?.children?.edges?.map((post) => (
-                    <li key={post?.node?.uri} className={cx('nav-link')}>
-                      <a
-                        href={post?.node?.uri}
-                        className={cx(isActive(post?.node?.uri) ? 'active' : '')}
-                      >
-                        <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
-                      </a>
-                    </li>
-                  ))}
-                </div>
-              </div>
-            )}
-
-          {/* Single post navigation */}
-          {categories && (
-            <div className={cx('navbar-wrapper')}>
-              {/* {'categories'} */}
-              <div className={cx('da-guide-wrapper')}>
-                {categoryDestinationGuides == 'yes' && (
-                  <DaGuideMenu
-                    categories={categoryCountryCode}
-                    categoryUri={categoryUri}
-                    categoryName={categoryName}
-                  />
-                )}
-                {categoryDestinationGuides == null && null}
-              </div>
+            <div className={cx('home-navbar-wrapper')}>
               <div className={cx('navigation-wrapper')}>
-                {categories?.node?.children?.edges?.map((post) => (
-                  <li key={post?.node?.uri} className={cx('single-nav-link')}>
-                    <a
-                      href={post?.node?.uri}
-                      className={cx(
-                        isActiveCategory(post?.node?.uri) ? 'active' : '',
-                      )}
-                    >
-                      <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
-                    </a>
-                  </li>
-                ))}
+                {/* {children?.edges?.map((post) => ( */}
+                <li className={cx('nav-link')}>
+                  {/* <button
+                    type="button"
+                    className={cx('menu-icon')}
+                    onClick={() => setIsNavShown(!isNavShown)}
+                    aria-label="Toggle navigation"
+                    aria-controls={cx('full-menu-wrapper')}
+                    aria-expanded={!isNavShown}
+                  > */}
+                    <h2 className={cx('nav-name')}>{'Destinations'}</h2>
+                  {/* </button> */}
+                </li>
+                <li className={cx('nav-link')}>
+                  <h2 className={cx('nav-name')}>{'Destinations Guides'}</h2>
+                </li>
+                <li className={cx('nav-link')}>
+                  <h2 className={cx('nav-name')}>{'Feature Stories'}</h2>
+                </li>
+                <li className={cx('nav-link')}>
+                  <h2 className={cx('nav-name')}>{'Latest Travel Stories'}</h2>
+                </li>
+                {/* ))} */}
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
+
+      {home == undefined && (
+        <div className={cx('container-wrapper', { sticky: isScrolled })}>
+          <div className={cx('navbar')}>
+            {/* Parent category navigation */}
+            {children?.edges?.length != 0 &&
+              children != null &&
+              children != undefined && (
+                <div className={cx('navbar-wrapper')}>
+                  {/* {'parent'} */}
+                  <div className={cx('da-guide-wrapper')}>
+                    {destinationGuides == 'yes' && (
+                      <DaGuideMenu
+                        title={titleCountryCode}
+                        titleName={titleName}
+                        titleUri={titleUri}
+                      />
+                    )}
+                    {destinationGuides == null && null}
+                  </div>
+                  <div className={cx('navigation-wrapper')}>
+                    {children?.edges?.map((post) => (
+                      <li key={post?.node?.uri} className={cx('nav-link')}>
+                        <a
+                          href={post?.node?.uri}
+                          className={cx(
+                            isActive(post?.node?.uri) ? 'active' : '',
+                          )}
+                        >
+                          <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
+                        </a>
+                      </li>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {/* Children category navigation */}
+            {parent?.node?.children?.edges?.length != 0 &&
+              parent != null &&
+              parent != undefined && (
+                <div className={cx('navbar-wrapper')}>
+                  {/* {'children'} */}
+                  <div className={cx('da-guide-wrapper')}>
+                    {parentDestinationGuides == 'yes' && (
+                      <DaGuideMenu
+                        parent={parentCountryCode}
+                        parentUri={parentUri}
+                        parentName={parentName}
+                        parentDestinationGuides={parentDestinationGuides}
+                      />
+                    )}
+                    {parentDestinationGuides == null && null}
+                  </div>
+                  <div className={cx('navigation-wrapper')}>
+                    {parent?.node?.children?.edges?.map((post) => (
+                      <li key={post?.node?.uri} className={cx('nav-link')}>
+                        <a
+                          href={post?.node?.uri}
+                          className={cx(
+                            isActive(post?.node?.uri) ? 'active' : '',
+                          )}
+                        >
+                          <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
+                        </a>
+                      </li>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {/* Single post navigation */}
+            {categories && (
+              <div className={cx('navbar-wrapper')}>
+                {/* {'categories'} */}
+                <div className={cx('da-guide-wrapper')}>
+                  {categoryDestinationGuides == 'yes' && (
+                    <DaGuideMenu
+                      categories={categoryCountryCode}
+                      categoryUri={categoryUri}
+                      categoryName={categoryName}
+                    />
+                  )}
+                  {categoryDestinationGuides == null && null}
+                </div>
+                <div className={cx('navigation-wrapper')}>
+                  {categories?.node?.children?.edges?.map((post) => (
+                    <li key={post?.node?.uri} className={cx('single-nav-link')}>
+                      <a
+                        href={post?.node?.uri}
+                        className={cx(
+                          isActiveCategory(post?.node?.uri) ? 'active' : '',
+                        )}
+                      >
+                        <h2 className={cx('nav-name')}>{post?.node?.name}</h2>
+                      </a>
+                    </li>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

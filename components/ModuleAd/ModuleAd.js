@@ -33,7 +33,19 @@ export default function ModuleAd({
     <div className={cx('component')}>
       {moduleAd1 && (
         <div className={cx('ad-container')}>
-          <img className={cx('ad-content')} src={banners[0].src}></img>
+          {/* <img className={cx('ad-content')} src={banners[0].src}></img> */}
+          {/* Google Ad Manager Module Ad 1 */}
+          <div
+            className={cx('ad-content')}
+            dangerouslySetInnerHTML={{
+              __html: `<!-- /34877012/DA_Module_Ad_1 -->
+                <div id='div-gpt-ad-1687504295147-0' style='min-width: 300px; min-height: 250px;'>
+                  <script>
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1687504295147-0'); });
+                  </d>
+                </div>`,
+            }}
+          />
         </div>
       )}
       {moduleAd2 && (
@@ -52,21 +64,6 @@ export default function ModuleAd({
         </div>
       )}
       <div className={cx('border-bottom')}></div>
-      
-      {/* Google Ad Manager Module Ad 1 */}
-      {/* <div className={cx('ad-container')}>
-        <div
-          className={cx('ad-content')}
-          dangerouslySetInnerHTML={{
-            __html: `<!-- /34877012/DA_Module_Ad_1 -->
-                <div id='div-gpt-ad-1687504295147-0' style='min-width: 300px; min-height: 250px;'>
-                  <script>
-                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1687504295147-0'); });
-                  </d>
-                </div>`,
-          }}
-        />
-      </div> */}
 
       {/* Google Ad Manager Module Ad 2 */}
       {/* <div className={cx('ad-container')}>

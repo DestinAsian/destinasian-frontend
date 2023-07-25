@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
@@ -18,6 +18,7 @@ import {
   ModuleAd,
   FeatureWell,
   Button,
+  SecondaryHeader,
 } from '../components'
 
 export default function Component(props) {
@@ -36,7 +37,7 @@ export default function Component(props) {
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const latestMenu = props?.data?.latestHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { content, featuredImage, acfHomepageSlider, homepagePinPosts } =
+  const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri } =
     props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
@@ -171,6 +172,17 @@ export default function Component(props) {
     ),
   ]
 
+  const [isNavShown, setIsNavShown] = useState(false)
+
+  // Stop scrolling pages when isNavShown
+  useEffect(() => {
+    if (isNavShown) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'visible'
+    }
+  }, [isNavShown])
+
   return (
     <>
       <SEO
@@ -188,7 +200,9 @@ export default function Component(props) {
         fifthMenuItems={fifthMenu}
         featureMenuItems={featureMenu}
         latestStories={allPosts}
+        home={uri}
       />
+      <SecondaryHeader home={uri}/>
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}
@@ -217,9 +231,7 @@ export default function Component(props) {
                 </Container>
               )}
             </div>
-            <div className="snap-start pt-16">
-              {/* <ContentWrapper content={content} /> */}
-
+            <div id="snapStart" className="snap-start pt-16">
               {/* All posts sorted by pinPosts then mainPosts & date */}
               {mergedPosts.length !== 0 &&
                 mergedPosts.slice(0, visiblePosts).map((post, index) => (
@@ -312,6 +324,7 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      uri
       ...FeaturedImageFragment
       acfHomepageSlider {
         desktopSlide1 {

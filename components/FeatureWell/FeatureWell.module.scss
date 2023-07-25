@@ -20,7 +20,7 @@
       display: flex;
       justify-content: center;
       color: var(--wpe--color--white);
-      top: 85vh;
+      top: 80vh;
       width: 100%;
       position: absolute;
       font-family: 'Unit Slab Pro Black';
@@ -29,7 +29,6 @@
       text-align: center;
 
       @media (min-width: $breakpoint-extra-small) {
-        top: 85vh;
         font-size: 3rem;
       }
     }
@@ -38,12 +37,13 @@
       display: flex;
       justify-content: center;
       color: var(--wpe--color--white);
-      top: 95vh;
+      top: 70vh;
       width: 100%;
       position: absolute;
-      transform: rotate(90deg);
+      visibility: hidden;
 
       svg {
+        transform: rotate(90deg);
         width: 1.5rem;
         height: 1.5rem;
         @media (min-width: $breakpoint-extra-small) {
@@ -51,6 +51,12 @@
           height: 2rem;
         }
       }
+    }
+
+    .maximized {
+      top: 92.5vh;
+      transition: top 0.5s ease-in-out;
+      visibility: visible;
     }
   }
 }
