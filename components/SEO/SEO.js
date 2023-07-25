@@ -92,7 +92,7 @@ export default function SEO({ title, description, imageUrl, url }) {
                   .addSize([1024, 0], [512, 428])
                   .build();
 
-                googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [640, 535], [512, 428]], 'div-gpt-ad-1690269614970-0')
+                  googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [510, 425]], 'div-gpt-ad-1690283074657-0')
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_3', [300, 250], 'div-gpt-ad-1687505544870-0').addService(googletag.pubads());

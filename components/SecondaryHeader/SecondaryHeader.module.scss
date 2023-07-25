@@ -47,11 +47,16 @@
 }
 
 .homeSticky {
-  padding: 0 0 0.5rem;
-  content-visibility: visible;
+  padding: 0;
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding: 0 0 0.5rem;
+    content-visibility: visible;
+  }
 }
 
-.sticky, .homeSticky {
+.sticky,
+.homeSticky {
   background-color: var(--wpe--main--background-color);
   position: fixed;
   top: 0;

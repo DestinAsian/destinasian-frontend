@@ -181,7 +181,7 @@ export default function Component(props) {
   const latestAllPosts = latestMainCatPosts.sort(sortPostsByDate)
 
   // Declare Pin Posts
-  const allPinPosts = [pinPosts?.pinPost]
+  const allPinPosts = pinPosts?.pinPost ? [pinPosts?.pinPost] : []
 
   // Merge All posts and Pin posts
   const mergedPosts = [
@@ -281,6 +281,7 @@ export default function Component(props) {
                 {index === 13 && <ModuleAd moduleAd4 />}
               </React.Fragment>
             ))}
+          {console.log(mergedPosts)}
           {visiblePosts < mergedPosts.length && (
             <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
               <Button onClick={loadMorePosts} className="gap-x-4	">

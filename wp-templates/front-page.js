@@ -157,12 +157,12 @@ export default function Component(props) {
 
   // Declare Pin Posts
   const allPinPosts = [
-    homepagePinPosts?.pinPost1,
-    homepagePinPosts?.pinPost2,
-    homepagePinPosts?.pinPost3,
-    homepagePinPosts?.pinPost4,
-    homepagePinPosts?.pinPost5,
-  ]
+    homepagePinPosts?.pinPost1 ? homepagePinPosts?.pinPost1 : null,
+    homepagePinPosts?.pinPost2 ? homepagePinPosts?.pinPost2 : null,
+    homepagePinPosts?.pinPost3 ? homepagePinPosts?.pinPost3 : null,
+    homepagePinPosts?.pinPost4 ? homepagePinPosts?.pinPost4 : null,
+    homepagePinPosts?.pinPost5 ? homepagePinPosts?.pinPost5 : null,
+  ].filter((pinPost) => pinPost !== null)
 
   // Merge All posts and Pin posts
   const mergedPosts = [
@@ -202,7 +202,7 @@ export default function Component(props) {
         latestStories={allPosts}
         home={uri}
       />
-      <SecondaryHeader home={uri}/>
+      <SecondaryHeader home={uri} />
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}

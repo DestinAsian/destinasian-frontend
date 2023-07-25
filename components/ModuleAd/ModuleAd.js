@@ -40,11 +40,9 @@ export default function ModuleAd({
             dangerouslySetInnerHTML={{
               __html: `
               <!-- /34877012/DA_Module_Ad_2 -->
-              <div id='div-gpt-ad-1690269614970-0' style='min-width: 300px; min-height: 250px;'>
+              <div id='div-gpt-ad-1690283074657-0' style='min-width: 300px; min-height: 250px;'>
                 <script>
-                  googletag.cmd.push(function() { 
-                    googletag.display('div-gpt-ad-1690269614970-0'); 
-                  });
+                  googletag.cmd.push(function() { googletag.display('div-gpt-ad-1690283074657-0'); });
                 </script>
               </div>
               `,

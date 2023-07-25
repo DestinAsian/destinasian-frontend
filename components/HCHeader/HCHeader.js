@@ -67,7 +67,7 @@ export default function HCHeader({
                   </a>
                 </Link>
               ) : (
-                <Link href="/honors-circle">
+                <Link href="/">
                   <a className={cx('title')}>
                     <img src={destinasianLogo.src} alt="DestinAsian Logo" />
                   </a>
