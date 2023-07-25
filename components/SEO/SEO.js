@@ -98,6 +98,7 @@ export default function SEO({ title, description, imageUrl, url }) {
                 googletag.defineSlot('/34877012/DA_Module_Ad_3', [300, 250], 'div-gpt-ad-1687505544870-0').addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_4', [300, 250], 'div-gpt-ad-1687505709352-0').addService(googletag.pubads());
 
+                googletag.pubads().collapseEmptyDivs()
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });
