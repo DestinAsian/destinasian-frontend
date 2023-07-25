@@ -21,16 +21,15 @@
 }
 
 .ad-content {
-  display: block;
   width: 100%;
 
-  @media (min-width: $breakpoint-extra-small) {
-    display: none;
-  }
+  // @media (min-width: $breakpoint-extra-small) {
+  //   display: none;
+  // }
 
-  @media (min-width: $breakpoint-medium) {
-    display: none;
-  }
+  // @media (min-width: $breakpoint-medium) {
+  //   display: none;
+  // }
 }
 
 // .tablet-ad-content {
