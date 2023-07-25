@@ -81,22 +81,23 @@ export default function SEO({ title, description, imageUrl, url }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Define the ad unit size mapping for responsive ads
-              var mapping1 = googletag.sizeMapping()
-                .addSize([0, 0], [300, 250]) // Default ad size for smaller screens
-                .addSize([640, 0], [640, 535]) // Ad size for screens with width >= 640
-                .addSize([1024, 0], [512, 428]) // Ad size for screens with width >= 1024
-                .build();
-
               // Initialize Google Ad Manager
               window.googletag = window.googletag || {cmd: []};
               googletag.cmd.push(function() {
-                var slot = googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [640, 535], [512, 428]], 'div-gpt-ad-1')
+
+                // Define the ad unit size mapping for responsive ads
+                var mapping1 = googletag.sizeMapping()
+                  .addSize([0, 0], [300, 250])
+                  .addSize([640, 0], [640, 535])
+                  .addSize([1024, 0], [512, 428])
+                  .build();
+
+                googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [640, 535], [512, 428]], 'div-gpt-ad-1690269614970-0')
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_3', [300, 250], 'div-gpt-ad-1687505544870-0').addService(googletag.pubads());
                 googletag.defineSlot('/34877012/DA_Module_Ad_4', [300, 250], 'div-gpt-ad-1687505709352-0').addService(googletag.pubads());
-                
+
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               });

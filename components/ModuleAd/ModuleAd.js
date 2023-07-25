@@ -39,15 +39,13 @@ export default function ModuleAd({
             className={cx('ad-content')}
             dangerouslySetInnerHTML={{
               __html: `
-              <div id="div-gpt-ad-1">
-                <!-- /34877012/DA_Module_Ad_2 -->
-                <div id='div-gpt-ad-1690269614970-0' style='min-width: 300px; min-height: 250px;'>
-                  <script>
-                    googletag.cmd.push(function() { 
-                      googletag.display('div-gpt-ad-1690269614970-0'); 
-                    });
-                  </script>
-                </div>
+              <!-- /34877012/DA_Module_Ad_2 -->
+              <div id='div-gpt-ad-1690269614970-0' style='min-width: 300px; min-height: 250px;'>
+                <script>
+                  googletag.cmd.push(function() { 
+                    googletag.display('div-gpt-ad-1690269614970-0'); 
+                  });
+                </script>
               </div>
               `,
             }}
