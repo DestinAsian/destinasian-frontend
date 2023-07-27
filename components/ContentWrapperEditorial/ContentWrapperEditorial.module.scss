@@ -21,9 +21,7 @@
 
   .content-wrapper {
     display: block;
-    flex-direction: column;
-    row-gap: 0.25rem;
-    padding: 1.25rem 0;
+    padding: 1.125rem 0;
 
     @media (min-width: $breakpoint-medium) {
       padding: 0 1rem;
