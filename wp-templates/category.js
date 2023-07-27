@@ -376,7 +376,6 @@ Component.query = gql`
     $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
-    $search: String = "ROS"
     $field: PostObjectsConnectionOrderbyEnum = DATE
     $order: OrderEnum = ASC
   ) {
@@ -768,7 +767,7 @@ Component.query = gql`
     }
     bannerAds(
       first: $first
-      where: { search: $search, orderby: { order: $order, field: $field } }
+      where: { orderby: { order: $order, field: $field } }
     ) {
       ...ModuleAdFragment
     }

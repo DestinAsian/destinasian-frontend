@@ -12,6 +12,9 @@ import {
   SEO,
   SingleEditorialFeaturedImage,
   ContentWrapperEditorial,
+  ModuleAd,
+  RelatedStories,
+  EntryRelatedStories,
 } from '../components'
 
 export default function SingleEditorial(props) {
@@ -40,9 +43,20 @@ export default function SingleEditorial(props) {
   const categories = props?.data?.editorial?.categories?.edges ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
+  const relatedStories = categories[0]?.node?.editorials ?? []
 
   const mainPosts = []
   const mainEditorialPosts = []
+  const mainRelatedStories = []
+
+  // Randomized Function
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[array[i], array[j]] = [array[j], array[i]]
+    }
+    return array
+  }
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
@@ -88,6 +102,23 @@ export default function SingleEditorial(props) {
       : null,
   ]
 
+  // Randomized slice function
+  function getRandomSlice(array, count) {
+    const shuffledArray = shuffleArray([...array])
+    return shuffledArray.slice(0, count)
+  }
+
+  // loop through all related stories by category
+  relatedStories.edges.forEach((post) => {
+    mainRelatedStories.push(post.node)
+  })
+
+  // Define related stories, taking a random slice of 5 elements
+  const mainRelatedPosts = getRandomSlice(
+    mainRelatedStories,
+    5, // Change this number to the desired count
+  )
+
   return (
     <>
       <SEO
@@ -120,7 +151,20 @@ export default function SingleEditorial(props) {
               date={date}
             />
             <ContentWrapperEditorial content={content} images={images} />
-            {/* <ModuleAd /> */}
+            {/* <ModuleAd banner1={}/> */}
+            <EntryRelatedStories />
+            {mainRelatedPosts.length !== 0 &&
+              mainRelatedPosts.map((post) => (
+                // Render the merged posts here
+                <RelatedStories
+                  title={post?.title}
+                  excerpt={post?.excerpt}
+                  uri={post?.uri}
+                  category={post?.categories?.edges[0]?.node?.name}
+                  categoryUri={post?.categories?.edges[0]?.node?.uri}
+                  featuredImage={post?.featuredImage?.node}
+                />
+              ))}
           </Container>
         </>
       </Main>
@@ -192,6 +236,24 @@ SingleEditorial.query = gql`
                 node {
                   name
                   uri
+                }
+              }
+            }
+            editorials {
+              edges {
+                node {
+                  title
+                  excerpt
+                  uri
+                  ...FeaturedImageFragment
+                  categories {
+                    edges {
+                      node {
+                        name
+                        uri
+                      }
+                    }
+                  }
                 }
               }
             }
