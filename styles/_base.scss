@@ -64,6 +64,21 @@ iframe {
   margin: 0 auto;
 }
 
+/* Editorial Dropcap */
+p:has(span.dropcap) {
+  display: inline-block;
+}
+
+.dropcap {
+  color: var(--wpe--color--orange);
+  font-family: "DreamOrphans-Regular";
+  font-weight: 700;
+  line-height: 0;
+  font-size: 5rem;
+  margin: 0 0.5rem 0 0;
+  float: left;
+}
+
 ::-moz-selection {
   color: var(--wpe--color--white);
   background-color: var(--wpe--color--accent);

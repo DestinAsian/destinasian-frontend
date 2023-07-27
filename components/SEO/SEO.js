@@ -82,27 +82,19 @@ export default function SEO({ title, description, imageUrl, url }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Initialize Google Ad Manager
-              window.googletag = window.googletag || {cmd: []};
-              googletag.cmd.push(function() {
+            if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
+            var AdButlerHB = AdButlerHB || {}; AdButlerHB.cmd = AdButlerHB.cmd || [];
+            AdButlerHB.timeout = 700;
+            AdButlerHB.cmd.push(function(){
 
-                // Define the ad unit size mapping for responsive ads
-                var mapping1 = googletag.sizeMapping()
-                  .addSize([0, 0], [300, 250])
-                  .addSize([510, 0], [510, 425])
-                  .build();
+            /* === ZONE ENTRIES GO HERE === */
+            AdButlerHB.registerAuction('abhb_70934_1', [[0,0]],624644, 185947, "servedbyadbutler.com");
+            AdButlerHB.registerAuction('abhb_70769_1', [[0,0]],624645, 185947, "servedbyadbutler.com");
+            AdButlerHB.registerAuction('abhb_36282_1', [[0,0]],624646, 185947, "servedbyadbutler.com");
+            AdButlerHB.registerAuction('abhb_14394_1', [[0,0]],624647, 185947, "servedbyadbutler.com");
 
-                  googletag.defineSlot('/34877012/DA_Module_Ad_1', [MISSING_WIDTH, MISSING_HEIGHT], 'div-gpt-ad-1690435753500-0').setTargeting('URL_Exact', ['\/', '\/honors-circle\/', '\/category\/thailand\/']).addService(googletag.pubads());
-                  googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [510, 425]], 'div-gpt-ad-1690283074657-0')
-                  .defineSizeMapping(mapping1)
-                  .addService(googletag.pubads());
-                googletag.defineSlot('/34877012/DA_Module_Ad_3', [300, 250], 'div-gpt-ad-1687505544870-0').addService(googletag.pubads());
-                googletag.defineSlot('/34877012/DA_Module_Ad_4', [300, 250], 'div-gpt-ad-1687505709352-0').addService(googletag.pubads());
-
-                googletag.pubads().collapseEmptyDivs()
-                googletag.pubads().enableSingleRequest();
-                googletag.enableServices();
-              });
+            AdButlerHB.requestAuctions();
+            });
             `,
           }}
         ></script>

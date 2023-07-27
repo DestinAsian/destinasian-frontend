@@ -1,3 +1,4 @@
+export { BannerAd } from './BannerAd';
 export { Button } from './Button';
 export { CategoryEntryHeader } from './CategoryEntryHeader';
 export { CategoryHeader } from './CategoryHeader';

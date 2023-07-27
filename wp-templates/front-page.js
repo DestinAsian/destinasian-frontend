@@ -294,7 +294,7 @@ export default function Component(props) {
                     {/* Banner Ads */}
                     {index === 1 && (
                       <ModuleAd
-                        bannerAd1
+                        bannerAd1={shuffledBannerAds[0]?.node?.content}
                       />
                     )}
                     {index === 5 && (

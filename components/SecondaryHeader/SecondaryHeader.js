@@ -87,7 +87,7 @@ export default function SecondaryHeader({
                   {/* </button> */}
                 </li>
                 <li className={cx('nav-link')}>
-                  <h2 className={cx('nav-name')}>{'Destinations Guides'}</h2>
+                  <h2 className={cx('nav-name')}>{'Destination Guides'}</h2>
                 </li>
                 <li className={cx('nav-link')}>
                   <h2 className={cx('nav-name')}>{'Feature Stories'}</h2>
