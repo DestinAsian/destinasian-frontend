@@ -37,11 +37,12 @@ export default function Component(props) {
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const latestMenu = props?.data?.latestHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri } =
-    props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
   const advertorials = props?.data?.advertorials ?? []
+  const bannerAds = props?.data?.bannerAds ?? []
+  const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri } =
+    props?.data?.page ?? []
 
   // Load More Function
   const [visiblePosts, setVisiblePosts] = useState(4)
@@ -183,6 +184,38 @@ export default function Component(props) {
     }
   }, [isNavShown])
 
+  // Randomized Function
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[array[i], array[j]] = [array[j], array[i]]
+    }
+    return array
+  }
+
+  // Declare state for shuffled banner ads
+  const [shuffledBannerAds, setShuffledBannerAds] = useState({});
+
+  // Function to shuffle the banner ads and store them in state
+  const shuffleBannerAds = () => {
+    // Assuming bannerAds is an object containing all available bannerAds
+    const bannerAdsArray = Object.values(bannerAds?.edges || []);
+    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray);
+
+    // Convert the shuffled array back to an object
+    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
+      acc[index] = curr;
+      return acc;
+    }, {});
+
+    setShuffledBannerAds(shuffledAds);
+  };
+
+  useEffect(() => {
+    // Shuffle the banner ads when the component mounts
+    shuffleBannerAds();
+  }, []);
+
   return (
     <>
       <SEO
@@ -258,10 +291,27 @@ export default function Component(props) {
                       locationLabel={post?.acfLocationIcon?.locationLabel}
                       locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
-                    {index === 1 && <ModuleAd moduleAd1 />}
-                    {index === 5 && <ModuleAd moduleAd2 />}
-                    {index === 9 && <ModuleAd moduleAd3 />}
-                    {index === 13 && <ModuleAd moduleAd4 />}
+                    {/* Banner Ads */}
+                    {index === 1 && (
+                      <ModuleAd
+                        bannerAd1
+                      />
+                    )}
+                    {index === 5 && (
+                      <ModuleAd
+                        bannerAd2={shuffledBannerAds[1]?.node?.content}
+                      />
+                    )}
+                    {index === 9 && (
+                      <ModuleAd
+                        bannerAd3={shuffledBannerAds[2]?.node?.content}
+                      />
+                    )}
+                    {index === 13 && (
+                      <ModuleAd
+                        bannerAd4={shuffledBannerAds[3]?.node?.content}
+                      />
+                    )}
                   </React.Fragment>
                 ))}
               {visiblePosts < mergedPosts.length && (
@@ -306,6 +356,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${ModuleAd.fragments.entry}
   query GetPageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -320,6 +371,9 @@ Component.query = gql`
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
     $where2: RootQueryToAdvertorialConnectionWhereArgs = { status: PUBLISH }
+    $search: String = "Homepage"
+    $field: PostObjectsConnectionOrderbyEnum = DATE
+    $order: OrderEnum = ASC
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -763,6 +817,12 @@ Component.query = gql`
           ...FeaturedImageFragment
         }
       }
+    }
+    bannerAds(
+      first: $first
+      where: { search: $search, orderby: { order: $order, field: $field } }
+    ) {
+      ...ModuleAdFragment
     }
     generalSettings {
       ...BlogInfoFragment

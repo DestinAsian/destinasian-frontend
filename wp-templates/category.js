@@ -32,6 +32,7 @@ export default function Component(props) {
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
+  const bannerAds = props?.data?.bannerAds ?? []
   const {
     name,
     uri,
@@ -191,6 +192,38 @@ export default function Component(props) {
     ),
   ]
 
+  // Randomized Function
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[array[i], array[j]] = [array[j], array[i]]
+    }
+    return array
+  }
+
+  // Declare state for shuffled banner ads
+  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
+
+  // Function to shuffle the banner ads and store them in state
+  const shuffleBannerAds = () => {
+    // Assuming bannerAds is an object containing all available bannerAds
+    const bannerAdsArray = Object.values(bannerAds?.edges || [])
+    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
+
+    // Convert the shuffled array back to an object
+    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
+      acc[index] = curr
+      return acc
+    }, {})
+
+    setShuffledBannerAds(shuffledAds)
+  }
+
+  useEffect(() => {
+    // Shuffle the banner ads when the component mounts
+    shuffleBannerAds()
+  }, [])
+
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
@@ -275,13 +308,20 @@ export default function Component(props) {
                   locationLabel={post?.acfLocationIcon?.locationLabel}
                   locationUrl={post?.acfLocationIcon?.locationUrl}
                 />
-                {index === 1 && <ModuleAd moduleAd1 />}
-                {index === 5 && <ModuleAd moduleAd2 />}
-                {index === 9 && <ModuleAd moduleAd3 />}
-                {index === 13 && <ModuleAd moduleAd4 />}
+                {index === 1 && (
+                  <ModuleAd bannerAd1={shuffledBannerAds[0]?.node?.content} />
+                )}
+                {index === 5 && (
+                  <ModuleAd bannerAd2={shuffledBannerAds[1]?.node?.content} />
+                )}
+                {index === 9 && (
+                  <ModuleAd bannerAd3={shuffledBannerAds[2]?.node?.content} />
+                )}
+                {index === 13 && (
+                  <ModuleAd bannerAd4={shuffledBannerAds[3]?.node?.content} />
+                )}
               </React.Fragment>
             ))}
-          {console.log(mergedPosts)}
           {visiblePosts < mergedPosts.length && (
             <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
               <Button onClick={loadMorePosts} className="gap-x-4	">
@@ -323,6 +363,7 @@ Component.query = gql`
   ${PostFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
+  ${ModuleAd.fragments.entry}
   query GetCategoryPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
@@ -335,6 +376,9 @@ Component.query = gql`
     $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
+    $search: String = "ROS"
+    $field: PostObjectsConnectionOrderbyEnum = DATE
+    $order: OrderEnum = ASC
   ) {
     nodeByUri(uri: $uri) {
       ... on Category {
@@ -721,6 +765,12 @@ Component.query = gql`
           }
         }
       }
+    }
+    bannerAds(
+      first: $first
+      where: { search: $search, orderby: { order: $order, field: $field } }
+    ) {
+      ...ModuleAdFragment
     }
     generalSettings {
       ...BlogInfoFragment

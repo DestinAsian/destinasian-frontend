@@ -92,6 +92,7 @@ export default function SEO({ title, description, imageUrl, url }) {
                   .addSize([510, 0], [510, 425])
                   .build();
 
+                  googletag.defineSlot('/34877012/DA_Module_Ad_1', [MISSING_WIDTH, MISSING_HEIGHT], 'div-gpt-ad-1690435753500-0').setTargeting('URL_Exact', ['\/', '\/honors-circle\/', '\/category\/thailand\/']).addService(googletag.pubads());
                   googletag.defineSlot('/34877012/DA_Module_Ad_2', [[300, 250], [510, 425]], 'div-gpt-ad-1690283074657-0')
                   .defineSizeMapping(mapping1)
                   .addService(googletag.pubads());
