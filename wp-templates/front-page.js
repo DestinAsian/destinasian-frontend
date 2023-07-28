@@ -33,7 +33,6 @@ export default function Component(props) {
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
-  const advertorials = props?.data?.advertorials ?? []
   const bannerAds = props?.data?.bannerAds ?? []
   const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri } =
     props?.data?.page ?? []
@@ -84,11 +83,6 @@ export default function Component(props) {
     mainEditorialPosts.push(post.node)
   })
 
-  // loop through all the main categories and their posts
-  advertorials.edges.forEach((post) => {
-    mainAdvertorialPosts.push(post.node)
-  })
-
   // sort posts by date
   const sortPostsByDate = (a, b) => {
     const dateA = new Date(a.date)
@@ -100,10 +94,6 @@ export default function Component(props) {
   const mainCatPosts = [
     ...(mainPosts != null ? mainPosts : []),
     ...(mainEditorialPosts != null ? mainEditorialPosts : []),
-  ]
-
-  const advertorialPosts = [
-    ...(mainAdvertorialPosts != null ? mainAdvertorialPosts : []),
   ]
 
   // sortByDate mainCat & childCat Posts
@@ -188,27 +178,27 @@ export default function Component(props) {
   }
 
   // Declare state for shuffled banner ads
-  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
+  // const [shuffledBannerAds, setShuffledBannerAds] = useState({})
 
-  // Function to shuffle the banner ads and store them in state
-  const shuffleBannerAds = () => {
-    // Assuming bannerAds is an object containing all available bannerAds
-    const bannerAdsArray = Object.values(bannerAds?.edges || [])
-    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
+  // // Function to shuffle the banner ads and store them in state
+  // const shuffleBannerAds = () => {
+  //   // Assuming bannerAds is an object containing all available bannerAds
+  //   const bannerAdsArray = Object.values(bannerAds?.edges || [])
+  //   const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
 
-    // Convert the shuffled array back to an object
-    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
-      acc[index] = curr
-      return acc
-    }, {})
+  //   // Convert the shuffled array back to an object
+  //   const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
+  //     acc[index] = curr
+  //     return acc
+  //   }, {})
 
-    setShuffledBannerAds(shuffledAds)
-  }
+  //   setShuffledBannerAds(shuffledAds)
+  // }
 
-  useEffect(() => {
-    // Shuffle the banner ads when the component mounts
-    shuffleBannerAds()
-  }, [])
+  // useEffect(() => {
+  //   // Shuffle the banner ads when the component mounts
+  //   shuffleBannerAds()
+  // }, [])
 
   return (
     <>
@@ -288,8 +278,10 @@ export default function Component(props) {
                     {/* Banner Ads */}
                     {index === 1 && (
                       <ModuleAd
+                        bannerAd={bannerAds?.edges[4]?.node?.content}
                       />
                     )}
+                    {/* {console.log(bannerAds?.edges[4]?.node?.content)} */}
                     {/* {index === 5 && (
                       <ModuleAd
                         bannerAd2={shuffledBannerAds[1]?.node?.content}
@@ -359,10 +351,9 @@ Component.query = gql`
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $first: Int = 20
+    $first: Int = 25
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
-    $where2: RootQueryToAdvertorialConnectionWhereArgs = { status: PUBLISH }
     $field: PostObjectsConnectionOrderbyEnum = DATE
     $order: OrderEnum = ASC
   ) {
@@ -795,17 +786,6 @@ Component.query = gql`
               }
             }
           }
-        }
-      }
-    }
-    advertorials(first: $first, where: $where2) {
-      edges {
-        node {
-          id
-          title
-          content
-          uri
-          ...FeaturedImageFragment
         }
       }
     }

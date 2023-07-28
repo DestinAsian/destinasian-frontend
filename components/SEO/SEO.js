@@ -54,6 +54,28 @@ export default function SEO({ title, description, imageUrl, url }) {
           </>
         )}
 
+        {/* AdButler Module Ad */}
+        <script
+          async
+          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
+            var AdButlerHB = AdButlerHB || {}; AdButlerHB.cmd = AdButlerHB.cmd || [];
+            AdButlerHB.timeout = 700;
+            AdButlerHB.cmd.push(function(){
+
+            /* === ZONE ENTRIES GO HERE === */
+            AdButlerHB.registerAuction('abhb_32661_1', [[0,0]],624825, 185947, "servedbyadbutler.com");
+
+            AdButlerHB.requestAuctions();
+            });
+            `,
+          }}
+        ></script>
+
         {/* Typography Cloud */}
         <link
           rel="stylesheet"
@@ -73,31 +95,6 @@ export default function SEO({ title, description, imageUrl, url }) {
           href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet"
         />
-
-        {/* Google Ad Manager Module Ad */}
-        <script
-          async
-          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
-            var AdButlerHB = AdButlerHB || {}; AdButlerHB.cmd = AdButlerHB.cmd || [];
-            AdButlerHB.timeout = 700;
-            AdButlerHB.cmd.push(function(){
-
-            /* === ZONE ENTRIES GO HERE === */
-            AdButlerHB.registerAuction('abhb_99001_1', [[0,0]],624644, 185947, "servedbyadbutler.com");
-            AdButlerHB.registerAuction('abhb_70769_1', [[0,0]],624645, 185947, "servedbyadbutler.com");
-            AdButlerHB.registerAuction('abhb_36282_1', [[0,0]],624646, 185947, "servedbyadbutler.com");
-            AdButlerHB.registerAuction('abhb_14394_1', [[0,0]],624647, 185947, "servedbyadbutler.com");
-
-            AdButlerHB.requestAuctions();
-            });
-            `,
-          }}
-        ></script>
       </Head>
     </>
   )
