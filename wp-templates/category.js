@@ -31,7 +31,7 @@ export default function Component(props) {
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
+  // const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const bannerAds = props?.data?.bannerAds ?? []
   const {
     name,
@@ -372,7 +372,6 @@ Component.query = gql`
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
-    $footerLocation: MenuLocationEnum
     $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
@@ -822,11 +821,6 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
-    }
   }
 `
 
@@ -839,6 +833,5 @@ Component.variables = ({ uri }) => {
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
     featureHeaderLocation: MENUS.FEATURE_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
@@ -7,14 +7,10 @@ import {
   HomepageHeader,
   Main,
   Container,
-  ContentWrapper,
   Post,
-  SingleAdvertorialPost,
   NavigationMenu,
   FeaturedImage,
   SEO,
-  HomepageSliderDesktop,
-  HomepageSliderMobile,
   ModuleAd,
   FeatureWell,
   Button,
@@ -35,8 +31,6 @@ export default function Component(props) {
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  const latestMenu = props?.data?.latestHeaderMenuItems?.nodes ?? []
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
   const advertorials = props?.data?.advertorials ?? []
@@ -365,7 +359,6 @@ Component.query = gql`
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
-    $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
@@ -826,11 +819,6 @@ Component.query = gql`
     generalSettings {
       ...BlogInfoFragment
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
-      nodes {
-        ...NavigationMenuItemFragment
-      }
-    }
     headerMenuItems: menuItems(
       where: { location: $headerLocation }
       first: $first
@@ -891,7 +879,6 @@ Component.variables = ({ databaseId }, ctx) => {
     fourthHeaderLocation: MENUS.FOURTH_LOCATION,
     fifthHeaderLocation: MENUS.FIFTH_LOCATION,
     featureHeaderLocation: MENUS.FEATURE_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
   }
 }
