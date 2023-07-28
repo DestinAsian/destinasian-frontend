@@ -286,8 +286,11 @@ export default function Component(props) {
                       locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
                     {/* Banner Ads */}
-                    {index === 1 && <ModuleAd />}
-                    {index === 5 && (
+                    {index === 1 && (
+                      <ModuleAd
+                      />
+                    )}
+                    {/* {index === 5 && (
                       <ModuleAd
                         bannerAd2={shuffledBannerAds[1]?.node?.content}
                       />
@@ -301,7 +304,7 @@ export default function Component(props) {
                       <ModuleAd
                         bannerAd4={shuffledBannerAds[3]?.node?.content}
                       />
-                    )}
+                    )} */}
                   </React.Fragment>
                 ))}
               {visiblePosts < mergedPosts.length && (
