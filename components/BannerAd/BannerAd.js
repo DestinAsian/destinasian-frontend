@@ -4,7 +4,6 @@ import styles from './BannerAd.module.scss'
 let cx = classNames.bind(styles)
 
 export default function BannerAd({ bannerAd }) {
-  const isBannerEmpty = !bannerAd || bannerAd.trim() === ''
 
   return (
     <div

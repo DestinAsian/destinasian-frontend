@@ -7,28 +7,26 @@ import { BannerAd } from '..'
 let cx = classNames.bind(styles)
 
 export default function ModuleAd({
-  bannerAd1,
+  // bannerAd,
   bannerAd2,
   bannerAd3,
   bannerAd4,
 }) {
-  const [isComponentHidden, setIsComponentHidden] = useState(false)
-
-  useEffect(() => {
-    const componentElement = document.getElementsByClassName('component')
-    if (componentElement.clientHeight < 50) {
-      setIsComponentHidden(true)
-    }
-  }, [])
-
   return (
-    <div
-      className={cx('component', isComponentHidden ? 'hide-component' : '')}
-    >
-      <BannerAd bannerAd={bannerAd1} />
-      <BannerAd bannerAd={bannerAd2} />
-      <BannerAd bannerAd={bannerAd3} />
-      <BannerAd bannerAd={bannerAd4} />
+    <div className={cx('banner-wrapper')}>
+      {/* {bannerAd && ( */}
+        <div className={cx('ad-container')}>
+          <div className={cx('ad-content')}>
+            <img
+              src="https://servedbyadbutler.com/convtrack.spark?MID=185947&zoneID=624644"
+              width="1"
+              height="1"
+              border="0"
+            />
+          </div>
+        </div>
+      {/* )} */}
+      <div className={cx('border-bottom')}></div>
     </div>
   )
 }

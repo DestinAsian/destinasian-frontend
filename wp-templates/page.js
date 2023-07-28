@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
-import * as MENUS from '../constants/menus';
-import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { gql } from '@apollo/client'
+import * as MENUS from '../constants/menus'
+import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import {
   Header,
   Footer,
@@ -11,26 +11,26 @@ import {
   NavigationMenu,
   FeaturedImage,
   SEO,
-} from '../components';
+} from '../components'
 
 export default function Component(props) {
   // Loading state for previews
   if (props.loading) {
-    return <>Loading...</>;
+    return <>Loading...</>
   }
 
   const { title: siteTitle, description: siteDescription } =
-    props?.data?.generalSettings;
-  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
+    props?.data?.generalSettings
+  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? []
   const secondaryMenu = props?.data?.secondHeaderMenuItems?.nodes ?? []
   const thirdMenu = props?.data?.thirdHeaderMenuItems?.nodes ?? []
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage } = props?.data?.page ?? { title: '' };
+  const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
+  const { title, content, featuredImage } = props?.data?.page
 
   const mainPosts = []
   const mainEditorialPosts = []
@@ -81,7 +81,7 @@ export default function Component(props) {
       />
       <Main>
         <>
-          <EntryHeader title={title} image={featuredImage?.node} />
+          <EntryHeader title={title} />
           <Container>
             <ContentWrapperPage content={content} />
           </Container>
@@ -89,7 +89,7 @@ export default function Component(props) {
       </Main>
       <Footer />
     </>
-  );
+  )
 }
 
 Component.query = gql`
@@ -106,7 +106,7 @@ Component.query = gql`
     $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $first: Int = 200
+    $first: Int = 20
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
@@ -184,7 +184,10 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: $first
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
@@ -230,7 +233,7 @@ Component.query = gql`
       }
     }
   }
-`;
+`
 
 Component.variables = ({ databaseId }, ctx) => {
   return {
@@ -243,5 +246,5 @@ Component.variables = ({ databaseId }, ctx) => {
     featureHeaderLocation: MENUS.FEATURE_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
-  };
-};
+  }
+}

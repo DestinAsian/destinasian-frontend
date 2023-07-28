@@ -188,27 +188,27 @@ export default function Component(props) {
   }
 
   // Declare state for shuffled banner ads
-  const [shuffledBannerAds, setShuffledBannerAds] = useState({});
+  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
 
   // Function to shuffle the banner ads and store them in state
   const shuffleBannerAds = () => {
     // Assuming bannerAds is an object containing all available bannerAds
-    const bannerAdsArray = Object.values(bannerAds?.edges || []);
-    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray);
+    const bannerAdsArray = Object.values(bannerAds?.edges || [])
+    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
 
     // Convert the shuffled array back to an object
     const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
-      acc[index] = curr;
-      return acc;
-    }, {});
+      acc[index] = curr
+      return acc
+    }, {})
 
-    setShuffledBannerAds(shuffledAds);
-  };
+    setShuffledBannerAds(shuffledAds)
+  }
 
   useEffect(() => {
     // Shuffle the banner ads when the component mounts
-    shuffleBannerAds();
-  }, []);
+    shuffleBannerAds()
+  }, [])
 
   return (
     <>
@@ -286,11 +286,7 @@ export default function Component(props) {
                       locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
                     {/* Banner Ads */}
-                    {index === 1 && (
-                      <ModuleAd
-                        bannerAd1={shuffledBannerAds[0]?.node?.content}
-                      />
-                    )}
+                    {index === 1 && <ModuleAd />}
                     {index === 5 && (
                       <ModuleAd
                         bannerAd2={shuffledBannerAds[1]?.node?.content}
