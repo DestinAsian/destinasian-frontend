@@ -17,6 +17,8 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 code {
