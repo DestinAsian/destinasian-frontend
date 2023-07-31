@@ -56,10 +56,6 @@ export default function SEO({ title, description, imageUrl, url }) {
 
         {/* AdButler Module Ad */}
         <script
-          async
-          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-        ></script>
-        <script
           dangerouslySetInnerHTML={{
             __html: `
             if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}

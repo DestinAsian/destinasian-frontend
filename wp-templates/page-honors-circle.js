@@ -9,6 +9,7 @@ import {
   FeaturedImage,
   SEO,
   ContentWrapperHCFrontPage,
+  EntryHeader,
 } from '../components'
 
 export default function Component(props) {
@@ -25,7 +26,7 @@ export default function Component(props) {
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  const { content, featuredImage } = props?.data?.page ?? []
+  const { title, content, featuredImage, hcCaption } = props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
 
@@ -79,6 +80,7 @@ export default function Component(props) {
       <Main>
         <>
           <Container>
+            <EntryHeader hcTitle={title} hcCaption={hcCaption?.hcCaption}/>
             <ContentWrapperHCFrontPage content={content}/>
           </Container>
         </>
@@ -109,6 +111,9 @@ Component.query = gql`
       title
       content
       ...FeaturedImageFragment
+      hcCaption {
+        hcCaption
+      }
     }
     posts(first: $first, where: $where) {
       edges {

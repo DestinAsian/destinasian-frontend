@@ -2,7 +2,6 @@ import { gql } from '@apollo/client'
 import { useState, useEffect } from 'react'
 import classNames from 'classnames/bind'
 import styles from './ModuleAd.module.scss'
-import { BannerAd } from '..'
 
 let cx = classNames.bind(styles)
 

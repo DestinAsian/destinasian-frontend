@@ -168,16 +168,16 @@ export default function Component(props) {
     }
   }, [isNavShown])
 
-  // Randomized Function
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[array[i], array[j]] = [array[j], array[i]]
-    }
-    return array
-  }
+  // // Randomized Function
+  // function shuffleArray(array) {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1))
+  //     ;[array[i], array[j]] = [array[j], array[i]]
+  //   }
+  //   return array
+  // }
 
-  // Declare state for shuffled banner ads
+  // // Declare state for shuffled banner ads
   // const [shuffledBannerAds, setShuffledBannerAds] = useState({})
 
   // // Function to shuffle the banner ads and store them in state
@@ -276,11 +276,10 @@ export default function Component(props) {
                       locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
                     {/* Banner Ads */}
-                    {index === 1 && (
-                      <ModuleAd
-                        bannerAd={bannerAds?.edges[4]?.node?.content}
-                      />
+                    {/* {index === 1 && (
+                      <ModuleAd bannerAd={bannerAds?.edges[4]?.node?.content} />
                     )}
+                    {console.log(bannerAds?.edges[4]?.node?.content)} */}
                     {/* {console.log(bannerAds?.edges[4]?.node?.content)} */}
                     {/* {index === 5 && (
                       <ModuleAd

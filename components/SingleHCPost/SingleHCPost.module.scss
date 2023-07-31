@@ -2,20 +2,29 @@
 @import 'styles/fonts/typography';
 
 .component {
-  max-width: 100vw;
-  margin: 0 auto;
-  line-height: 1;
-  margin-bottom: 2rem;
+  // max-width: 100vw;
+  // margin: 0 auto;
+  // line-height: 1;
+  // margin-bottom: 2rem;
+  flex: 1 1 calc(50% - 0.25rem);
 
   @media (min-width: $breakpoint-small) {
-    max-width: 50vw;
+    flex: 1 1 calc(25% - 0.75rem);
   }
+
+  // @media (min-width: $breakpoint-medium) {
+  //   max-width: 50vw;
+  // }
+}
+
+.content-wrapper-image {
+  width: 100%;
+  height: auto;
 }
 
 .content-wrapper {
-  padding: 0.1rem 4vw;
-  height: fit-content;
-
+  width: 100%;
+  height: auto;
   @media (min-width: $breakpoint-small) {
     padding: 0.2rem 2vw;
   }
@@ -39,25 +48,22 @@
 }
 
 .title {
-  font-family: 'Unit Slab Pro Black';
-  font-size: 1.65rem;
-  line-height: 1.2;
+  font-family: 'Ringside Regular A', 'Ringside Regular B';
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: var(--wpe--color--title);
+  text-transform: uppercase;
+  text-align: center;
 
   @media (min-width: $breakpoint-extra-small) {
-    font-size: 1.7rem;
+    font-size: 1.2rem;
   }
 
   @media (min-width: $breakpoint-medium) {
-    font-size: 2.4rem;
+    font-size: 1.5rem;
   }
-}
-
-.parent {
-  margin-bottom: 0.5rem;
-}
-
-.postInfo {
-  margin-bottom: 1.5rem;
 }
 
 .featuredImage {
@@ -65,59 +71,9 @@
   margin: 0;
   margin-bottom: 1rem;
 
-  span, img {
+  span,
+  img {
     min-width: 100%;
-  }
-}
-
-.excerpt {
-  font-family: 'Chronicle Display A', 'Chronicle Display B';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 0 0 0.25rem;
-
-  @media (min-width: $breakpoint-extra-small) {
-    font-size: 1.3rem;
-  }
-
-  a {
-    display: none;
-  }
-}
-
-.icon-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
-  font-family: 'Ringside Regular A', 'Ringside Regular B';
-  font-style: normal;
-  font-weight: 500;
-  padding-bottom: 0.75rem;
-
-  .category-label {
-    font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
-  }
-
-  .location-label {
-    font-size: 1rem;
-    line-height: 1.2;
-
-    @media (min-width: $breakpoint-medium) {
-      font-size: 1.25rem;
-    }
-  }
-
-  .icon {
-    svg {
-      width: 1.8rem;
-      height: 1.8rem;
-    }
   }
 }
 

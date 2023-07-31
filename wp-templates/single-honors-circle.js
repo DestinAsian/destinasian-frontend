@@ -14,11 +14,12 @@ import {
   SingleHCFeaturedImage,
   SingleHCEntryHeader,
   SingleHCContainer,
-  ContentWrapperHC,
+  ContentWrapperHCFrontPage,
   SingleHCSlider,
   Post,
   SingleHCPost,
   Button,
+  ContentWrapperHC,
 } from '../components'
 
 export default function SingleHonorsCircle(props) {
@@ -41,7 +42,6 @@ export default function SingleHonorsCircle(props) {
     content,
     featuredImage,
     acfHCSlider,
-    children,
     parent,
     hcLocation,
     hcCaption,
@@ -69,44 +69,20 @@ export default function SingleHonorsCircle(props) {
     ...(latestMainEditorialPosts != null ? latestMainEditorialPosts : []),
   ]
 
-  // Load More Function
-  const [visiblePosts, setVisiblePosts] = useState(4)
-  const loadMorePosts = () => {
-    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
-  }
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     checkScrollBottom()
+  //   }
 
-  // load more posts when scrolled to bottom
-  const checkScrollBottom = () => {
-    const scrolledToBottom =
-      window.scrollY + window.innerHeight >=
-      document.documentElement.scrollHeight
+  //   // Attach the event listener
+  //   window.addEventListener('scroll', handleScroll)
 
-    if (scrolledToBottom) {
-      // Call the loadMorePosts function to load additional posts
-      loadMorePosts()
-    }
-  }
+  //   // Clean up the event listener when the component unmounts
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll)
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      checkScrollBottom()
-    }
-
-    // Attach the event listener
-    window.addEventListener('scroll', handleScroll)
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  const mainPosts = []
-
-  // loop through all the main categories posts
-  children.edges.forEach((post) => {
-    mainPosts.push(post.node)
-  })
 
   // sort posts by date
   const sortPostsByDate = (a, b) => {
@@ -114,12 +90,6 @@ export default function SingleHonorsCircle(props) {
     const dateB = new Date(b.date)
     return dateB - dateA // Sort in descending order
   }
-
-  // sortByDate mainCat & childCat Posts
-  const sortedMainPosts = mainPosts.sort(sortPostsByDate)
-
-  // define allPosts
-  const allPosts = [...(sortedMainPosts != null ? sortedMainPosts : [])]
 
   // sortByDate latestCat & childCat Posts
   const latestAllPosts = latestMainCatPosts.sort(sortPostsByDate)
@@ -170,47 +140,8 @@ export default function SingleHonorsCircle(props) {
             <Container>
               {/* {'countries'} */}
               {/* All posts sorted by mainPosts & date */}
-              {allPosts.length !== 0 &&
-                allPosts.slice(0, visiblePosts).map((post) => (
-                  <React.Fragment key={post.id}>
-                    <SingleHCPost
-                      title={post.title}
-                      content={post.content}
-                      uri={post.uri}
-                      featuredImage={post.featuredImage?.node}
-                    />
-                  </React.Fragment>
-                ))}
-              {visiblePosts < allPosts.length && (
-                <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
-                  <Button onClick={loadMorePosts} className="gap-x-4	">
-                    Load More{' '}
-                    <svg
-                      className="h-auto w-8 origin-center rotate-90	"
-                      version="1.0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="512.000000pt"
-                      height="512.000000pt"
-                      viewBox="0 0 512.000000 512.000000"
-                      preserveAspectRatio="xMidYMid meet"
-                    >
-                      <g
-                        transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-                        fill="#000000"
-                        stroke="none"
-                      >
-                        <path
-                          d="M1387 5110 c-243 -62 -373 -329 -272 -560 27 -62 77 -114 989 -1027
-l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
--289 39 -117 106 -191 220 -245 59 -28 74 -31 160 -30 74 0 108 5 155 23 58
-22 106 70 1198 1160 1304 1302 1202 1185 1202 1371 0 186 102 69 -1202 1371
--1102 1101 -1140 1137 -1198 1159 -67 25 -189 34 -248 20z"
-                        />
-                      </g>
-                    </svg>
-                  </Button>
-                </div>
-              )}
+              <EntryHeader hcTitle={title}/>
+            <ContentWrapperHCFrontPage content={content}/>
             </Container>
           </>
         </Main>
