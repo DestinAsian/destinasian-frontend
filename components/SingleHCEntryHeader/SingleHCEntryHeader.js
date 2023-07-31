@@ -25,7 +25,7 @@ export default function SingleHCEntryHeader({ title, locationLabel, caption }) {
       {/* HC Icon */}
       <div className={cx('hc-wrapper')}>
         <div className={cx('hc-label')}>{'Honors Circle'}</div>
-        <div class={cx('hc-border')}></div>
+        <div className={cx('hc-border')}></div>
       </div>
       <div className={cx('header-wrapper')}>
         <Heading className={cx('title')}>{title}</Heading>
