@@ -83,7 +83,6 @@ export default function SingleHonorsCircle(props) {
   //   }
   // }, [])
 
-
   // sort posts by date
   const sortPostsByDate = (a, b) => {
     const dateA = new Date(a.date)
@@ -95,21 +94,11 @@ export default function SingleHonorsCircle(props) {
   const latestAllPosts = latestMainCatPosts.sort(sortPostsByDate)
 
   const images = [
-    acfHCSlider.slide1 != null
-      ? acfHCSlider.slide1.mediaItemUrl
-      : null,
-    acfHCSlider.slide2 != null
-      ? acfHCSlider.slide2.mediaItemUrl
-      : null,
-    acfHCSlider.slide3 != null
-      ? acfHCSlider.slide3.mediaItemUrl
-      : null,
-    acfHCSlider.slide4 != null
-      ? acfHCSlider.slide4.mediaItemUrl
-      : null,
-    acfHCSlider.slide5 != null
-      ? acfHCSlider.slide5.mediaItemUrl
-      : null,
+    acfHCSlider.slide1 != null ? acfHCSlider.slide1.mediaItemUrl : null,
+    acfHCSlider.slide2 != null ? acfHCSlider.slide2.mediaItemUrl : null,
+    acfHCSlider.slide3 != null ? acfHCSlider.slide3.mediaItemUrl : null,
+    acfHCSlider.slide4 != null ? acfHCSlider.slide4.mediaItemUrl : null,
+    acfHCSlider.slide5 != null ? acfHCSlider.slide5.mediaItemUrl : null,
   ]
 
   return (
@@ -140,8 +129,11 @@ export default function SingleHonorsCircle(props) {
             <Container>
               {/* {'countries'} */}
               {/* All posts sorted by mainPosts & date */}
-              <EntryHeader hcTitle={title}/>
-            <ContentWrapperHCFrontPage content={content}/>
+              <EntryHeader
+                hcCountryTitle={title}
+                hcCaption={hcCaption?.hcCaption}
+              />
+              <ContentWrapperHCFrontPage content={content} />
             </Container>
           </>
         </Main>
@@ -170,7 +162,6 @@ export default function SingleHonorsCircle(props) {
               <SingleHCEntryHeader
                 title={title}
                 locationLabel={hcLocation?.hcLocation}
-                // caption={hcCaption?.hcCaption}
               />
               {/* <SingleHCSlider images={images} /> */}
               <ContentWrapperHC content={content} images={images} />

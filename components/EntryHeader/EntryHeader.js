@@ -8,6 +8,7 @@ export default function EntryHeader({
   parent,
   title,
   hcTitle,
+  hcCountryTitle,
   image,
   date,
   author,
@@ -37,12 +38,18 @@ export default function EntryHeader({
 
       {hcTitle && (
         <Container>
+          <Heading className={cx('hc-title')}>{hcTitle}</Heading>
+          <Heading className={cx('hc-caption')}>{hcCaption}</Heading>
+        </Container>
+      )}
+
+      {hcCountryTitle && (
+        <Container>
           <Heading className={cx('hc-title')}>
-            {hcTitle}
+            {'Honors Circle : '}
+            {hcCountryTitle}
           </Heading>
-          <Heading className={cx('hc-caption')}>
-            {hcCaption}
-          </Heading>
+          <Heading className={cx('hc-caption')}>{hcCaption}</Heading>
         </Container>
       )}
     </div>

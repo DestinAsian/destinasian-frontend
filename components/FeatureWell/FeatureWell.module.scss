@@ -20,7 +20,7 @@
       display: flex;
       justify-content: center;
       color: var(--wpe--color--white);
-      top: 80vh;
+      top: 60vh;
       width: 100%;
       position: absolute;
       font-family: 'Unit Slab Pro Black';
@@ -31,16 +31,24 @@
       @media (min-width: $breakpoint-extra-small) {
         font-size: 3rem;
       }
+
+      @media (min-width: $breakpoint-medium) {
+        top: 80vh;
+      }
     }
 
     .chevron-wrapper {
       display: flex;
       justify-content: center;
       color: var(--wpe--color--white);
-      top: 70vh;
+      top: 50vh;
       width: 100%;
       position: absolute;
       visibility: hidden;
+
+      @media (min-width: $breakpoint-medium) {
+        top: 70vh;
+      }
 
       svg {
         transform: rotate(90deg);
@@ -54,9 +62,13 @@
     }
 
     .maximized {
-      top: 92.5vh;
+      top: 72.5vh;
       transition: top 0.5s ease-in-out;
       visibility: visible;
+
+      @media (min-width: $breakpoint-medium) {
+        top: 92.5vh;
+      }
     }
   }
 }
