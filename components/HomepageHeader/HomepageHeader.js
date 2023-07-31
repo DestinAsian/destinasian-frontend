@@ -372,6 +372,64 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
         </Container>
       )}
 
+      {/* SecondaryHeader */}
+      <div className={cx('home-container-wrapper', { homeSticky: isScrolled })}>
+        <div className={cx('home-navbar')}>
+          {/* Homepage navigation */}
+
+          <div className={cx('home-navbar-wrapper')}>
+            <div className={cx('navigation-wrapper')}>
+              {/* {children?.edges?.map((post) => ( */}
+              <li className={cx('nav-link')}>
+                <button
+                  type="button"
+                  onClick={() => setIsNavShown(!isNavShown)}
+                  aria-label="Toggle navigation"
+                  aria-controls={cx('full-menu-wrapper')}
+                  aria-expanded={!isNavShown}
+                >
+                  <h2 className={cx('nav-name')}>{'Destinations'}</h2>
+                </button>
+              </li>
+              <li className={cx('nav-link')}>
+                <button
+                  type="button"
+                  onClick={() => setIsNavShown(!isNavShown)}
+                  aria-label="Toggle navigation"
+                  aria-controls={cx('full-menu-wrapper')}
+                  aria-expanded={!isNavShown}
+                >
+                  <h2 className={cx('nav-name')}>{'Destination Guides'}</h2>
+                </button>
+              </li>
+              <li className={cx('nav-link')}>
+                <button
+                  type="button"
+                  onClick={() => setIsNavShown(!isNavShown)}
+                  aria-label="Toggle navigation"
+                  aria-controls={cx('full-menu-wrapper')}
+                  aria-expanded={!isNavShown}
+                >
+                  <h2 className={cx('nav-name')}>{'Feature Stories'}</h2>
+                </button>
+              </li>
+              <li className={cx('nav-link')}>
+                <button
+                  type="button"
+                  onClick={() => setIsNavShown(!isNavShown)}
+                  aria-label="Toggle navigation"
+                  aria-controls={cx('full-menu-wrapper')}
+                  aria-expanded={!isNavShown}
+                >
+                  <h2 className={cx('nav-name')}>{'Latest Travel Stories'}</h2>
+                </button>
+              </li>
+              {/* ))} */}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Full menu */}
       <div
         className={cx(['full-menu-wrapper', isNavShown ? 'show' : undefined])}

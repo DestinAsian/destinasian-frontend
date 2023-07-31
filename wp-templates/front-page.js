@@ -219,7 +219,9 @@ export default function Component(props) {
         latestStories={allPosts}
         home={uri}
       />
-      <SecondaryHeader home={uri} />
+      {/* <SecondaryHeader
+        home={uri}
+      /> */}
       <Main>
         <>
           {/* <NavigationHeader menuItems={navigationMenu}/> */}

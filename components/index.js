@@ -4,6 +4,7 @@ export { CategoryHeader } from './CategoryHeader';
 export { CategoryIcon } from './CategoryIcon';
 export { Container } from './Container';
 export { ContentWrapper } from './ContentWrapper';
+export { ContentWrapperAdvertorial } from './ContentWrapperAdvertorial';
 export { ContentWrapperEditorial } from './ContentWrapperEditorial';
 export { ContentWrapperHC } from './ContentWrapperHC';
 export { ContentWrapperHCFrontPage } from './ContentWrapperHCFrontPage';

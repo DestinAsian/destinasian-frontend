@@ -12,6 +12,7 @@ import {
   SEO,
   SingleAdvertorialSlider,
   ContentWrapper,
+  ContentWrapperAdvertorial,
 } from '../components'
 
 export default function SingleAdvertorial(props) {
@@ -104,7 +105,7 @@ export default function SingleAdvertorial(props) {
           <SingleAdvertorialContainer>
             <SingleAdvertorialSlider images={images} />
             <SingleAdvertorialEntryHeader title={title} />
-            <ContentWrapper content={content} />
+            <ContentWrapperAdvertorial content={content} />
             {/* <ModuleAd /> */}
           </SingleAdvertorialContainer>
         </>

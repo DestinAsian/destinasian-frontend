@@ -64,43 +64,6 @@ export default function SecondaryHeader({
 
   return (
     <nav className={cx('component')}>
-      {home == '/' && (
-        <div
-          className={cx('home-container-wrapper', { homeSticky: isScrolled })}
-        >
-          <div className={cx('home-navbar')}>
-            {/* Homepage navigation */}
-
-            <div className={cx('home-navbar-wrapper')}>
-              <div className={cx('navigation-wrapper')}>
-                {/* {children?.edges?.map((post) => ( */}
-                <li className={cx('nav-link')}>
-                  {/* <button
-                    type="button"
-                    className={cx('menu-icon')}
-                    onClick={() => setIsNavShown(!isNavShown)}
-                    aria-label="Toggle navigation"
-                    aria-controls={cx('full-menu-wrapper')}
-                    aria-expanded={!isNavShown}
-                  > */}
-                    <h2 className={cx('nav-name')}>{'Destinations'}</h2>
-                  {/* </button> */}
-                </li>
-                <li className={cx('nav-link')}>
-                  <h2 className={cx('nav-name')}>{'Destination Guides'}</h2>
-                </li>
-                <li className={cx('nav-link')}>
-                  <h2 className={cx('nav-name')}>{'Feature Stories'}</h2>
-                </li>
-                <li className={cx('nav-link')}>
-                  <h2 className={cx('nav-name')}>{'Latest Travel Stories'}</h2>
-                </li>
-                {/* ))} */}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {home == undefined && (
         <div className={cx('container-wrapper', { sticky: isScrolled })}>
