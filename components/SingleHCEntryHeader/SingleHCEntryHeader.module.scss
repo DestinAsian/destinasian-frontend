@@ -165,7 +165,7 @@
   line-height: 1.2;
   font-size: 1.75rem;
   color: var(--wpe--color--title);
-  text-transform: capitalize;
+  text-transform: lowercase;
   font-variant-caps: small-caps;
 
   @media (min-width: $breakpoint-extra-small) {
@@ -174,6 +174,10 @@
 
   @media (min-width: $breakpoint-medium) {
     font-size: 3rem;
+  }
+
+  :first-letter {
+    text-transform: uppercase;
   }
 }
 

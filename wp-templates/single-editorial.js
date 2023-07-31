@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
+import { useState, useEffect } from 'react'
 import {
   SingleHeader,
   Footer,
@@ -108,16 +109,19 @@ export default function SingleEditorial(props) {
     return shuffledArray.slice(0, count)
   }
 
-  // loop through all related stories by category
-  relatedStories.edges.forEach((post) => {
-    mainRelatedStories.push(post.node)
-  })
+  // Shuffle the relatedStories before rendering
+  const [shuffledRelatedStories, setShuffledRelatedStories] = useState([])
 
-  // Define related stories, taking a random slice of 5 elements
-  const mainRelatedPosts = getRandomSlice(
-    mainRelatedStories,
-    5, // Change this number to the desired count
-  )
+  useEffect(() => {
+    if (relatedStories && relatedStories.edges) {
+      const shuffledSlice = getRandomSlice(relatedStories.edges, 5)
+      setShuffledRelatedStories(shuffledSlice)
+    }
+  }, [relatedStories])
+
+  {
+    console.log(relatedStories)
+  }
 
   return (
     <>
@@ -153,18 +157,22 @@ export default function SingleEditorial(props) {
             <ContentWrapperEditorial content={content} images={images} />
             {/* <ModuleAd banner1={}/> */}
             <EntryRelatedStories />
-            {mainRelatedPosts.length !== 0 &&
-              mainRelatedPosts.map((post) => (
-                // Render the merged posts here
-                <RelatedStories
-                  title={post?.title}
-                  excerpt={post?.excerpt}
-                  uri={post?.uri}
-                  category={post?.categories?.edges[0]?.node?.name}
-                  categoryUri={post?.categories?.edges[0]?.node?.uri}
-                  featuredImage={post?.featuredImage?.node}
-                />
-              ))}
+            {shuffledRelatedStories.map((post) => (
+              <Container>
+                {post.node.title !== title && (
+                  // Render the merged posts here
+                  <RelatedStories
+                    key={post.node.id}
+                    title={post.node.title}
+                    excerpt={post.node.excerpt}
+                    uri={post.node.uri}
+                    category={post.node.categories.edges[0]?.node?.name}
+                    categoryUri={post.node.categories.edges[0]?.node?.uri}
+                    featuredImage={post.node.featuredImage?.node}
+                  />
+                )}
+              </Container>
+            ))}
           </Container>
         </>
       </Main>
@@ -187,7 +195,7 @@ SingleEditorial.query = gql`
     $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $first: Int = 20
+    $first: Int = 10
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {

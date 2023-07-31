@@ -350,7 +350,7 @@ Component.query = gql`
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $first: Int = 25
+    $first: Int = 10
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
     $field: PostObjectsConnectionOrderbyEnum = DATE

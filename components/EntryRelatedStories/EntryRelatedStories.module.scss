@@ -31,21 +31,25 @@
   }
 
   .entry-title {
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.2;
     text-transform: uppercase;
     font-weight: 700;
     color: var(--wpe--color--orange);
 
     @media (min-width: $breakpoint-medium) {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
   }
 
   .entry-border {
     background: var(--wpe--color--black);
-    width: 58vw;
+    width: 50vw;
     height: 0.06rem;
+
+    @media (min-width: $breakpoint-small) {
+      width: 34.5vw;
+    }
 
     @media (min-width: $breakpoint-medium) {
       width: 34.5vw;

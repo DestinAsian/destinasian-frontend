@@ -372,7 +372,7 @@ Component.query = gql`
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
-    $first: Int = 20
+    $first: Int = 10
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
     $field: PostObjectsConnectionOrderbyEnum = DATE
@@ -474,7 +474,7 @@ Component.query = gql`
             }
           }
         }
-        posts {
+        posts(first: $first, where: {status: PUBLISH}) {
           edges {
             node {
               id
@@ -514,7 +514,7 @@ Component.query = gql`
             }
           }
         }
-        editorials {
+        editorials(first: $first, where: {status: PUBLISH}) {
           edges {
             node {
               id

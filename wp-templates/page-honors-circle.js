@@ -103,7 +103,7 @@ Component.query = gql`
     $featureHeaderLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $first: Int = 20
+    $first: Int = 10
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {

@@ -41,7 +41,7 @@ export default function HCHeader({
   // Add sticky header on scroll
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 0)
+      setIsScrolled(window.scrollY > 20)
     }
 
     window.addEventListener('scroll', handleScroll)
