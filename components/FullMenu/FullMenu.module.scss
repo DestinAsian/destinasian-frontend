@@ -15,7 +15,7 @@
   overflow-x: hidden;
   padding: 0 1rem 7rem;
   transition: transform 0.1s ease-out;
-  transform: translateY(0vh);
+  transition: top .4s ease-in-out;
   flex-direction: row;
   flex-wrap: wrap;
 

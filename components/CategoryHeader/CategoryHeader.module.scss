@@ -169,8 +169,7 @@
   height: 100vh;
   position: absolute;
   z-index: 51;
-  transition: transform 0.4s ease-in-out;
-  transform: translateY(-150vh);
+  top: -150vh;
   background-color: var(--wpe--main--background-color);
   color: var(--wpe--color--black);
 
