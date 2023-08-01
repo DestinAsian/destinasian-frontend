@@ -119,10 +119,6 @@ export default function SingleEditorial(props) {
     }
   }, [relatedStories])
 
-  {
-    console.log(relatedStories)
-  }
-
   return (
     <>
       <SEO
@@ -344,7 +340,7 @@ SingleEditorial.query = gql`
     }
     secondHeaderMenuItems: menuItems(
       where: { location: $secondHeaderLocation }
-      first: $first
+      first: 20
     ) {
       nodes {
         ...NavigationMenuItemFragment

@@ -322,7 +322,7 @@ SingleHonorsCircle.query = gql`
     }
     secondHeaderMenuItems: menuItems(
       where: { location: $secondHeaderLocation }
-      first: $first
+      first: 20
     ) {
       nodes {
         ...NavigationMenuItemFragment
