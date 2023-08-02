@@ -9,11 +9,65 @@ export const GetSearchResults = gql`
           uri
           date
           databaseId
-          ... on NodeWithTitle {
+          ... on Post {
+            id
             title
-          }
-          ... on NodeWithExcerpt {
             excerpt
+            categories {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            contentType {
+              node {
+                graphqlPluralName
+              }
+            }
+          }
+          ... on HonorsCircle {
+            id
+            title
+            excerpt
+            contentType {
+              node {
+                label
+                graphqlPluralName
+              }
+            }
+          }
+          ... on Editorial {
+            id
+            title
+            excerpt
+            categories {
+              edges {
+                node {
+                  name
+                  uri
+                }
+              }
+            }
+            contentType {
+              node {
+                graphqlPluralName
+              }
+            }
+          }
+          ... on BannerAd {
+            contentType {
+              node {
+                graphqlPluralName
+              }
+            }
+          }
+          ... on Advertorial {
+            contentType {
+              node {
+                graphqlPluralName
+              }
+            }
           }
         }
       }

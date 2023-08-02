@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import classNames from 'classnames/bind'
-import { FormatDate, LoadingSearchResult } from '../../components'
+import { Container, FormatDate, LoadingSearchResult } from '../../components'
 import { FaSearch } from 'react-icons/fa'
 
 import styles from './SearchResults.module.scss'
@@ -35,23 +35,42 @@ export default function SearchResults({ searchResults, isLoading }) {
     <>
       <div className={cx('component')}>
         {searchResults?.map((node) => (
-          <div key={node.databaseId} className={styles.result}>
-            <Link href={node.uri}>
-              <a>
-                <h2 className={styles.title}>{node.title}</h2>
-              </a>
-            </Link>
-            {/* <div className={styles.meta}>
-              <time className={styles.date} dateTime={node.date}>
-                <FormatDate date={node.date} />
-              </time>
-            </div> */}
-            <div
-              dangerouslySetInnerHTML={{
-                __html: node.excerpt,
-              }}
-            />
-          </div>
+          <Container>
+            {node.contentType?.node?.graphqlPluralName !==
+              ('Advertorials' || 'BannerAds') && (
+              <div key={node.databaseId} className={styles.result}>
+                <Link href={node.uri}>
+                  <a>
+                    <h2 className={styles.title}>{node.title}</h2>
+                  </a>
+                </Link>
+                {/* <div className={styles.meta}>
+                    <time className={styles.date} dateTime={node.date}>
+                      <FormatDate date={node.date} />
+                    </time>
+                  </div> */}
+                {/* {node.categories?.edges[0]?.node?.name && (
+                    <Link href={node.categories?.edges[0]?.node?.uri}>
+                      <h2 className={styles.meta}>
+                        {node.categories?.edges[0]?.node?.name}
+                      </h2>
+                    </Link>
+                  )} */}
+                <Link href={node.uri}>
+                  <a>
+                    <h2 className={styles.meta}>
+                      {node.contentType?.node?.label}
+                    </h2>
+                  </a>
+                </Link>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: node.excerpt,
+                  }}
+                />
+              </div>
+            )}
+          </Container>
         ))}
 
         {isLoading === true && (
