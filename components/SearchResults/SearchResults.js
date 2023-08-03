@@ -1,11 +1,8 @@
 import Link from 'next/link'
-import classNames from 'classnames/bind'
 import { Container, FormatDate, LoadingSearchResult } from '../../components'
 import { FaSearch } from 'react-icons/fa'
 
 import styles from './SearchResults.module.scss'
-
-let cx = classNames.bind(styles)
 
 /**
  * Renders the search results list.
@@ -33,7 +30,7 @@ export default function SearchResults({ searchResults, isLoading }) {
 
   return (
     <>
-      <div className={cx('component')}>
+      <div className={styles.component}>
         {searchResults?.map((node) => (
           <Container>
             {node.contentType?.node?.graphqlPluralName !==

@@ -10,13 +10,12 @@ $color-grey: #777;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 0 1rem;
-  min-height: calc(-7rem + 100vh);
 
   @media (min-width: $breakpoint-extra-small) {
     padding: 1rem 2rem 5rem;
-    min-height: calc(-15rem + 100vh);
+    align-items: center;
   }
 }
 

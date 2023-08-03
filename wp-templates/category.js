@@ -308,6 +308,7 @@ export default function Component(props) {
                   locationLabel={post?.acfLocationIcon?.locationLabel}
                   locationUrl={post?.acfLocationIcon?.locationUrl}
                 />
+                {/* Banner Ads */}
                 {/* {index === 1 && (
                   <ModuleAd bannerAd={shuffledBannerAds[0]?.node?.content} />
                 )}
@@ -319,6 +320,24 @@ export default function Component(props) {
                 )}
                 {index === 13 && (
                   <ModuleAd bannerAd={shuffledBannerAds[3]?.node?.content} />
+                )}
+                {index === 17 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[4]?.node?.content} />
+                )}
+                {index === 21 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[5]?.node?.content} />
+                )}
+                {index === 25 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[6]?.node?.content} />
+                )}
+                {index === 29 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[7]?.node?.content} />
+                )}
+                {index === 33 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[8]?.node?.content} />
+                )}
+                {index === 37 && (
+                  <ModuleAd bannerAd={shuffledBannerAds[9]?.node?.content} />
                 )} */}
                 {/* {console.log(shuffledBannerAds)} */}
               </React.Fragment>

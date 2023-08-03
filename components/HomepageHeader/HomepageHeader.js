@@ -372,14 +372,11 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
         </Container>
       )}
 
-      {/* SecondaryHeader */}
+      {/* SecondaryHeader Homepage*/}
       <div className={cx('home-container-wrapper', { homeSticky: isScrolled })}>
         <div className={cx('home-navbar')}>
-          {/* Homepage navigation */}
-
           <div className={cx('home-navbar-wrapper')}>
             <div className={cx('navigation-wrapper')}>
-              {/* {children?.edges?.map((post) => ( */}
               <li className={cx('nav-link')}>
                 <button
                   type="button"
@@ -424,7 +421,6 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
                   <h2 className={cx('nav-name')}>{'Latest Travel Stories'}</h2>
                 </button>
               </li>
-              {/* ))} */}
             </div>
           </div>
         </div>

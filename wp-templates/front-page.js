@@ -297,6 +297,36 @@ export default function Component(props) {
                       <ModuleAd
                         bannerAd={shuffledBannerAds[3]?.node?.content}
                       />
+                    )}
+                    {index === 17 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[4]?.node?.content}
+                      />
+                    )}
+                    {index === 21 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[5]?.node?.content}
+                      />
+                    )}
+                    {index === 25 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[6]?.node?.content}
+                      />
+                    )}
+                    {index === 29 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[7]?.node?.content}
+                      />
+                    )}
+                    {index === 33 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[8]?.node?.content}
+                      />
+                    )}
+                    {index === 37 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[9]?.node?.content}
+                      />
                     )} */}
                   </React.Fragment>
                 ))}

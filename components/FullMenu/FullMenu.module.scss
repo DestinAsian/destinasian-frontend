@@ -15,7 +15,7 @@
   overflow-x: hidden;
   padding: 0 1rem 7rem;
   transition: transform 0.1s ease-out;
-  transition: top .4s ease-in-out;
+  transition: top 0.4s ease-in-out;
   flex-direction: row;
   flex-wrap: wrap;
 
@@ -53,15 +53,18 @@
 
     .search-result-wrapper {
       position: absolute;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      // flex-direction: column;
       top: 4.5rem;
       left: 0;
       width: 100%;
       text-align: left;
+      height: calc(-7rem + 100vh);
+      overflow: auto;
 
       @media (min-width: $breakpoint-extra-small) {
         top: 6.5rem;
+        height: calc(-15rem + 100vh);
       }
     }
   }
