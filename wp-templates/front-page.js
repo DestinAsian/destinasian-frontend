@@ -17,6 +17,15 @@ import {
   SecondaryHeader,
 } from '../components'
 
+// Randomized Function
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+  return array
+}
+
 export default function Component(props) {
   // Loading state for previews
   if (props.loading) {
@@ -168,37 +177,28 @@ export default function Component(props) {
     }
   }, [isNavShown])
 
-  // // Randomized Function
-  // function shuffleArray(array) {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1))
-  //     ;[array[i], array[j]] = [array[j], array[i]]
-  //   }
-  //   return array
-  // }
+  // Declare state for shuffled banner ads
+  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
 
-  // // Declare state for shuffled banner ads
-  // const [shuffledBannerAds, setShuffledBannerAds] = useState({})
+  // Function to shuffle the banner ads and store them in state
+  const shuffleBannerAds = () => {
+    // Assuming bannerAds is an object containing all available bannerAds
+    const bannerAdsArray = Object.values(bannerAds?.edges || [])
+    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
 
-  // // Function to shuffle the banner ads and store them in state
-  // const shuffleBannerAds = () => {
-  //   // Assuming bannerAds is an object containing all available bannerAds
-  //   const bannerAdsArray = Object.values(bannerAds?.edges || [])
-  //   const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
+    // Convert the shuffled array back to an object
+    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
+      acc[index] = curr
+      return acc
+    }, {})
 
-  //   // Convert the shuffled array back to an object
-  //   const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
-  //     acc[index] = curr
-  //     return acc
-  //   }, {})
+    setShuffledBannerAds(shuffledAds)
+  }
 
-  //   setShuffledBannerAds(shuffledAds)
-  // }
-
-  // useEffect(() => {
-  //   // Shuffle the banner ads when the component mounts
-  //   shuffleBannerAds()
-  // }, [])
+  useEffect(() => {
+    // Shuffle the banner ads when the component mounts
+    shuffleBannerAds()
+  }, [])
 
   return (
     <>
@@ -279,23 +279,23 @@ export default function Component(props) {
                     />
                     {/* Banner Ads */}
                     {/* {index === 1 && (
-                      <ModuleAd bannerAd={bannerAds?.edges[4]?.node?.content} />
-                    )}
-                    {console.log(bannerAds?.edges[4]?.node?.content)} */}
-                    {/* {console.log(bannerAds?.edges[4]?.node?.content)} */}
-                    {/* {index === 5 && (
                       <ModuleAd
-                        bannerAd2={shuffledBannerAds[1]?.node?.content}
+                        bannerAd={shuffledBannerAds[0]?.node?.content}
+                      />
+                    )}
+                    {index === 5 && (
+                      <ModuleAd
+                        bannerAd={shuffledBannerAds[1]?.node?.content}
                       />
                     )}
                     {index === 9 && (
                       <ModuleAd
-                        bannerAd3={shuffledBannerAds[2]?.node?.content}
+                        bannerAd={shuffledBannerAds[2]?.node?.content}
                       />
                     )}
                     {index === 13 && (
                       <ModuleAd
-                        bannerAd4={shuffledBannerAds[3]?.node?.content}
+                        bannerAd={shuffledBannerAds[3]?.node?.content}
                       />
                     )} */}
                   </React.Fragment>
@@ -355,8 +355,6 @@ Component.query = gql`
     $first: Int = 10
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
-    $field: PostObjectsConnectionOrderbyEnum = DATE
-    $order: OrderEnum = ASC
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -790,10 +788,7 @@ Component.query = gql`
         }
       }
     }
-    bannerAds(
-      first: $first
-      where: { orderby: { order: $order, field: $field } }
-    ) {
+    bannerAds(first: 10, where: { search: "homepage" }) {
       ...ModuleAdFragment
     }
     generalSettings {

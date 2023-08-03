@@ -12,6 +12,7 @@ export { ContentWrapperPage } from './ContentWrapperPage';
 export { DaGuideMenu } from './DaGuideMenu';
 export { EntryHeader } from './EntryHeader';
 export { EntryRelatedStories } from './EntryRelatedStories';
+export { ErrorPage } from './ErrorPage';
 export { FeaturedImage } from './FeaturedImage';
 export { FeatureWell } from './FeatureWell';
 export { Footer } from './Footer';

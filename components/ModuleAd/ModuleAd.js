@@ -2,15 +2,14 @@ import { gql } from '@apollo/client'
 import { useState, useEffect } from 'react'
 import classNames from 'classnames/bind'
 import styles from './ModuleAd.module.scss'
+import banner1 from '../../assets/images/Banner Blank_1.jpg'
+import banner2 from '../../assets/images/Banner Blank_2.jpg'
+import banner3 from '../../assets/images/Banner Blank_3.jpg'
+import banner4 from '../../assets/images/Banner Blank_4.jpg'
 
 let cx = classNames.bind(styles)
 
-export default function ModuleAd({
-  bannerAd,
-  bannerAd2,
-  bannerAd3,
-  bannerAd4,
-}) {
+export default function ModuleAd({ bannerAd }) {
   const [isComponentHidden, setIsComponentHidden] = useState(false)
 
   useEffect(() => {
@@ -19,6 +18,8 @@ export default function ModuleAd({
       setIsComponentHidden(true)
     }
   }, [])
+
+  const banners = [banner1.src, banner2.src, banner3.src, banner4.src]
 
   return (
     <div className={cx('component', isComponentHidden ? 'hide-component' : '')}>
@@ -34,9 +35,6 @@ export default function ModuleAd({
 
         <div className={cx('border-bottom')}></div>
       </div>
-      {/* <BannerAd bannerAd={bannerAd2} />
-      <BannerAd bannerAd={bannerAd3} />
-      <BannerAd bannerAd={bannerAd4} /> */}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import classNames from 'classnames/bind'
 import { NavigationMenu, SearchInput, SearchResults, Button } from '..'
 import styles from './FullMenu.module.scss'

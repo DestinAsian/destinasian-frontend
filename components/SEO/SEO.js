@@ -55,7 +55,7 @@ export default function SEO({ title, description, imageUrl, url }) {
         )}
 
         {/* AdButler Module Ad */}
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
             if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
@@ -63,14 +63,13 @@ export default function SEO({ title, description, imageUrl, url }) {
             AdButlerHB.timeout = 700;
             AdButlerHB.cmd.push(function(){
 
-            /* === ZONE ENTRIES GO HERE === */
             AdButlerHB.registerAuction('abhb_32661_1', [[0,0]],624825, 185947, "servedbyadbutler.com");
 
             AdButlerHB.requestAuctions();
             });
             `,
           }}
-        ></script>
+        ></script> */}
 
         {/* Typography Cloud */}
         <link

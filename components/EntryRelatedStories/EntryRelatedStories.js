@@ -8,9 +8,9 @@ export default function EntryRelatedStories({
 
   return (
     <article className={cx('component')}>
-      <div class={cx('entry-wrapper')}>
+      <div className={cx('entry-wrapper')}>
         <div className={cx('entry-title')}>{'Related Stories'}</div>
-        <div class={cx('entry-border')}></div>
+        <div className={cx('entry-border')}></div>
       </div>
     </article>
   )
