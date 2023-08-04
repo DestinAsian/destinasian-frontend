@@ -35,6 +35,9 @@ export default function FullMenu({
     fetchPolicy: 'network-only',
   })
 
+  // Check if the search query is empty and no search results are loading, then hide the SearchResults component
+  const isSearchResultsVisible = !!(searchQuery && !searchResultsLoading)
+
   return (
     <div className={cx('component')}>
       {/* Full menu */}
@@ -54,12 +57,15 @@ export default function FullMenu({
               </div>
             )}
 
-            <SearchResults
-              searchResults={searchResultsData?.contentNodes?.edges?.map(
-                ({ node }) => node,
-              )}
-              isLoading={searchResultsLoading}
-            />
+            {/* Conditionally render the SearchResults component */}
+            {isSearchResultsVisible && (
+              <SearchResults
+                searchResults={searchResultsData?.contentNodes?.edges?.map(
+                  ({ node }) => node,
+                )}
+                isLoading={searchResultsLoading}
+              />
+            )}
           </div>
         </div>
         <div className={cx('first-wrapper')}>

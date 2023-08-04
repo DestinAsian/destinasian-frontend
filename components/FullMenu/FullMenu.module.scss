@@ -59,12 +59,10 @@
       left: 0;
       width: 100%;
       text-align: left;
-      height: calc(-7rem + 100vh);
-      overflow: auto;
+      
 
       @media (min-width: $breakpoint-extra-small) {
         top: 6.5rem;
-        height: calc(-15rem + 100vh);
       }
     }
   }
