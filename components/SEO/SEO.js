@@ -58,18 +58,34 @@ export default function SEO({ title, description, imageUrl, url }) {
         {/* <script
           dangerouslySetInnerHTML={{
             __html: `
-            if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
-            var AdButlerHB = AdButlerHB || {}; AdButlerHB.cmd = AdButlerHB.cmd || [];
-            AdButlerHB.timeout = 700;
-            AdButlerHB.cmd.push(function(){
+              if (!window.AdButlerHB){(function(){var s = document.createElement("script");s.async = true; s.type = "text/javascript";s.src = 'https://servedbyadbutler.com/hb_app.js';var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(s, n);}());}
+              var AdButlerHB = AdButlerHB || {}; AdButlerHB.cmd = AdButlerHB.cmd || [];
+              AdButlerHB.timeout = 700;
+              AdButlerHB.cmd.push(function(){
 
-            AdButlerHB.registerAuction('abhb_32661_1', [[0,0]],624825, 185947, "servedbyadbutler.com");
+              AdButlerHB.registerAuction('abhb_32661_1', [[0,0]],624825, 185947, "servedbyadbutler.com");
 
-            AdButlerHB.requestAuctions();
+              AdButlerHB.requestAuctions();
             });
             `,
           }}
         ></script> */}
+
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-QV16KRW1PT"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-QV16KRW1PT');`,
+          }}
+        ></script>
 
         {/* Typography Cloud */}
         <link
