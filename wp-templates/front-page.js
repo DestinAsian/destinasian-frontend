@@ -207,6 +207,16 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
+      {/* Google Tag Manager (noscript) */}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-5BJVGS"
+          height="0"
+          width="0"
+          className="hidden invisible"
+        ></iframe>
+      </noscript>
+      {/* End Google Tag Manager (noscript) */}
       <HomepageHeader
         title={siteTitle}
         description={siteDescription}
