@@ -201,22 +201,17 @@ export default function Component(props) {
     ),
   ]
 
-  // Declare state for shuffled banner ads
-  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
+  // Declare state for banner ads
+  const [bannerAdsArray, setBannerAdsArray] = useState([])
 
   // Function to shuffle the banner ads and store them in state
   const shuffleBannerAds = () => {
-    // Assuming bannerAds is an object containing all available bannerAds
     const bannerAdsArray = Object.values(bannerAds?.edges || [])
+
+    // Shuffle the array
     const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
 
-    // Convert the shuffled array back to an object
-    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
-      acc[index] = curr
-      return acc
-    }, {})
-
-    setShuffledBannerAds(shuffledAds)
+    setBannerAdsArray(shuffledBannerAdsArray)
   }
 
   useEffect(() => {
@@ -224,19 +219,20 @@ export default function Component(props) {
     shuffleBannerAds()
   }, [])
 
+  // Separate shuffled banner ads with <img> tags from those without
+  const bannerAdsWithImg = bannerAdsArray.filter((bannerAd) =>
+    !bannerAd?.node?.content.includes('<!--'),
+  )
+  const bannerAdsWithoutImg = bannerAdsArray.filter(
+    (bannerAd) => bannerAd?.node?.content.includes('<!--'),
+  )
+
+  // Concatenate the arrays to place ads with <img> tags first
+  const sortedBannerAdsArray = [...bannerAdsWithImg, ...bannerAdsWithoutImg]
+
   return (
     <>
       <SEO title={siteTitle} description={siteDescription} />
-      {/* Google Tag Manager (noscript) */}
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5BJVGS"
-          height="0"
-          width="0"
-          className="hidden invisible"
-        ></iframe>
-      </noscript>
-      {/* End Google Tag Manager (noscript) */}
       <CategoryHeader
         title={siteTitle}
         description={siteDescription}
@@ -319,37 +315,36 @@ export default function Component(props) {
                   locationUrl={post?.acfLocationIcon?.locationUrl}
                 />
                 {/* Banner Ads */}
-                {/* {index === 1 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[0]?.node?.content} />
+                {index === 1 && (
+                  <ModuleAd bannerAd={sortedBannerAdsArray[0]?.node?.content} />
                 )}
                 {index === 5 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[1]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[1]?.node?.content} />
                 )}
                 {index === 9 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[2]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[2]?.node?.content} />
                 )}
                 {index === 13 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[3]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[3]?.node?.content} />
                 )}
                 {index === 17 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[4]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[4]?.node?.content} />
                 )}
                 {index === 21 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[5]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[5]?.node?.content} />
                 )}
                 {index === 25 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[6]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[6]?.node?.content} />
                 )}
                 {index === 29 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[7]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[7]?.node?.content} />
                 )}
                 {index === 33 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[8]?.node?.content} />
+                  <ModuleAd bannerAd={sortedBannerAdsArray[8]?.node?.content} />
                 )}
                 {index === 37 && (
-                  <ModuleAd bannerAd={shuffledBannerAds[9]?.node?.content} />
-                )} */}
-                {/* {console.log(shuffledBannerAds)} */}
+                  <ModuleAd bannerAd={sortedBannerAdsArray[9]?.node?.content} />
+                )}
               </React.Fragment>
             ))}
           {visiblePosts < mergedPosts.length && (
@@ -792,7 +787,7 @@ Component.query = gql`
         }
       }
     }
-    bannerAds(first: 10, where: { search: "ros" }) {
+    bannerAds(first: 10, where: { search: "homepage" }) {
       ...ModuleAdFragment
     }
     generalSettings {

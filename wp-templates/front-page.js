@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import { useMediaQuery } from 'react-responsive'
@@ -15,6 +15,7 @@ import {
   FeatureWell,
   Button,
   SecondaryHeader,
+  HomepageStories,
 } from '../components'
 
 // Randomized Function
@@ -46,10 +47,12 @@ export default function Component(props) {
   const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri } =
     props?.data?.page ?? []
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const postsPerPage = 4 // Number of posts to load per page
+
   // Load More Function
-  const [visiblePosts, setVisiblePosts] = useState(4)
   const loadMorePosts = () => {
-    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
+    setCurrentPage((prevPage) => prevPage + 1)
   }
 
   // load more posts when scrolled to bottom
@@ -76,11 +79,10 @@ export default function Component(props) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [currentPage]) // Listen for changes in currentPage
 
   const mainPosts = []
   const mainEditorialPosts = []
-  const mainAdvertorialPosts = []
 
   // loop through all the main categories posts
   posts.edges.forEach((post) => {
@@ -108,6 +110,30 @@ export default function Component(props) {
   // sortByDate mainCat & childCat Posts
   const allPosts = mainCatPosts.sort(sortPostsByDate)
 
+  // Declare Pin Posts
+  const allPinPosts = [
+    homepagePinPosts?.pinPost1 ? homepagePinPosts?.pinPost1 : null,
+    homepagePinPosts?.pinPost2 ? homepagePinPosts?.pinPost2 : null,
+    homepagePinPosts?.pinPost3 ? homepagePinPosts?.pinPost3 : null,
+    homepagePinPosts?.pinPost4 ? homepagePinPosts?.pinPost4 : null,
+    homepagePinPosts?.pinPost5 ? homepagePinPosts?.pinPost5 : null,
+  ].filter((pinPost) => pinPost !== null)
+
+  // Merge All posts and Pin posts
+  const mergedPosts = [
+    ...allPinPosts,
+    ...allPosts.filter(
+      (post) => !allPinPosts.some((pinPost) => pinPost?.id === post?.id),
+    ),
+  ]
+
+  const startIndex = (currentPage - 1) * postsPerPage
+  const endIndex = startIndex + postsPerPage
+
+  // All posts sorted by pinPosts then mainPosts & date
+  const paginatedPosts = mergedPosts.slice(0, endIndex)
+
+  // Feature Well
   const isDesktop = useMediaQuery({ minWidth: 640 })
   const isMobile = useMediaQuery({ maxWidth: 639 })
 
@@ -149,56 +175,34 @@ export default function Component(props) {
     }
   }, [])
 
-  // Declare Pin Posts
-  const allPinPosts = [
-    homepagePinPosts?.pinPost1 ? homepagePinPosts?.pinPost1 : null,
-    homepagePinPosts?.pinPost2 ? homepagePinPosts?.pinPost2 : null,
-    homepagePinPosts?.pinPost3 ? homepagePinPosts?.pinPost3 : null,
-    homepagePinPosts?.pinPost4 ? homepagePinPosts?.pinPost4 : null,
-    homepagePinPosts?.pinPost5 ? homepagePinPosts?.pinPost5 : null,
-  ].filter((pinPost) => pinPost !== null)
-
-  // Merge All posts and Pin posts
-  const mergedPosts = [
-    ...allPinPosts,
-    ...allPosts.filter(
-      (post) => !allPinPosts.some((pinPost) => pinPost?.id === post?.id),
-    ),
-  ]
-
-  const [isNavShown, setIsNavShown] = useState(false)
-
-  // Stop scrolling pages when isNavShown
-  useEffect(() => {
-    if (isNavShown) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'visible'
-    }
-  }, [isNavShown])
-
-  // Declare state for shuffled banner ads
-  const [shuffledBannerAds, setShuffledBannerAds] = useState({})
+  // Declare state for banner ads
+  const [bannerAdsArray, setBannerAdsArray] = useState([])
 
   // Function to shuffle the banner ads and store them in state
   const shuffleBannerAds = () => {
-    // Assuming bannerAds is an object containing all available bannerAds
     const bannerAdsArray = Object.values(bannerAds?.edges || [])
+
+    // Shuffle the array
     const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
 
-    // Convert the shuffled array back to an object
-    const shuffledAds = shuffledBannerAdsArray.reduce((acc, curr, index) => {
-      acc[index] = curr
-      return acc
-    }, {})
-
-    setShuffledBannerAds(shuffledAds)
+    setBannerAdsArray(shuffledBannerAdsArray)
   }
 
   useEffect(() => {
     // Shuffle the banner ads when the component mounts
     shuffleBannerAds()
   }, [])
+
+  // Separate shuffled banner ads with <img> tags from those without
+  const bannerAdsWithImg = bannerAdsArray.filter(
+    (bannerAd) => !bannerAd?.node?.content.includes('<!--'),
+  )
+  const bannerAdsWithoutImg = bannerAdsArray.filter((bannerAd) =>
+    bannerAd?.node?.content.includes('<!--'),
+  )
+
+  // Concatenate the arrays to place ads with <img> tags first
+  const sortedBannerAdsArray = [...bannerAdsWithImg, ...bannerAdsWithoutImg]
 
   return (
     <>
@@ -207,16 +211,6 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
-      {/* Google Tag Manager (noscript) */}
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5BJVGS"
-          height="0"
-          width="0"
-          className="hidden invisible"
-        ></iframe>
-      </noscript>
-      {/* End Google Tag Manager (noscript) */}
       <HomepageHeader
         title={siteTitle}
         description={siteDescription}
@@ -262,9 +256,9 @@ export default function Component(props) {
             </div>
             <div id="snapStart" className="snap-start pt-16">
               {/* All posts sorted by pinPosts then mainPosts & date */}
-              {mergedPosts.length !== 0 &&
-                mergedPosts.slice(0, visiblePosts).map((post, index) => (
-                  // Render the merged posts here
+              {/* <HomepageStories /> */}
+              {paginatedPosts.length !== 0 &&
+                paginatedPosts.map((post, index) => (
                   <React.Fragment key={post?.id}>
                     <Post
                       title={post?.title}
@@ -287,60 +281,59 @@ export default function Component(props) {
                       locationLabel={post?.acfLocationIcon?.locationLabel}
                       locationUrl={post?.acfLocationIcon?.locationUrl}
                     />
-                    {/* Banner Ads */}
-                    {/* {index === 1 && (
+                    {index === 1 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[0]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[0]?.node?.content}
                       />
                     )}
                     {index === 5 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[1]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[1]?.node?.content}
                       />
                     )}
                     {index === 9 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[2]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[2]?.node?.content}
                       />
                     )}
                     {index === 13 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[3]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[3]?.node?.content}
                       />
                     )}
                     {index === 17 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[4]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[4]?.node?.content}
                       />
                     )}
                     {index === 21 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[5]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[5]?.node?.content}
                       />
                     )}
                     {index === 25 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[6]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[6]?.node?.content}
                       />
                     )}
                     {index === 29 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[7]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[7]?.node?.content}
                       />
                     )}
                     {index === 33 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[8]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[8]?.node?.content}
                       />
                     )}
                     {index === 37 && (
                       <ModuleAd
-                        bannerAd={shuffledBannerAds[9]?.node?.content}
+                        bannerAd={sortedBannerAdsArray[9]?.node?.content}
                       />
-                    )} */}
+                    )}
                   </React.Fragment>
                 ))}
-              {visiblePosts < mergedPosts.length && (
+              {paginatedPosts < mergedPosts.length && (
                 <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
                   <Button onClick={loadMorePosts} className="gap-x-4	">
                     Load More{' '}
@@ -393,8 +386,7 @@ Component.query = gql`
     $featureHeaderLocation: MenuLocationEnum
     $asPreview: Boolean = false
     $first: Int = 10
-    $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
-    $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
+    $first2: Int!
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
@@ -767,7 +759,7 @@ Component.query = gql`
         }
       }
     }
-    posts(first: $first, where: $where) {
+    posts(first: $first2, where: { status: PUBLISH }) {
       edges {
         node {
           id
@@ -802,7 +794,7 @@ Component.query = gql`
         }
       }
     }
-    editorials(first: $first, where: $where1) {
+    editorials(first: $first2, where: { status: PUBLISH }) {
       edges {
         node {
           id
@@ -888,6 +880,7 @@ Component.query = gql`
 Component.variables = ({ databaseId }, ctx) => {
   return {
     databaseId,
+    first2: 10,
     headerLocation: MENUS.PRIMARY_LOCATION,
     secondHeaderLocation: MENUS.SECONDARY_LOCATION,
     thirdHeaderLocation: MENUS.THIRD_LOCATION,
