@@ -10,7 +10,6 @@ import {
 import styles from './FullMenu.module.scss'
 import { useState, useEffect } from 'react'
 import { GetSearchResults } from '../../queries/GetSearchResults'
-import appConfig from '../../app.config'
 
 let cx = classNames.bind(styles)
 
@@ -26,7 +25,10 @@ export default function FullMenu({
   searchQuery,
   setSearchQuery,
 }) {
+  // LatestStories content
   const [visiblePosts] = useState(3)
+
+  // Search function content
   const [isFetchingMore, setIsFetchingMore] = useState(false)
   const postsPerPage = 5
 
@@ -44,6 +46,7 @@ export default function FullMenu({
     },
     skip: searchQuery === '',
     fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-and-network',
   })
 
   // Update query when load more button clicked
@@ -98,7 +101,7 @@ export default function FullMenu({
             )}
             {searchResultsData?.contentNodes?.pageInfo?.hasNextPage &&
               searchResultsData?.contentNodes?.pageInfo?.endCursor && (
-                <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+                <div className="mx-auto my-0 flex w-[100vw] justify-center	">
                   <Button
                     onClick={() => {
                       if (
@@ -108,6 +111,7 @@ export default function FullMenu({
                         setIsFetchingMore(true) // Set flag to indicate fetch in progress
                         fetchMore({
                           variables: {
+                            first: postsPerPage,
                             after:
                               searchResultsData?.contentNodes?.pageInfo
                                 ?.endCursor,

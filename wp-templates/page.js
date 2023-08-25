@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
+import { HeaderFooterVisibilityFragment } from '../fragments/HeaderFooterVisibility'
 import {
   Header,
   Footer,
@@ -30,7 +31,8 @@ export default function Component(props) {
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
-  const { title, content, featuredImage } = props?.data?.page
+  const { title, content, featuredImage, headerFooterVisibility } =
+    props?.data?.page
 
   const mainPosts = []
   const mainEditorialPosts = []
@@ -68,16 +70,6 @@ export default function Component(props) {
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
       />
-      {/* Google Tag Manager (noscript) */}
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5BJVGS"
-          height="0"
-          width="0"
-          className="hidden invisible"
-        ></iframe>
-      </noscript>
-      {/* End Google Tag Manager (noscript) */}
       <Header
         title={siteTitle}
         description={siteDescription}
@@ -91,19 +83,22 @@ export default function Component(props) {
       />
       <Main>
         <>
-          <EntryHeader title={title} />
+          {headerFooterVisibility?.headerVisibility == true ? null : (
+            <EntryHeader title={title} />
+          )}
           <Container>
             <ContentWrapperPage content={content} />
           </Container>
         </>
       </Main>
-      <Footer />
+      {headerFooterVisibility?.footerVisibility == true ? null : <Footer />}
     </>
   )
 }
 
 Component.query = gql`
   ${BlogInfoFragment}
+  ${HeaderFooterVisibilityFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
   query GetPageData(
@@ -124,6 +119,9 @@ Component.query = gql`
       title
       content
       ...FeaturedImageFragment
+      headerFooterVisibility {
+        ...HeaderFooterVisibilityFragment
+      }
     }
     posts(first: $first, where: $where) {
       edges {

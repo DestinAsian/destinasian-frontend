@@ -179,9 +179,9 @@ export default function HomepageHeader({
                       type="button"
                       className={cx('close-icon')}
                       onClick={() => {
-                          setIsNavShown(!isNavShown)
-                          setSearchQuery('')
-                        }}
+                        setIsNavShown(!isNavShown)
+                        setSearchQuery('')
+                      }}
                       aria-label="Toggle navigation"
                       aria-controls={cx('full-menu-wrapper')}
                       aria-expanded={!isNavShown}
@@ -362,9 +362,9 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
               type="button"
               className={cx('close-icon')}
               onClick={() => {
-                          setIsNavShown(!isNavShown)
-                          setSearchQuery('')
-                        }}
+                setIsNavShown(!isNavShown) // Toggle navigation
+                clearSearch // Clear search input
+              }}
               aria-label="Toggle navigation"
               aria-controls={cx('primary-navigation')}
               aria-expanded={!isNavShown}
