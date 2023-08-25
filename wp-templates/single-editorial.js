@@ -40,6 +40,8 @@ export default function SingleEditorial(props) {
     author,
     date,
     acfSingleEditorialSlider,
+    seo,
+    uri,
   } = props?.data?.editorial
   const categories = props?.data?.editorial?.categories?.edges ?? []
   const posts = props?.data?.posts ?? []
@@ -122,9 +124,10 @@ export default function SingleEditorial(props) {
   return (
     <>
       <SEO
-        title={siteTitle}
-        description={siteDescription}
+        title={seo?.title}
+        description={seo?.metaDesc}
         imageUrl={featuredImage?.node?.sourceUrl}
+        url={uri}
       />
       {/* Google Tag Manager (noscript) */}
       <noscript>
@@ -215,6 +218,11 @@ SingleEditorial.query = gql`
           name
         }
       }
+      seo {
+        title
+        metaDesc
+      }
+      uri
       acfSingleEditorialSlider {
         slide1 {
           mediaItemUrl

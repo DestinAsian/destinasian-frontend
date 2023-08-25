@@ -30,7 +30,7 @@ export default function SingleAdvertorial(props) {
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const { title, content, featuredImage, author, date, acfPostSlider } =
+  const { title, content, featuredImage, author, date, acfPostSlider, seo, uri } =
     props?.data?.advertorial
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
@@ -85,9 +85,10 @@ export default function SingleAdvertorial(props) {
   return (
     <>
       <SEO
-        title={siteTitle}
-        description={siteDescription}
+        title={seo?.title}
+        description={seo?.metaDesc}
         imageUrl={featuredImage?.node?.sourceUrl}
+        url={uri}
       />
       {/* Google Tag Manager (noscript) */}
       <noscript>
@@ -153,6 +154,11 @@ SingleAdvertorial.query = gql`
           name
         }
       }
+      seo {
+        title
+        metaDesc
+      }
+      uri
       acfPostSlider {
         slide1 {
           mediaItemUrl

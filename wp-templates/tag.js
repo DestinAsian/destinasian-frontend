@@ -18,11 +18,16 @@ export default function Component(props) {
     props?.data?.generalSettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { name, posts } = props?.data?.nodeByUri;
+  const { name, posts, seo, uri } = props?.data?.nodeByUri;
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={seo?.title}
+        description={seo?.metaDesc}
+        imageUrl={featuredImage?.node?.sourceUrl}
+        url={uri}
+      />
       {/* Google Tag Manager (noscript) */}
       <noscript>
         <iframe
@@ -77,6 +82,11 @@ Component.query = gql`
     nodeByUri(uri: $uri) {
       ... on Tag {
         name
+        seo {
+          title
+          metaDesc
+        }
+        uri
         posts {
           edges {
             node {

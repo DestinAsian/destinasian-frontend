@@ -40,6 +40,8 @@ export default function Component(props) {
     acfPostSlider,
     acfCategoryIcon,
     acfLocationIcon,
+    seo,
+    uri,
   } = props?.data?.post
   const categories = props?.data?.post.categories?.edges ?? []
   const posts = props?.data?.posts ?? []
@@ -89,9 +91,10 @@ export default function Component(props) {
   return (
     <>
       <SEO
-        title={siteTitle}
-        description={siteDescription}
+        title={seo?.title}
+        description={seo?.metaDesc}
         imageUrl={featuredImage?.node?.sourceUrl}
+        url={uri}
       />
       {/* Google Tag Manager (noscript) */}
       <noscript>
@@ -180,6 +183,11 @@ Component.query = gql`
           name
         }
       }
+      seo {
+        title
+        metaDesc
+      }
+      uri
       categories {
         edges {
           node {

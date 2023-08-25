@@ -49,13 +49,15 @@ export default function SEO({ title, description, imageUrl, url }) {
 
         {url && (
           <>
-            <meta property="og:url" content={'https://destinasian.com' + url} />
+            <meta property="og:url" content={"https://destinasian.com" + url} />
             <meta
               property="twitter:url"
-              content={'https://destinasian.com' + url}
+              content={"https://destinasian.com" + url}
             />
           </>
         )}
+
+        {console.log(url)}
 
         {/* Google tag (gtag.js) */}
         <script

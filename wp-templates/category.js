@@ -56,6 +56,7 @@ export default function Component(props) {
     pinPosts,
     countryCode,
     destinationGuides,
+    seo,
   } = props?.data?.nodeByUri ?? []
 
   // Rest of World validation
@@ -244,7 +245,12 @@ export default function Component(props) {
 
   return (
     <>
-      <SEO title={siteTitle} description={siteDescription} />
+      <SEO
+        title={seo?.title}
+        description={seo?.metaDesc}
+        imageUrl={featuredImage?.node?.sourceUrl}
+        url={uri}
+      />
       <CategoryHeader
         title={siteTitle}
         description={siteDescription}
@@ -429,6 +435,10 @@ Component.query = gql`
         }
         destinationGuides {
           destinationGuides
+        }
+        seo {
+          title
+          metaDesc
         }
         pinPosts {
           pinPost {
