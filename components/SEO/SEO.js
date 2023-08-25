@@ -49,8 +49,11 @@ export default function SEO({ title, description, imageUrl, url }) {
 
         {url && (
           <>
-            <meta property="og:url" content={url} />
-            <meta property="twitter:url" content={url} />
+            <meta property="og:url" content={'https://destinasian.com' + url} />
+            <meta
+              property="twitter:url"
+              content={'https://destinasian.com' + url}
+            />
           </>
         )}
 
