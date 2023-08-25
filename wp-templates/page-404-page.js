@@ -25,7 +25,7 @@ export default function Component(props) {
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  const { title, content, featuredImage, hcCaption } = props?.data?.page ?? []
+  const { title, content, featuredImage, hcCaption, seo } = props?.data?.page ?? []
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
 
@@ -60,11 +60,11 @@ export default function Component(props) {
 
   return (
     <>
-      {/* <SEO
-        title={siteTitle}
-        description={siteDescription}
+      <SEO
+        title={seo?.title}
+        description={seo?.metaDesc}
         imageUrl={featuredImage?.node?.sourceUrl}
-      /> */}
+      />
       {/* Google Tag Manager (noscript) */}
       <noscript>
         <iframe
@@ -125,6 +125,10 @@ Component.query = gql`
       ...FeaturedImageFragment
       hcCaption {
         hcCaption
+      }
+      seo {
+        title
+        metaDesc
       }
     }
     posts(first: $first, where: $where) {
