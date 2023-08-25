@@ -60,11 +60,11 @@ export default function Component(props) {
 
   return (
     <>
-      <SEO
+      {/* <SEO
         title={siteTitle}
         description={siteDescription}
         imageUrl={featuredImage?.node?.sourceUrl}
-      />
+      /> */}
       {/* Google Tag Manager (noscript) */}
       <noscript>
         <iframe
