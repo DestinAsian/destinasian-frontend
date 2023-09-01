@@ -57,8 +57,6 @@ export default function SEO({ title, description, imageUrl, url }) {
           </>
         )}
 
-        {console.log(url)}
-
         {/* Google tag (gtag.js) */}
         <script
           async

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const GetHomepageBannerAds = gql`
+export const GetSpecificBannerAds = gql`
   query GetBannerAds($first: Int) {
-    bannerAds(first: $first, where: { search: "homepage" }) {
+    bannerAds(first: $first, where: { search: "specific" }) {
       pageInfo {
         hasPreviousPage
         hasNextPage

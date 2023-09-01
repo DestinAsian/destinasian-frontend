@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import { PostFragment } from '../fragments/PostFragment'
+import { GetROSBannerAds } from '../queries/GetROSBannerAds'
+import { GetSpecificBannerAds } from '../queries/GetSpecificBannerAds'
 import {
   CategoryHeader,
   SecondaryHeader,
@@ -41,8 +43,6 @@ export default function Component(props) {
   const fourthMenu = props?.data?.fourthHeaderMenuItems?.nodes ?? []
   const fifthMenu = props?.data?.fifthHeaderMenuItems?.nodes ?? []
   const featureMenu = props?.data?.featureHeaderMenuItems?.nodes ?? []
-  // const footerMenu = props?.data?.footerMenuItems?.nodes ?? []
-  const bannerAds = props?.data?.bannerAds ?? []
   const {
     name,
     uri,
@@ -57,6 +57,59 @@ export default function Component(props) {
     countryCode,
     destinationGuides,
   } = props?.data?.nodeByUri ?? []
+
+  // Declare state for banner ads
+  const [bannerAdsArray, setBannerAdsArray] = useState([])
+  const bannerPerPage = 10
+
+  // // Post per fetching
+  // const postsPerPage = 4
+
+  // // Get Posts
+  // const { data, error, loading, fetchMore } = useQuery(Component.query, {
+  //   variables: {
+  //     uri
+  //   },
+  //   fetchPolicy: 'network-only',
+  //   nextFetchPolicy: 'cache-and-network',
+  // })
+
+
+  // Get ROS Banner
+  const {
+    data: bannerROSData,
+    error: bannerROSError,
+    fetchMore: fetchMoreROSBanner,
+  } = useQuery(GetROSBannerAds, {
+    variables: {
+      first: bannerPerPage,
+      after: null,
+    },
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-and-network',
+  })
+
+  if (bannerROSError) {
+    return <pre>{JSON.stringify(error)}</pre>
+  }
+
+  // Get ROS Banner
+  const {
+    data: bannerSpecificData,
+    error: bannerSpecificError,
+    fetchMore: fetchMoreSpecificBanner,
+  } = useQuery(GetSpecificBannerAds, {
+    variables: {
+      first: bannerPerPage,
+      after: null,
+    },
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-and-network',
+  })
+
+  if (bannerSpecificError) {
+    return <pre>{JSON.stringify(error)}</pre>
+  }
 
   // Rest of World validation
   const rowValidation =
@@ -91,6 +144,47 @@ export default function Component(props) {
   const [visiblePosts, setVisiblePosts] = useState(4)
   const loadMorePosts = () => {
     setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
+
+    // // Call the fetchMoreROSBanner function to load additional banner ads
+    // fetchMoreROSBanner({
+    //   variables: {
+    //     first: bannerPerPage,
+    //     after: bannerROSData?.bannerAds?.pageInfo?.endCursor,
+    //   },
+    //   updateQuery: (prev, { fetchMoreResult }) => {
+    //     if (!fetchMoreResult) return prev
+    //     return {
+    //       ...prev,
+    //       bannerAds: {
+    //         ...fetchMoreResult.bannerAds,
+    //         edges: [
+    //           ...prev.bannerAds.edges,
+    //           ...fetchMoreResult.bannerAds.edges,
+    //         ],
+    //       },
+    //     }
+    //   },
+    // })
+
+    // fetchMoreSpecificBanner({
+    //   variables: {
+    //     first: bannerPerPage,
+    //     after: bannerSpecificData?.bannerAds?.pageInfo?.endCursor,
+    //   },
+    //   updateQuery: (prev, { fetchMoreResult }) => {
+    //     if (!fetchMoreResult) return prev
+    //     return {
+    //       ...prev,
+    //       bannerAds: {
+    //         ...fetchMoreResult.bannerAds,
+    //         edges: [
+    //           ...prev.bannerAds.edges,
+    //           ...fetchMoreResult.bannerAds.edges,
+    //         ],
+    //       },
+    //     }
+    //   },
+    // })
   }
 
   // load more posts when scrolled to bottom
@@ -213,34 +307,83 @@ export default function Component(props) {
     [],
   )
 
-  // Declare state for banner ads
-  const [bannerAdsArray, setBannerAdsArray] = useState([])
-
   // Function to shuffle the banner ads and store them in state
-  const shuffleBannerAds = () => {
-    const bannerAdsArray = Object.values(bannerAds?.edges || [])
-
-    // Shuffle the array
-    const shuffledBannerAdsArray = shuffleArray(bannerAdsArray)
-
-    setBannerAdsArray(shuffledBannerAdsArray)
-  }
-
   useEffect(() => {
+    const shuffleBannerAds = () => {
+      const bannerAdsArrayObj = Object.values(
+        bannerROSData?.bannerAds?.edges || [],
+      )
+
+      // Shuffle the array
+      const shuffledBannerAdsArray = shuffleArray(bannerAdsArrayObj)
+
+      setBannerAdsArray(shuffledBannerAdsArray)
+    }
+
     // Shuffle the banner ads when the component mounts
     shuffleBannerAds()
-  }, [])
+
+    // Shuffle the banner ads every 10 seconds
+    const shuffleInterval = setInterval(() => {
+      shuffleBannerAds()
+    }, 60000) // 10000 milliseconds = 10 seconds
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(shuffleInterval)
+    }
+  }, [bannerROSData]) // Use bannerROSData as a dependency to trigger shuffling when new data arrives
 
   // Separate shuffled banner ads with <img> tags from those without
-  const bannerAdsWithImg = bannerAdsArray.filter((bannerAd) =>
-    !bannerAd?.node?.content.includes('<!--'),
-  )
-  const bannerAdsWithoutImg = bannerAdsArray.filter(
-    (bannerAd) => bannerAd?.node?.content.includes('<!--'),
+  const bannerROSAdsWithImg = bannerAdsArray.filter(
+    (bannerAd) => !bannerAd?.node?.content.includes('<!--'),
   )
 
-  // Concatenate the arrays to place ads with <img> tags first
-  const sortedBannerAdsArray = [...bannerAdsWithImg, ...bannerAdsWithoutImg]
+  // Specific Banner Ads
+  const bannerSpecificAdsArray = bannerSpecificData?.bannerAds?.edges || []
+  const bannerSpecificAdsWithImg = bannerSpecificAdsArray.filter(
+    (bannerAd) => !bannerAd?.node?.content.includes('<!--'),
+  )
+
+  const matchingBannerAdsWithImg = bannerSpecificAdsWithImg.filter(
+    (bannerAd) => {
+      const anyOfUris = bannerAd?.node?.acfBannerAds?.anyOf?.map(
+        (anyOfItem) => anyOfItem.uri,
+      )
+      return anyOfUris && anyOfUris.includes(uri)
+    },
+  )
+
+  const pinROSAds = bannerROSAdsWithImg.filter(
+    (bannerAd) => !bannerAd?.node?.acfBannerAds?.pinAd === false || null,
+  )
+
+  const pinSpecificAds = matchingBannerAdsWithImg.filter(
+    (bannerAd) => !bannerAd?.node?.acfBannerAds?.pinAd === false || null,
+  )
+
+  // Concatenate the arrays to place ads specificAds first
+  const sortedBannerAdsArray = [
+    ...matchingBannerAdsWithImg,
+    ...bannerROSAdsWithImg,
+  ]
+
+  const pinAds = [...pinSpecificAds, ...pinROSAds]
+
+  const numberOfBannerAds = sortedBannerAdsArray.length
+  const numberOfPinAds = pinAds.length
+
+  const sortedBannerWithPin = [...pinAds, ...sortedBannerAdsArray].reduce(
+    (uniqueAds, ad) => {
+      if (!uniqueAds.some((uniqueAd) => uniqueAd?.node?.id === ad?.node?.id)) {
+        uniqueAds.push(ad)
+      }
+      return uniqueAds
+    },
+    [],
+  )
+
+  const numberOfSortedPinAds = sortedBannerWithPin.length
 
   return (
     <>
@@ -302,10 +445,10 @@ export default function Component(props) {
 
       <Main>
         <>
+          {/* <CategoryStories pinPosts={pinPosts} uri={uri}/> */}
           {/* All posts sorted by pinPosts then mainPosts & date */}
           {mergedPosts.length !== 0 &&
             mergedPosts.slice(0, visiblePosts).map((post, index) => (
-              // Render the merged posts here
               <React.Fragment key={post?.id}>
                 <Post
                   title={post?.title}
@@ -326,36 +469,32 @@ export default function Component(props) {
                   locationLabel={post?.acfLocationIcon?.locationLabel}
                   locationUrl={post?.acfLocationIcon?.locationUrl}
                 />
-                {/* Banner Ads */}
-                {index === 1 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[0]?.node?.content} />
+                {/* Check if pinAds is not an empty array */}
+                {numberOfPinAds > 0 && (
+                  <>
+                    {/* Loop through the rest of the banner ads */}
+                    {(index - 1) % 4 === 0 && (
+                      <ModuleAd
+                        bannerAd={
+                          sortedBannerWithPin[(index - 1) % numberOfSortedPinAds]
+                            ?.node?.content
+                        }
+                      />
+                    )}
+                  </>
                 )}
-                {index === 5 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[1]?.node?.content} />
-                )}
-                {index === 9 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[2]?.node?.content} />
-                )}
-                {index === 13 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[3]?.node?.content} />
-                )}
-                {index === 17 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[4]?.node?.content} />
-                )}
-                {index === 21 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[5]?.node?.content} />
-                )}
-                {index === 25 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[6]?.node?.content} />
-                )}
-                {index === 29 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[7]?.node?.content} />
-                )}
-                {index === 33 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[8]?.node?.content} />
-                )}
-                {index === 37 && (
-                  <ModuleAd bannerAd={sortedBannerAdsArray[9]?.node?.content} />
+                {/* Check if pinAds is an empty array */}
+                {numberOfPinAds === 0 && (
+                  <>
+                    {(index - 1) % 4 === 0 && (
+                      <ModuleAd
+                        bannerAd={
+                          sortedBannerAdsArray[(index - 1) % numberOfBannerAds]?.node
+                            ?.content
+                        }
+                      />
+                    )}
+                  </>
                 )}
               </React.Fragment>
             ))}
@@ -401,7 +540,6 @@ Component.query = gql`
   ${PostFragment}
   ${NavigationMenu.fragments.entry}
   ${FeaturedImage.fragments.entry}
-  ${ModuleAd.fragments.entry}
   query GetCategoryPage(
     $uri: String!
     $headerLocation: MenuLocationEnum
@@ -410,7 +548,7 @@ Component.query = gql`
     $fourthHeaderLocation: MenuLocationEnum
     $fifthHeaderLocation: MenuLocationEnum
     $featureHeaderLocation: MenuLocationEnum
-    $first: Int = 10
+    $first: Int
     $where: RootQueryToPostConnectionWhereArgs = { status: PUBLISH }
     $where1: RootQueryToEditorialConnectionWhereArgs = { status: PUBLISH }
   ) {
@@ -581,7 +719,7 @@ Component.query = gql`
             }
           }
         }
-        updates(first: $first, where: { status: PUBLISH}) {
+        updates(first: $first, where: { status: PUBLISH }) {
           edges {
             node {
               id
@@ -825,9 +963,6 @@ Component.query = gql`
           }
         }
       }
-    }
-    bannerAds(first: 10, where: { search: "homepage" }) {
-      ...ModuleAdFragment
     }
     generalSettings {
       ...BlogInfoFragment
