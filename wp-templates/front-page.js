@@ -32,8 +32,14 @@ export default function Component(props) {
   const posts = props?.data?.posts ?? []
   const editorials = props?.data?.editorials ?? []
   const updates = props?.data?.updates ?? []
-  const { content, featuredImage, acfHomepageSlider, homepagePinPosts, uri, seo } =
-    props?.data?.page ?? []
+  const {
+    content,
+    featuredImage,
+    acfHomepageSlider,
+    homepagePinPosts,
+    uri,
+    seo,
+  } = props?.data?.page ?? []
 
   const mainPosts = []
   const mainEditorialPosts = []
@@ -143,7 +149,7 @@ export default function Component(props) {
             <div className="snap-start">
               {currentFeatureWell && (
                 <Container>
-                  {isDesktop && (
+                  {/* {isDesktop && (
                     <FeatureWell
                       type={currentFeatureWell?.type}
                       videoSrc={currentFeatureWell?.videoSrc}
@@ -160,15 +166,15 @@ export default function Component(props) {
                       url={currentFeatureWell?.url}
                       caption={currentFeatureWell?.caption}
                     />
-                  )}
+                  )} */}
+
+                  <FeatureWell featureWells={featureWell} />
                 </Container>
               )}
             </div>
             <div id="snapStart" className="snap-start pt-16">
               {/* All posts sorted by pinPosts then mainPosts & date */}
-              <HomepageStories
-                pinPosts={homepagePinPosts}
-              />
+              <HomepageStories pinPosts={homepagePinPosts} />
             </div>
           </div>
         </>

@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import className from 'classnames/bind'
 import styles from './FeatureWell.module.scss'
 import { useMediaQuery } from 'react-responsive'
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react'
+import Div100vh from 'react-div-100vh'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/effect-fade'
+import 'swiper/css/pagination'
+
+// import required modules
+import { EffectFade, Autoplay, Pagination } from 'swiper'
 
 let cx = className.bind(styles)
 
-export default function FeatureWell({
-  type,
-  videoSrc,
-  desktopSrc,
-  mobileSrc,
-  url,
-  caption,
-}) {
+export default function FeatureWell({ featureWells }) {
   const isDesktop = useMediaQuery({ minWidth: 640 })
   const isMobile = useMediaQuery({ maxWidth: 639 })
 
@@ -29,29 +33,78 @@ export default function FeatureWell({
 
   return (
     <>
-      <div className={cx('component')}>
-        {type === 'image' && (
-          <a href={url}>
-            {isDesktop && <img src={desktopSrc} />}
-            {isMobile && <img src={mobileSrc} />}
-          </a>
-        )}
-        {type === 'video' && (
-          <a href={url}>
-            <div className={cx('video-wrapper')}>
-              <video
-                src={videoSrc}
-                className="video-content"
-                loop
-                autoPlay
-                playsInline
-                muted
-              />
+      <Div100vh>
+        <Swiper
+          effect={'fade'}
+          autoplay={{
+            delay: 15000,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            el: '.swiper-custom-pagination',
+            clickable: 'true',
+            type: 'bullets',
+            renderBullet: function (i, className) {
+              return `
+              <button class="${className}">
+              <svg class= "progress">
+              <circle class="circle-origin" cx="16" cy="16" r="10.5"></circle>
+              </svg>
+              <span></span>
+              </button>
+              `
+            },
+          }}
+          modules={[EffectFade, Autoplay, Pagination]}
+          className="fw-swiper-wrapper"
+        >
+          {featureWells?.map((featureWell, index) => (
+            <SwiperSlide key={index}>
+              {featureWell.type === 'image' && (
+                <a href={featureWell.url}>
+                  {isDesktop && (
+                    <div className={cx('image-wrapper')}>
+                      <img src={featureWell.desktopSrc} />
+                      <div className={cx('caption-wrapper')}>
+                        {featureWell.caption}
+                      </div>
+                      <div className={cx('bottom-gradient')}></div>
+                    </div>
+                  )}
+                  {isMobile && (
+                    <div className={cx('image-wrapper')}>
+                      <img src={featureWell.mobileSrc} />
+                      <div className={cx('caption-wrapper')}>
+                        {featureWell.caption}
+                      </div>
+                      <div className={cx('bottom-gradient')}></div>
+                    </div>
+                  )}
+                </a>
+              )}
+              {featureWell.type === 'video' && (
+                <a href={featureWell.url}>
+                  <div className={cx('video-wrapper')}>
+                    <video
+                      src={featureWell.videoSrc}
+                      className="video-content"
+                      loop
+                      autoPlay
+                      playsInline
+                      muted
+                    />
 
-              <div className={cx('caption-wrapper')}>{caption}</div>
-
+                    <div className={cx('caption-wrapper')}>
+                      {featureWell.caption}
+                    </div>
+                    <div className={cx('bottom-gradient')}></div>
+                  </div>
+                </a>
+              )}
               <div
-                className={cx('chevron-wrapper', { maximized: IsMaximized })}
+                className={cx('chevron-wrapper', {
+                  maximized: IsMaximized,
+                })}
               >
                 <a href="#snapStart">
                   <svg
@@ -69,19 +122,20 @@ export default function FeatureWell({
                     >
                       <path
                         d="M1387 5110 c-243 -62 -373 -329 -272 -560 27 -62 77 -114 989 -1027
-l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
--289 39 -117 106 -191 220 -245 59 -28 74 -31 160 -30 74 0 108 5 155 23 58
-22 106 70 1198 1160 1304 1302 1202 1185 1202 1371 0 186 102 69 -1202 1371
--1102 1101 -1140 1137 -1198 1159 -67 25 -189 34 -248 20z"
+    l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
+    -289 39 -117 106 -191 220 -245 59 -28 74 -31 160 -30 74 0 108 5 155 23 58
+    22 106 70 1198 1160 1304 1302 1202 1185 1202 1371 0 186 102 69 -1202 1371
+    -1102 1101 -1140 1137 -1198 1159 -67 25 -189 34 -248 20z"
                       />
                     </g>
                   </svg>
                 </a>
               </div>
-            </div>
-          </a>
-        )}
-      </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div class="swiper-custom-pagination"></div>
+      </Div100vh>
     </>
   )
 }

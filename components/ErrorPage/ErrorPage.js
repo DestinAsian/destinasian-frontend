@@ -36,24 +36,40 @@ export default function ErrorPage({ image, title, content }) {
 
   // Update query when load more button clicked
   const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult.contentNodes.edges.length) {
-      return previousResult.contentNodes
+    if (!fetchMoreResult.tags.edges.length) {
+      return previousResult.tags
     }
 
     return {
-      contentNodes: {
-        ...previousResult.contentNodes,
-        edges: [
-          ...previousResult.contentNodes.edges,
-          ...fetchMoreResult.contentNodes.edges,
-        ],
-        pageInfo: fetchMoreResult.contentNodes.pageInfo,
+      tags: {
+        ...previousResult.tags,
+        edges: [...previousResult.tags.edges, ...fetchMoreResult.tags.edges],
+        pageInfo: fetchMoreResult.tags.pageInfo,
       },
     }
   }
 
   // Check if the search query is empty and no search results are loading, then hide the SearchResults component
   const isSearchResultsVisible = !!(searchQuery && !searchResultsLoading)
+
+  // Create a Set to store unique databaseId values
+  const uniqueDatabaseIds = new Set()
+
+  // Initialize an array to store unique posts
+  const contentNodesPosts = []
+
+  // Loop through all the contentNodes posts
+  searchResultsData?.tags?.edges.forEach((contentNodes) => {
+    contentNodes.node?.contentNodes?.edges.forEach((post) => {
+      const { databaseId } = post.node
+
+      // Check if the databaseId is unique (not in the Set)
+      if (!uniqueDatabaseIds.has(databaseId)) {
+        uniqueDatabaseIds.add(databaseId) // Add the databaseId to the Set
+        contentNodesPosts.push(post.node) // Push the unique post to the array
+      }
+    })
+  })
 
   return (
     <div className={cx(['component', className])}>
@@ -88,28 +104,24 @@ export default function ErrorPage({ image, title, content }) {
           )}
           {isSearchResultsVisible && (
             <SearchResults
-              searchResults={searchResultsData?.contentNodes?.edges?.map(
-                ({ node }) => node,
-              )}
+              searchResults={contentNodesPosts}
               isLoading={searchResultsLoading}
             />
           )}
-          {/* Load More Button */}
-          {/* {searchResultsData?.contentNodes?.pageInfo?.hasNextPage &&
-            searchResultsData?.contentNodes?.pageInfo?.endCursor && (
-              <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+          {searchResultsData?.tags?.pageInfo?.hasNextPage &&
+            searchResultsData?.tags?.pageInfo?.endCursor && (
+              <div className="mx-auto my-0 flex w-[100vw] justify-center	">
                 <Button
                   onClick={() => {
                     if (
                       !isFetchingMore &&
-                      searchResultsData?.contentNodes?.pageInfo?.hasNextPage
+                      searchResultsData?.tags?.pageInfo?.hasNextPage
                     ) {
                       setIsFetchingMore(true) // Set flag to indicate fetch in progress
                       fetchMore({
                         variables: {
-                          after:
-                            searchResultsData?.contentNodes?.pageInfo
-                              ?.endCursor,
+                          first: postsPerPage,
+                          after: searchResultsData?.tags?.pageInfo?.endCursor,
                         },
                         updateQuery,
                       }).then(() => {
@@ -151,7 +163,7 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
                   )}
                 </Button>
               </div>
-            )} */}
+            )}
         </div>
       </div>
       <div className={cx('footer-wrapper')}>
