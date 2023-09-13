@@ -365,7 +365,12 @@ export default function Component(props) {
   const sortedBannerAdsArray = [
     ...matchingBannerAdsWithImg,
     ...bannerROSAdsWithImg,
-  ]
+  ].reduce((uniqueAds, ad) => {
+    if (!uniqueAds.some((uniqueAd) => uniqueAd?.node?.id === ad?.node?.id)) {
+      uniqueAds.push(ad)
+    }
+    return uniqueAds
+  }, [])
 
   const pinAds = [...pinSpecificAds, ...pinROSAds]
 
@@ -476,9 +481,7 @@ export default function Component(props) {
                     {(index - 1) % 4 === 0 && (
                       <ModuleAd
                         bannerAd={
-                          sortedBannerWithPin[
-                            (index - 1) % numberOfSortedPinAds
-                          ]?.node?.content
+                          sortedBannerWithPin[(index - 1) / 4]?.node?.content
                         }
                       />
                     )}
@@ -488,12 +491,13 @@ export default function Component(props) {
                 {numberOfPinAds === 0 && (
                   <>
                     {(index - 1) % 4 === 0 && (
-                      <ModuleAd
-                        bannerAd={
-                          sortedBannerAdsArray[(index - 1) % numberOfBannerAds]
-                            ?.node?.content
-                        }
-                      />
+                      <>
+                        <ModuleAd
+                          bannerAd={
+                            sortedBannerAdsArray[(index - 1) / 4]?.node?.content
+                          }
+                        />
+                      </>
                     )}
                   </>
                 )}
