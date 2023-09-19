@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import className from 'classnames/bind'
 import styles from './ContentWrapperContestFrontPage.module.scss'
 import { GetContestPages } from '../../queries/GetContestPages'
-import { Button, Post } from '../../components'
+import { Button, ContestPost } from '../../components'
 
 let cx = className.bind(styles)
 
@@ -89,7 +89,7 @@ export default function ContentWrapperContestFrontPage() {
       {allPosts.length !== 0 &&
         allPosts.map((post, index) => (
           <React.Fragment key={post?.id}>
-            <Post
+            <ContestPost
               title={post?.title}
               date={post?.date}
               uri={post?.uri}
