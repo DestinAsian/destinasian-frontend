@@ -49,10 +49,10 @@ export default function SEO({ title, description, imageUrl, url }) {
 
         {url && (
           <>
-            <meta property="og:url" content={"https://destinasian.com" + url} />
+            <meta property="og:url" content={'https://destinasian.com' + url} />
             <meta
               property="twitter:url"
-              content={"https://destinasian.com" + url}
+              content={'https://destinasian.com' + url}
             />
           </>
         )}
@@ -98,11 +98,11 @@ export default function SEO({ title, description, imageUrl, url }) {
         </noscript>
         {/* <!-- END FOUANALYTICS ON-SITE EMBED CODE --> */}
 
-        {/* Typography Cloud */}
+        {/* Testing Typography Cloud */}
         <link
           rel="stylesheet"
           type="text/css"
-          href="https://cloud.typography.com/7429004/7933832/css/fonts.css"
+          href="https://cloud.typography.com/7429004/6477832/css/fonts.css"
         />
 
         {/* Google Fonts */}
@@ -113,8 +113,15 @@ export default function SEO({ title, description, imageUrl, url }) {
           crossOrigin="anonymous"
         />
 
+        {/* EB Garamond */}
         <link
           href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"
+        />
+
+        {/* Rubik Mono One */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
           rel="stylesheet"
         />
       </Head>
