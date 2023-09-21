@@ -5,26 +5,18 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings'
 import {
   Footer,
   Main,
-  Container,
-  EntryHeader,
   NavigationMenu,
   FeaturedImage,
   SEO,
-  SingleHCFeaturedImage,
-  SingleHCEntryHeader,
-  SingleHCContainer,
-  ContentWrapperHCFrontPage,
-  SingleHCSlider,
-  Post,
-  SingleHCPost,
-  Button,
-  ContentWrapperHC,
-  LLHeader,
+  Header,
   SingleLLContainer,
   ContentWrapperLLFrontPage,
   SingleLLFeaturedImage,
+  SingleAdvertorialEntryHeader,
+  LLPost,
+  Button,
+  ContentWrapperLL,
 } from '../components'
-import { ContentWrapperLL } from '../components/ContentWrapperLL'
 
 export default function SingleLuxeList(props) {
   // Loading state for previews
@@ -51,6 +43,8 @@ export default function SingleLuxeList(props) {
     hcCaption,
     seo,
     uri,
+    children,
+    databaseId,
   } = props?.data?.luxeList
   // Latest Travel Stories
   const latestPosts = props?.data?.posts ?? []
@@ -74,20 +68,6 @@ export default function SingleLuxeList(props) {
     ...(latestMainPosts != null ? latestMainPosts : []),
     ...(latestMainEditorialPosts != null ? latestMainEditorialPosts : []),
   ]
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     checkScrollBottom()
-  //   }
-
-  //   // Attach the event listener
-  //   window.addEventListener('scroll', handleScroll)
-
-  //   // Clean up the event listener when the component unmounts
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll)
-  //   }
-  // }, [])
 
   // sort posts by date
   const sortPostsByDate = (a, b) => {
@@ -127,7 +107,7 @@ export default function SingleLuxeList(props) {
       {/* End Google Tag Manager (noscript) */}
       {/* Year pages */}
       {parent == null && (
-        <LLHeader
+        <Header
           title={siteTitle}
           description={siteDescription}
           primaryMenuItems={primaryMenu}
@@ -146,7 +126,7 @@ export default function SingleLuxeList(props) {
               {/* {'countries'} */}
               {/* All posts sorted by mainPosts & date */}
               <SingleLLFeaturedImage image={featuredImage?.node} />
-              <ContentWrapperLLFrontPage content={content} />
+              <ContentWrapperLLFrontPage content={content} id={databaseId} parentTitle={title}/>
             </SingleLLContainer>
           </>
         </Main>
@@ -154,7 +134,7 @@ export default function SingleLuxeList(props) {
 
       {/* Hotel pages */}
       {parent != null && (
-        <LLHeader
+        <Header
           title={siteTitle}
           description={siteDescription}
           primaryMenuItems={primaryMenu}
@@ -171,11 +151,9 @@ export default function SingleLuxeList(props) {
           <>
             <SingleLLContainer>
               {/* {'hotel'} */}
-              <SingleLLFeaturedImage image={featuredImage?.node} />
-              {/* <SingleLLEntryHeader
+              <SingleAdvertorialEntryHeader
                 title={title}
-                locationLabel={hcLocation?.hcLocation}
-              /> */}
+              />
               {/* <SingleHCSlider images={images} /> */}
               <ContentWrapperLL content={content} images={images} />
             </SingleLLContainer>
@@ -208,6 +186,7 @@ SingleLuxeList.query = gql`
     luxeList(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      databaseId
       ...FeaturedImageFragment
       author {
         node {
@@ -237,19 +216,6 @@ SingleLuxeList.query = gql`
         }
       }
       ...FeaturedImageFragment
-      children {
-        edges {
-          node {
-            ... on HonorsCircle {
-              id
-              title
-              content
-              uri
-              ...FeaturedImageFragment
-            }
-          }
-        }
-      }
       parent {
         node {
           ... on HonorsCircle {
