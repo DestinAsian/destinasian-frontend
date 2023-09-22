@@ -45,6 +45,7 @@ export default function SingleLuxeList(props) {
     uri,
     children,
     databaseId,
+    luxeListLogo,
   } = props?.data?.luxeList
   // Latest Travel Stories
   const latestPosts = props?.data?.posts ?? []
@@ -125,8 +126,16 @@ export default function SingleLuxeList(props) {
             <SingleLLContainer>
               {/* {'countries'} */}
               {/* All posts sorted by mainPosts & date */}
-              <SingleLLFeaturedImage image={featuredImage?.node} />
-              <ContentWrapperLLFrontPage content={content} id={databaseId} parentTitle={title}/>
+              <SingleLLFeaturedImage
+                mainLogo={luxeListLogo?.mainLogo}
+                secondaryLogo={luxeListLogo?.secondaryLogo}
+                id={databaseId}
+              />
+              <ContentWrapperLLFrontPage
+                content={content}
+                id={databaseId}
+                parentTitle={title}
+              />
             </SingleLLContainer>
           </>
         </Main>
@@ -151,9 +160,7 @@ export default function SingleLuxeList(props) {
           <>
             <SingleLLContainer>
               {/* {'hotel'} */}
-              <SingleAdvertorialEntryHeader
-                title={title}
-              />
+              <SingleAdvertorialEntryHeader title={title} />
               {/* <SingleHCSlider images={images} /> */}
               <ContentWrapperLL content={content} images={images} />
             </SingleLLContainer>
@@ -188,6 +195,26 @@ SingleLuxeList.query = gql`
       content
       databaseId
       ...FeaturedImageFragment
+      luxeListLogo {
+        mainLogo {
+          id
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+        secondaryLogo {
+          id
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
       author {
         node {
           name

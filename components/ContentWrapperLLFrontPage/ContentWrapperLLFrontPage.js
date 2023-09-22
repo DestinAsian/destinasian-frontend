@@ -26,20 +26,26 @@ export default function ContentWrapperLLFrontPage({
     nextFetchPolicy: 'cache-and-network',
   })
 
-  // Update function
   const updateQuery = (previousResult, { fetchMoreResult }) => {
     if (!fetchMoreResult) return previousResult
 
-    const { children: prevChildren } = previousResult.luxeList
-    const { children: newChildren } = fetchMoreResult.luxeList
+    const prevEdges = previousResult.luxeList.children?.edges || []
+    const newEdges = fetchMoreResult.luxeList.children?.edges || []
+
+    // Use a Set to keep track of unique post IDs
+    const uniquePostIds = new Set(prevEdges.map(({ node }) => node.id))
+
+    // Filter out any duplicate posts from newEdges
+    const filteredNewEdges = newEdges.filter(
+      ({ node }) => !uniquePostIds.has(node.id),
+    )
 
     return {
       luxeList: {
-        ...previousResult.luxeList,
         children: {
-          ...prevChildren,
-          edges: [...prevChildren.edges, ...newChildren.edges],
-          pageInfo: newChildren.pageInfo,
+          ...previousResult.luxeList.children,
+          edges: [...prevEdges, ...filteredNewEdges],
+          pageInfo: fetchMoreResult.luxeList.children.pageInfo,
         },
       },
     }
