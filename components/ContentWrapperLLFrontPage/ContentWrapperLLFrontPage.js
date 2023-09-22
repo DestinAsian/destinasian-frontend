@@ -42,6 +42,7 @@ export default function ContentWrapperLLFrontPage({
 
     return {
       luxeList: {
+        ...previousResult.luxeList,
         children: {
           ...previousResult.luxeList.children,
           edges: [...prevEdges, ...filteredNewEdges],

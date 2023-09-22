@@ -38,6 +38,7 @@ export default function LLMenu({ secondaryLogo, id }) {
 
     return {
       luxeList: {
+        ...previousResult.luxeList,
         children: {
           ...previousResult.luxeList.children,
           edges: [...prevEdges, ...filteredNewEdges],
