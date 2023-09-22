@@ -23,7 +23,8 @@ export default function LLMenu({ secondaryLogo, id }) {
   })
 
   const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult.luxeList.children?.edges.length) {
+
+    if (!fetchMoreResult.luxeList.children.edges.length) {
       return previousResult
     }
 
@@ -38,11 +39,8 @@ export default function LLMenu({ secondaryLogo, id }) {
       (edge, index) => index === 0 || !uniquePostIds.has(edge.node.id),
     )
 
-    console.log(prevEdges)
-
     return {
       luxeList: {
-        ...previousResult.luxeList,
         children: {
           ...previousResult.luxeList.children,
           edges: [...prevEdges, ...filteredNewEdges],

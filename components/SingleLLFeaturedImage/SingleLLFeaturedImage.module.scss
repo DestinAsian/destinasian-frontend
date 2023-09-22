@@ -14,11 +14,7 @@
   }
 
   &.show {
-    height: 100vh;
-
-    @media ((min-width: $breakpoint-extra-small) and (max-width: $breakpoint-small)) {
-      height: calc(-3.5rem + 100vh);
-    }
+    height: calc(-3.5rem + 100vh);
 
     @media (min-width: $breakpoint-small) {
       height: calc(-4.5rem + 100vh);
@@ -136,15 +132,15 @@
   &.show {
     padding: 0;
     gap: 1rem;
-    top: 5.5rem;
+    top: 5rem;
     transition: top 0.4s ease-in-out;
 
-    @media ((min-width: $breakpoint-extra-small) and (max-width: $breakpoint-small)) {
-      top: 4.5rem;
-    }
+    // @media ((min-width: $breakpoint-extra-small) and (max-width: $breakpoint-small)) {
+    //   top: 4.5rem;
+    // }
 
-    @media (min-width: $breakpoint-small) {
-      top: 5.5rem;
-    }
+    // @media (min-width: $breakpoint-small) {
+    //   top: 5.5rem;
+    // }
   }
 }
