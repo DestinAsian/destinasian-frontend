@@ -27,18 +27,22 @@ export default function ContentWrapperLLFrontPage({
   })
 
   const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult) return previousResult
+    if (!fetchMoreResult.luxeList.children?.edges.length) {
+      return previousResult
+    }
 
     const prevEdges = previousResult.luxeList.children?.edges || []
     const newEdges = fetchMoreResult.luxeList.children?.edges || []
 
-    // Use a Set to keep track of unique post IDs
+    // Use a Set to keep track of unique post IDs from previousResult
     const uniquePostIds = new Set(prevEdges.map(({ node }) => node.id))
 
-    // Filter out any duplicate posts from newEdges
+    // Filter out duplicates from newEdges (excluding the first result)
     const filteredNewEdges = newEdges.filter(
-      ({ node }) => !uniquePostIds.has(node.id),
+      (edge, index) => index === 0 || !uniquePostIds.has(edge.node.id),
     )
+
+    console.log(prevEdges)
 
     return {
       luxeList: {
