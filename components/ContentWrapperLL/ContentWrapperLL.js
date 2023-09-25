@@ -1,6 +1,7 @@
 import className from 'classnames/bind'
 import styles from './ContentWrapperLL.module.scss'
 import { SingleHCSlider } from '../SingleHCSlider'
+import { SingleLLSlider } from '../SingleLLSlider'
 
 let cx = className.bind(styles)
 
@@ -18,13 +19,13 @@ export default function ContentWrapperLL({ content, children, images }) {
     <article className={cx('component')}>
       {images[0] != null && (
         <div className={cx('with-slider-wrapper')}>
-          <SingleHCSlider images={images} />
           <div
             className={cx('content-wrapper')}
             dangerouslySetInnerHTML={{ __html: content }}
           />
           {children}
-          
+          <SingleLLSlider images={images} />
+          <div className={cx('pagination-wrapper')}>{'Pagination'}</div>
         </div>
       )}
       {images[0] == null && (
@@ -34,6 +35,7 @@ export default function ContentWrapperLL({ content, children, images }) {
             dangerouslySetInnerHTML={{ __html: content }}
           />
           {children}
+          <div className={cx('pagination-wrapper')}>{'Pagination'}</div>
         </div>
       )}
     </article>

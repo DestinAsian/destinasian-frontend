@@ -152,7 +152,7 @@ export default function HomepageStories(pinPosts) {
   if (loading) {
     return (
       <>
-        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
           <Button className="gap-x-4	">{'Loading...'}</Button>
         </div>
       </>
@@ -233,7 +233,7 @@ export default function HomepageStories(pinPosts) {
           </React.Fragment>
         ))}
       {mergedPosts.length && (
-        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
           {data?.contentNodes?.pageInfo?.hasNextPage &&
             data?.contentNodes?.pageInfo?.endCursor && (
               <Button

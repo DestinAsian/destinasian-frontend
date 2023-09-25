@@ -3,47 +3,38 @@ import classNames from 'classnames/bind'
 import { Button, LLPost, FeaturedImage } from '..'
 import styles from './LLMenu.module.scss'
 import React, { useState, useEffect } from 'react'
-import { GetLuxeListStories } from '../../queries/GetLuxeListStories'
+import { GetLuxeListMenu } from '../../queries/GetLuxeListMenu'
 
 let cx = classNames.bind(styles)
 
-export default function LLMenu({ secondaryLogo, id }) {
+export default function LLMenu({ secondaryLogo, databaseId }) {
   const [isFetchingMore, setIsFetchingMore] = useState(false)
   const postsPerPage = 20
 
   // Get Pages
-  const { data, error, loading, fetchMore } = useQuery(GetLuxeListStories, {
+  const { data, error, loading, fetchMore } = useQuery(GetLuxeListMenu, {
     variables: {
       first: postsPerPage,
       after: null,
-      id: id,
+      id: databaseId,
     },
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network',
   })
 
   const updateQuery = (previousResult, { fetchMoreResult }) => {
-
     if (!fetchMoreResult.luxeList.children.edges.length) {
-      return previousResult
+      return previousResult.luxeList.children
     }
-
-    const prevEdges = previousResult.luxeList.children?.edges || []
-    const newEdges = fetchMoreResult.luxeList.children?.edges || []
-
-    // Use a Set to keep track of unique post IDs from previousResult
-    const uniquePostIds = new Set(prevEdges.map(({ node }) => node.id))
-
-    // Filter out duplicates from newEdges (excluding the first result)
-    const filteredNewEdges = newEdges.filter(
-      (edge, index) => index === 0 || !uniquePostIds.has(edge.node.id),
-    )
 
     return {
       luxeList: {
         children: {
           ...previousResult.luxeList.children,
-          edges: [...prevEdges, ...filteredNewEdges],
+          edges: [
+            ...previousResult.luxeList.children?.edges,
+            ...fetchMoreResult.luxeList.children?.edges,
+          ],
           pageInfo: fetchMoreResult.luxeList.children.pageInfo,
         },
       },
@@ -86,7 +77,7 @@ export default function LLMenu({ secondaryLogo, id }) {
   if (loading) {
     return (
       <>
-        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
           <Button className="gap-x-4	">{'Loading...'}</Button>
         </div>
       </>
@@ -143,8 +134,8 @@ export default function LLMenu({ secondaryLogo, id }) {
               })}
             </React.Fragment>
           ))}
-          {uniqueCategories.length !== 0 && uniqueCategories.length && (
-            <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+          {uniqueCategories.length && (
+            <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
               {data?.luxeList?.children?.pageInfo?.hasNextPage &&
                 data?.luxeList?.children?.pageInfo?.endCursor && (
                   <Button

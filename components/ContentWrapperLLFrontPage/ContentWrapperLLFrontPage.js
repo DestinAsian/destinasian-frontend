@@ -9,7 +9,7 @@ let cx = className.bind(styles)
 
 export default function ContentWrapperLLFrontPage({
   content,
-  id,
+  databaseId,
   parentTitle,
 }) {
   const [isFetchingMore, setIsFetchingMore] = useState(false)
@@ -20,35 +20,26 @@ export default function ContentWrapperLLFrontPage({
     variables: {
       first: postsPerPage,
       after: null,
-      id: id,
+      id: databaseId,
     },
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network',
   })
 
   const updateQuery = (previousResult, { fetchMoreResult }) => {
-
-    if (!fetchMoreResult.luxeList.children.edges.length) {
-      return previousResult
+    if (!fetchMoreResult.luxeList?.children?.edges.length) {
+      return previousResult.luxeList?.children
     }
 
-    const prevEdges = previousResult.luxeList.children?.edges || []
-    const newEdges = fetchMoreResult.luxeList.children?.edges || []
-
-    // Use a Set to keep track of unique post IDs from previousResult
-    const uniquePostIds = new Set(prevEdges.map(({ node }) => node.id))
-
-    // Filter out duplicates from newEdges (excluding the first result)
-    const filteredNewEdges = newEdges.filter(
-      (edge, index) => index === 0 || !uniquePostIds.has(edge.node.id),
-    )
+    const prevEdges = previousResult.luxeList?.children?.edges ?? []
+    const newEdges = fetchMoreResult.luxeList?.children?.edges ?? []
 
     return {
       luxeList: {
         children: {
-          ...previousResult.luxeList.children,
-          edges: [...prevEdges, ...filteredNewEdges],
-          pageInfo: fetchMoreResult.luxeList.children.pageInfo,
+          ...previousResult.luxeList?.children,
+          edges: [...prevEdges, ...newEdges],
+          pageInfo: fetchMoreResult.luxeList?.children?.pageInfo,
         },
       },
     }
@@ -90,7 +81,7 @@ export default function ContentWrapperLLFrontPage({
   if (loading) {
     return (
       <>
-        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+        <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
           <Button className="gap-x-4	">{'Loading...'}</Button>
         </div>
       </>
@@ -98,8 +89,7 @@ export default function ContentWrapperLLFrontPage({
   }
 
   // Declare all posts
-  const allPosts =
-    data?.luxeList?.children?.edges.map((post) => post.node) || []
+  const allPosts = data?.luxeList?.children?.edges.map((post) => post.node)
 
   return (
     <article className={cx('component')}>
@@ -127,8 +117,8 @@ export default function ContentWrapperLLFrontPage({
             )} */}
             </React.Fragment>
           ))}
-        {allPosts.length !== 0 && allPosts.length && (
-          <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[50vw]	">
+        {allPosts.length && (
+          <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
             {data?.luxeList?.children?.pageInfo?.hasNextPage &&
               data?.luxeList?.children?.pageInfo?.endCursor && (
                 <Button
