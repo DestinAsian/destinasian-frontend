@@ -29,14 +29,14 @@
   flex-direction: column;
   row-gap: 0.5rem;
   align-items: flex-end;
-  padding: 2rem 1rem 5rem;
+  padding: 2rem 1rem;
 
   @media (min-width: $breakpoint-small) {
-    padding: 2rem 0 5rem;
+    padding: 2rem 0;
   }
 
   figure {
-    width: 10rem;
+    width: 5rem;
     height: auto;
 
     img {
@@ -61,7 +61,7 @@
   }
 
   figure {
-    width: 10rem;
+    width: 5rem;
     height: auto;
 
     img {

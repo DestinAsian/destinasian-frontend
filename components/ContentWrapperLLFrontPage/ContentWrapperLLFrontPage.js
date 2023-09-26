@@ -26,44 +26,52 @@ export default function ContentWrapperLLFrontPage({
     nextFetchPolicy: 'cache-and-network',
   })
 
-  const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult.luxeList?.children?.edges.length) {
-      return previousResult.luxeList?.children
-    }
+  const luxeList = data?.luxeListBy
 
-    const prevEdges = previousResult.luxeList?.children?.edges ?? []
-    const newEdges = fetchMoreResult.luxeList?.children?.edges ?? []
+  const updateQuery = (prev, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+
+    const prevEdges = prev?.luxeListBy?.children?.edges || []
+    const newEdges = fetchMoreResult?.luxeListBy?.children?.edges || []
 
     return {
-      luxeList: {
+      ...prev,
+      luxeListBy: {
+        ...prev.luxeListBy,
         children: {
-          ...previousResult.luxeList?.children,
+          ...prev.luxeListBy.children,
           edges: [...prevEdges, ...newEdges],
-          pageInfo: fetchMoreResult.luxeList?.children?.pageInfo,
+          pageInfo: fetchMoreResult.luxeListBy.children.pageInfo,
         },
       },
     }
   }
 
-  // Fetch more stories when scroll to bottom
+  // Function to fetch more posts
+  const fetchMorePosts = () => {
+    if (!isFetchingMore && luxeList?.children?.pageInfo?.hasNextPage) {
+      setIsFetchingMore(true)
+      fetchMore({
+        variables: {
+          after: luxeList?.children?.pageInfo?.endCursor,
+        },
+        updateQuery,
+      }).then(() => {
+        setIsFetchingMore(false) // Reset the flag after fetch is done
+      })
+    }
+  }
+
+  // Scroll event listener to detect when user scrolls to the bottom
   useEffect(() => {
     const handleScroll = () => {
       const scrolledToBottom =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight
 
-      if (
-        scrolledToBottom &&
-        !isFetchingMore &&
-        data?.luxeList?.children?.pageInfo?.hasNextPage
-      ) {
-        fetchMore({
-          variables: {
-            first: postsPerPage,
-            after: data?.luxeList?.children?.pageInfo?.endCursor,
-          },
-          updateQuery,
-        })
+      if (scrolledToBottom) {
+        // Call the function to fetch more when scrolled to the bottom
+        fetchMorePosts()
       }
     }
 
@@ -72,7 +80,7 @@ export default function ContentWrapperLLFrontPage({
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [data, fetchMore])
+  }, [data, isFetchingMore, luxeList])
 
   if (error) {
     return <pre>{JSON.stringify(error)}</pre>
@@ -89,7 +97,9 @@ export default function ContentWrapperLLFrontPage({
   }
 
   // Declare all posts
-  const allPosts = data?.luxeList?.children?.edges.map((post) => post.node)
+  const allPosts = luxeList?.children?.edges.map((post) => post.node)
+
+  console.log(allPosts)
 
   return (
     <article className={cx('component')}>
@@ -119,24 +129,15 @@ export default function ContentWrapperLLFrontPage({
           ))}
         {allPosts.length && (
           <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
-            {data?.luxeList?.children?.pageInfo?.hasNextPage &&
-              data?.luxeList?.children?.pageInfo?.endCursor && (
+            {luxeList?.children?.pageInfo?.hasNextPage &&
+              luxeList?.children?.pageInfo?.endCursor && (
                 <Button
                   onClick={() => {
                     if (
                       !isFetchingMore &&
-                      data?.luxeList?.children?.pageInfo?.hasNextPage
+                      luxeList?.children?.pageInfo?.hasNextPage
                     ) {
-                      setIsFetchingMore(true)
-                      fetchMore({
-                        variables: {
-                          first: postsPerPage,
-                          after: data?.luxeList?.children?.pageInfo?.endCursor,
-                        },
-                        updateQuery,
-                      }).then(() => {
-                        setIsFetchingMore(false) // Reset the flag after fetch is done
-                      })
+                      fetchMorePosts()
                     }
                   }}
                   className="gap-x-4	"

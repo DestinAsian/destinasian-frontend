@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const GetLuxeListStories = gql`
-  query GetLuxeListStories($first: Int, $after: String, $id: ID = "") {
-    luxeList(id: $id, idType: DATABASE_ID) {
+  query GetLuxeListStories($first: Int, $after: String, $id: Int) {
+    luxeListBy(luxeListId: $id) {
       children(
         first: $first
         after: $after

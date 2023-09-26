@@ -34,23 +34,15 @@
 
 .category {
   color: var(--wpe--color--white);
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.6;
   text-transform: uppercase;
   text-align: center;
-
-  @media (min-width: $breakpoint-extra-small) {
-    font-size: 1.4rem;
-  }
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   line-height: 1.2;
   text-transform: none;
   color: var(--wpe--color--white);
-
-  @media (min-width: $breakpoint-extra-small) {
-    font-size: 2rem;
-  }
 }

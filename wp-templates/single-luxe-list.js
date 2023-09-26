@@ -170,7 +170,7 @@ export default function SingleLuxeList(props) {
               />
               <SingleLLEntryHeader title={title} category={categories?.edges[0]?.node?.name}/>
               {/* <SingleHCSlider images={images} /> */}
-              <ContentWrapperLL content={content} images={images} />
+              <ContentWrapperLL content={content} images={images} databaseId={databaseId}/>
             </SingleLLContainer>
           </>
         </Main>
