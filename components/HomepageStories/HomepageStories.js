@@ -112,25 +112,31 @@ export default function HomepageStories(pinPosts) {
     }
   }, [bannerData]) // Use bannerData as a dependency to trigger shuffling when new data arrives
 
-  // Fetch more stories when scroll to bottom
+  // Function to fetch more posts
+  const fetchMorePosts = () => {
+    if (!isFetchingMore && data?.contentNodes?.pageInfo?.hasNextPage) {
+      setIsFetchingMore(true)
+      fetchMore({
+        variables: {
+          after: data?.contentNodes?.pageInfo?.endCursor,
+        },
+        updateQuery,
+      }).then(() => {
+        setIsFetchingMore(false) // Reset the flag after fetch is done
+      })
+    }
+  }
+
+  // Scroll event listener to detect when user scrolls to the bottom
   useEffect(() => {
     const handleScroll = () => {
       const scrolledToBottom =
         window.scrollY + window.innerHeight >=
         document.documentElement.scrollHeight
 
-      if (
-        scrolledToBottom &&
-        !isFetchingMore &&
-        data?.contentNodes?.pageInfo?.hasNextPage
-      ) {
-        fetchMore({
-          variables: {
-            first: postsPerPage,
-            after: data?.contentNodes?.pageInfo?.endCursor,
-          },
-          updateQuery,
-        })
+      if (scrolledToBottom) {
+        // Call the function to fetch more when scrolled to the bottom
+        fetchMorePosts()
       }
     }
 
@@ -242,16 +248,7 @@ export default function HomepageStories(pinPosts) {
                     !isFetchingMore &&
                     data?.contentNodes?.pageInfo?.hasNextPage
                   ) {
-                    setIsFetchingMore(true)
-                    fetchMore({
-                      variables: {
-                        first: postsPerPage,
-                        after: data?.contentNodes?.pageInfo?.endCursor,
-                      },
-                      updateQuery,
-                    }).then(() => {
-                      setIsFetchingMore(false) // Reset the flag after fetch is done
-                    })
+                    fetchMorePosts()
                   }
                 }}
                 className="gap-x-4	"

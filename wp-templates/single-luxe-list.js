@@ -10,6 +10,7 @@ import {
   SEO,
   Header,
   SingleLLContainer,
+  SingleLLFrontPageContainer,
   ContentWrapperLLFrontPage,
   SingleLLFeaturedImage,
   SingleAdvertorialEntryHeader,
@@ -126,20 +127,21 @@ export default function SingleLuxeList(props) {
       {parent == null && (
         <Main>
           <>
-            <SingleLLContainer>
+            <SingleLLFrontPageContainer>
               {/* {'countries'} */}
               {/* All posts sorted by mainPosts & date */}
               <SingleLLFrontPageFeaturedImage
                 mainLogo={luxeListLogo?.mainLogo}
                 secondaryLogo={luxeListLogo?.secondaryLogo}
                 databaseId={databaseId}
+                uri={uri}
               />
               <ContentWrapperLLFrontPage
                 content={content}
                 databaseId={databaseId}
                 parentTitle={title}
               />
-            </SingleLLContainer>
+            </SingleLLFrontPageContainer>
           </>
         </Main>
       )}
@@ -167,6 +169,7 @@ export default function SingleLuxeList(props) {
                 mainLogo={parent?.node?.luxeListLogo?.mainLogo}
                 secondaryLogo={parent?.node?.luxeListLogo?.secondaryLogo}
                 databaseId={parent?.node?.databaseId}
+                uri={parent?.node?.uri}
               />
               <SingleLLEntryHeader title={title} category={categories?.edges[0]?.node?.name}/>
               {/* <SingleHCSlider images={images} /> */}
@@ -261,6 +264,7 @@ SingleLuxeList.query = gql`
       parent {
         node {
           ... on LuxeList {
+            uri
             databaseId
             luxeListLogo {
               mainLogo {
