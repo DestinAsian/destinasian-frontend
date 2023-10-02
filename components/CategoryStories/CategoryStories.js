@@ -24,7 +24,7 @@ export default function CategoryStories(pinPosts, uri, id) {
   const [bannerAdsArray, setBannerAdsArray] = useState([])
   // Post per fetching
   const postsPerPage = 4
-  const bannerPerPage = 15
+  const bannerPerPage = 20
 
   // Get Stories / Posts
   const { data, error, loading, fetchMore } = useQuery(GetCategoryStories, {

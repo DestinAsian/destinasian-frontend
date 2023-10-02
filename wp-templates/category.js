@@ -60,7 +60,7 @@ export default function Component(props) {
 
   // Declare state for banner ads
   const [bannerAdsArray, setBannerAdsArray] = useState([])
-  const bannerPerPage = 15
+  const bannerPerPage = 20
 
   // // Post per fetching
   // const postsPerPage = 4
