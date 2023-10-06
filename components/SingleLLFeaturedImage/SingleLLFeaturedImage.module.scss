@@ -10,17 +10,27 @@
   width: 100vw;
 
   @media (min-width: $breakpoint-extra-small) {
-    width: 50vw;
-    padding: 0 0 2rem;
+    width: 100%;
+    padding: 0;
   }
 
   &.show {
     height: calc(-3.5rem + 100vh);
     display: flex;
     flex-direction: row-reverse;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    z-index: 900;
+    transform: translate(-50%, 3.5rem);
 
-    @media (min-width: $breakpoint-small) {
+    @media (min-width: $breakpoint-extra-small) {
       height: calc(-4.5rem + 100vh);
+      left: 75%;
+      width: 50vw;
+      max-width: 700px;
+      transform: translate(-50%, 4.5rem);
     }
   }
 }
@@ -53,12 +63,52 @@
   }
 }
 
+.sticky-image-wrapper {
+  background-color: var(--wpe--color--black);
+  color: var(--wpe--color--white);
+  position: fixed;
+  padding: 1rem;
+  z-index: 900;
+  top: 0;
+
+  // Sticky menu with background
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 3.5rem);
+
+  // Sticky menu without background
+  // right: 0;
+  // width: fit-content;
+  // transform: translateY(3.5rem);
+
+  @media (min-width: $breakpoint-extra-small) {
+    width: 50vw;
+    transform: translate(0, 4.5rem);
+    padding: 1rem 2rem;
+  }
+
+  figure {
+    width: 5rem;
+    height: 5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
 .image-menu-wrapper {
   display: flex;
   width: fit-content;
   margin: 0;
   flex-direction: column;
-  padding: 2rem 1rem;
+  padding: 2rem 0.5rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding: 2rem 1rem;
+  }
 
   figure {
     width: 5rem;
@@ -116,7 +166,7 @@
 
 .full-menu-wrapper {
   display: block;
-  width: 100vw;
+  width: 90%;
   height: 100vh;
   position: absolute;
   z-index: 49;
@@ -126,7 +176,7 @@
   margin: 0 2.5rem 0 0;
 
   @media (min-width: $breakpoint-extra-small) {
-    width: 100%;
+    width: 90%;
     margin-right: 3.5rem;
   }
 
@@ -141,7 +191,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(0.9);
   }
   100% {
     transform: scale(1);

@@ -81,9 +81,9 @@ export default function SingleHeader({
                   type="button"
                   className={cx('menu-icon')}
                   onClick={() => {
-                          setIsNavShown(!isNavShown)
-                          setSearchQuery('')
-                        }}
+                    setIsNavShown(!isNavShown)
+                    setSearchQuery('')
+                  }}
                   aria-label="Toggle navigation"
                   aria-controls={cx('full-menu-wrapper')}
                   aria-expanded={!isNavShown}
@@ -124,9 +124,9 @@ export default function SingleHeader({
                   type="button"
                   className={cx('close-icon')}
                   onClick={() => {
-                          setIsNavShown(!isNavShown)
-                          setSearchQuery('')
-                        }}
+                    setIsNavShown(!isNavShown)
+                    setSearchQuery('')
+                  }}
                   aria-label="Toggle navigation"
                   aria-controls={cx('full-menu-wrapper')}
                   aria-expanded={!isNavShown}
@@ -170,9 +170,9 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
               type="button"
               className={cx('close-icon')}
               onClick={() => {
-                          setIsNavShown(!isNavShown)
-                          setSearchQuery('')
-                        }}
+                setIsNavShown(!isNavShown)
+                setSearchQuery('')
+              }}
               aria-label="Toggle navigation"
               aria-controls={cx('primary-navigation')}
               aria-expanded={!isNavShown}
@@ -223,7 +223,7 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
           clearSearch={clearSearch}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-        /> 
+        />
       </div>
     </header>
   )

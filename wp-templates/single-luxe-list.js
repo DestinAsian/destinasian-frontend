@@ -20,6 +20,7 @@ import {
   SingleLLFrontPageFeaturedImage,
   SingleLLEntryHeader,
 } from '../components'
+import Div100vh from 'react-div-100vh'
 
 export default function SingleLuxeList(props) {
   // Loading state for previews
@@ -163,17 +164,31 @@ export default function SingleLuxeList(props) {
       {parent != null && (
         <Main>
           <>
+            {/* {'hotel'} */}
             <SingleLLContainer>
-              {/* {'hotel'} */}
-              <SingleLLFeaturedImage
-                mainLogo={parent?.node?.luxeListLogo?.mainLogo}
-                secondaryLogo={parent?.node?.luxeListLogo?.secondaryLogo}
-                databaseId={parent?.node?.databaseId}
-                uri={parent?.node?.uri}
-              />
-              <SingleLLEntryHeader title={title} category={categories?.edges[0]?.node?.name}/>
-              {/* <SingleHCSlider images={images} /> */}
-              <ContentWrapperLL content={content} images={images} databaseId={databaseId}/>
+              <div className="sm:fixed sm:left-[50vw] sm:flex sm:w-[50vw] sm:flex-col">
+                <div className="sm:relative sm:h-[100vh] sm:flex-row sm:flex-wrap sm:overflow-y-auto">
+                  {/* First wrapper */}
+                  <SingleLLFeaturedImage
+                    mainLogo={parent?.node?.luxeListLogo?.mainLogo}
+                    secondaryLogo={parent?.node?.luxeListLogo?.secondaryLogo}
+                    databaseId={parent?.node?.databaseId}
+                    uri={parent?.node?.uri}
+                  />
+                  {/* Second wrapper */}
+                  <div className="sm:relative sm:mx-auto">
+                    <SingleLLEntryHeader
+                      title={title}
+                      category={categories?.edges[0]?.node?.name}
+                    />
+                    <ContentWrapperLL
+                      content={content}
+                      images={images}
+                      databaseId={databaseId}
+                    />
+                  </div>
+                </div>
+              </div>
             </SingleLLContainer>
           </>
         </Main>

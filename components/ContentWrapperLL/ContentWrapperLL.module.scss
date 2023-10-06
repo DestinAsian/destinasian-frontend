@@ -9,8 +9,9 @@
   @media (min-width: $breakpoint-extra-small) {
     margin: 0 auto;
     background-color: var(--wpe--color--black);
-    width: 50vw;
+    width: 100%;
     position: relative;
+    max-width: 700px;
   }
 
   .with-slider-wrapper {
@@ -26,6 +27,7 @@
       width: 50vw;
       padding: 0;
       height: 100vh;
+      border-left: 2rem solid var(--wpe--color--black);
     }
 
     // @media ((min-width: $breakpoint-extra-small) and (max-width: $breakpoint-small)) {
@@ -43,13 +45,12 @@
     row-gap: 0.25rem;
     padding: 0 1rem;
     text-transform: none;
-    overflow: hidden; // Hide overflow content
-    border-left: 1px solid var(--wpe--color--white);
-    margin: 0.5rem 0 2rem 0;
+    margin: 0.5rem 0 0 0;
+    overflow-x: hidden;
 
     @media (min-width: $breakpoint-extra-small) {
       padding: 0 2rem;
-      height: auto;
+      margin: 0.5rem 0 5.25rem 0;
       border-left: none;
     }
   }
@@ -67,9 +68,11 @@
     background-color: var(--wpe--color--black);
 
     @media (min-width: $breakpoint-extra-small) {
-      position: absolute;
-      justify-content: flex-end;
-      padding: 0 2rem;
+      height: 5.25rem;
+      left: 50%;
+      width: 50vw;
+      justify-content: center;
+      padding: 1rem 2rem;
     }
   }
 
@@ -116,10 +119,6 @@
     p {
       font-family: 'Ringside Regular A', 'Ringside Regular B';
       font-weight: 400;
-      font-size: 1rem;
-      overflow-y: scroll; // Enable vertical scrolling
-      height: 100%; // Take up the full height of the container
-      /* Additional styles for the paragraph content */
       font-size: 1rem;
     }
 
