@@ -23,7 +23,7 @@
   margin: 0 auto;
   padding: 0 1rem 1rem;
   flex-direction: column;
-  row-gap: 0.25rem;
+  row-gap: 0.5rem;
   align-items: flex-start;
 
   @media (min-width: $breakpoint-extra-small) {
@@ -35,14 +35,13 @@
 .category {
   color: var(--wpe--color--black);
   background-color: var(--wpe--color--white);
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   line-height: 1.2;
   text-transform: uppercase;
   text-align: center;
-  padding: 0.6rem;
+  padding: 0.4rem;
   width: fit-content;
   font-family: 'Ringside Regular A', 'Ringside Regular B';
-  font-style: normal;
   font-weight: 700;
 }
 
@@ -53,4 +52,5 @@
   color: var(--wpe--color--white);
   text-align: left;
   text-align-last: left;
+  word-spacing: -0.4rem;
 }
