@@ -218,10 +218,29 @@ export default function HomepageStories(pinPosts) {
               author={post?.author?.node?.name}
               uri={post?.uri}
               parentCategory={
-                post?.categories?.edges[0]?.node?.parent?.node?.name
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.parent?.node?.name)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.parent?.node?.name)
               }
-              category={post?.categories?.edges[0]?.node?.name}
-              categoryUri={post?.categories?.edges[0]?.node?.uri}
+              category={
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.name)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.name)
+              }
+              categoryUri={
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.uri)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.uri)
+              }
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
               chooseIcon={post?.acfCategoryIcon?.chooseIcon?.mediaItemUrl}

@@ -29,6 +29,7 @@ export const GetHomepageStories = gql`
             ...FeaturedImageFragment
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -61,6 +62,7 @@ export const GetHomepageStories = gql`
             ...FeaturedImageFragment
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -81,6 +83,7 @@ export const GetHomepageStories = gql`
             ...FeaturedImageFragment
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri

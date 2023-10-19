@@ -196,25 +196,26 @@ export default function SingleEditorial(props) {
               image={featuredImage?.node}
               title={title}
               categoryUri={
-                categories?.length !== 1
-                  ? categories
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.uri)
-                  : categories[0]?.node?.uri
+                (categories?.length !== 1 &&
+                  categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.uri)) ||
+                (categories?.length === 1 && categories[0]?.node?.uri)
               }
               parentCategory={
-                categories?.length !== 1
-                  ? categories
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.parent?.node?.name)
-                  : categories[0]?.node?.parent?.node?.name
+                (categories?.length !== 1 &&
+                  categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.parent?.node?.name)) ||
+                (categories?.length === 1 &&
+                  categories[0]?.node?.parent?.node?.name)
               }
               categoryName={
-                categories?.length !== 1
-                  ? categories
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.name)
-                  : categories[0]?.node?.name
+                (categories?.length !== 1 &&
+                  categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.name)) ||
+                (categories?.length === 1 && categories[0]?.node?.name)
               }
               author={author.node.name}
               date={date}

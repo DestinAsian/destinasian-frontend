@@ -15,7 +15,7 @@ export const GetCategoryStories = gql`
         where: {
           status: PUBLISH
           contentTypes: [EDITORIAL, POST, UPDATE]
-          orderby: { field: DATE, order: DESC }
+          orderby: [{ field: DATE, order: DESC }]
         }
       ) {
         pageInfo {

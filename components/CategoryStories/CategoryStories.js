@@ -36,13 +36,39 @@ export default function CategoryStories(categoryUri) {
   const children = categoryUri?.children
   const parent = categoryUri?.parent
 
+  let storiesVariable = {
+    first: postsPerPage,
+    after: null,
+    id: uri,
+  }
+
+  // if (
+  //   data?.category?.children?.edges?.length === 0 &&
+  //   data?.category?.parent?.node?.name !== null
+  // ) {
+  //   // Modify the variables based on the condition
+  //   storiesVariable = {
+  //     search: parent, // Change this to the desired value
+  //   }
+  // }
+
+  // if (data?.category?.parent?.node?.name === null) {
+  //   // Modify the variables based on the condition
+  //   storiesVariable = {
+  //     search: name, // Change this to the desired value
+  //   }
+  // }
+
+  // if (name === ('Trade Talk' || 'Airline News' || 'Travel News')) {
+  //   // Modify the variables based on the condition
+  //   storiesVariable = {
+  //     search: name, // Change this to the desired value
+  //   }
+  // }
+
   // Get Stories / Posts
   const { data, error, loading, fetchMore } = useQuery(GetCategoryStories, {
-    variables: {
-      first: postsPerPage,
-      after: null,
-      id: uri,
-    },
+    variables: storiesVariable,
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network',
   })
@@ -369,25 +395,28 @@ export default function CategoryStories(categoryUri) {
               author={post?.author?.node?.name}
               uri={post?.uri}
               parentCategory={
-                post?.categories?.edges?.length !== 1
-                  ? post?.categories?.edges
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.parent?.node?.name)
-                  : post?.categories?.edges[0]?.node?.parent?.node?.name
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.parent?.node?.name)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.parent?.node?.name)
               }
               category={
-                post?.categories?.edges?.length !== 1
-                  ? post?.categories?.edges
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.name)
-                  : post?.categories?.edges[0]?.node?.name
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.name)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.name)
               }
               categoryUri={
-                post?.categories?.edges?.length !== 1
-                  ? post?.categories?.edges
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.uri)
-                  : post?.categories?.edges[0]?.node?.uri
+                (post?.categories?.edges?.length !== 1 &&
+                  post?.categories?.edges
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.uri)) ||
+                (post?.categories?.edges?.length === 1 &&
+                  post?.categories?.edges[0]?.node?.uri)
               }
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
