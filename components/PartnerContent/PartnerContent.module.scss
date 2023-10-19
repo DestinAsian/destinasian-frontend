@@ -1,0 +1,171 @@
+@import 'styles/breakpoints';
+@import 'styles/fonts/typography';
+
+.adv-component {
+  width: 100vw;
+  line-height: 1;
+  background-color: var(--wpe--color--light--green);
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding-bottom: 1rem;
+  }
+}
+
+.hc-component {
+  width: 100vw;
+  padding-bottom: 2rem;
+  line-height: 1;
+  background-color: var(--wpe--color--light--yellow);
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding-top: 1rem;
+  }
+}
+
+.main-wrapper {
+  margin: 0 auto;
+  padding: 1rem 1rem;
+  display: flex;
+  align-items: flex-start;
+
+  @media (min-width: $breakpoint-extra-small) {
+    max-width: 700px;
+    padding: 1rem 0;
+  }
+}
+
+.left-wrapper {
+  width: 30%;
+  display: block;
+}
+
+.right-wrapper {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.content-wrapper {
+  padding-left: 4vw;
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding-left: 2vw;
+  }
+}
+
+.hc-content-wrapper {
+  padding-left: 4vw;
+
+  @media (min-width: $breakpoint-extra-small) {
+    padding-left: 2vw;
+  }
+}
+
+.content-wrapper-image {
+  margin: 0 auto;
+  padding: 0;
+}
+
+figure.image {
+  width: 100%;
+  height: 7rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    height: 10rem;
+  }
+
+  span,
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+}
+
+.honors-circle {
+  font-family: 'Gotham A', 'Gotham B';
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.6rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 0.8rem;
+  }
+}
+
+.title {
+  font-family: 'EB Garamond';
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.2;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 1.5rem;
+  }
+}
+
+.hc-title {
+  font-family: 'Hoefler Text A', 'Hoefler Text B';
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  text-transform: none;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 1.5rem;
+  }
+
+  :first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.excerpt {
+  font-size: 0.8rem;
+  padding: 0 0 0.25rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 1rem;
+  }
+
+  p {
+    font-family: 'Ringside Regular A', 'Ringside Regular B';
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  a {
+    display: none;
+  }
+}
+
+.hc-excerpt {
+  font-size: 0.8rem;
+  padding: 0 0 0.25rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    font-size: 1rem;
+  }
+
+  p {
+    font-family: 'Gotham A', 'Gotham B';
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  a {
+    display: none;
+  }
+}
+
+.border-bottom {
+  width: 95%;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--wpe--color--grey);
+
+  @media (min-width: $breakpoint-extra-small) {
+    width: 100%;
+    max-width: 700px;
+  }
+}

@@ -9,7 +9,7 @@ export const GetCategoryStories = gql`
         after: $after
         where: {
           status: PUBLISH
-          contentTypes: [POST, EDITORIAL, UPDATE]
+          contentTypes: [EDITORIAL, POST, UPDATE]
           orderby: { field: DATE, order: DESC }
         }
       ) {
@@ -44,6 +44,7 @@ export const GetCategoryStories = gql`
               }
               categories {
                 edges {
+                  isPrimary
                   node {
                     name
                     uri
@@ -93,6 +94,7 @@ export const GetCategoryStories = gql`
               }
               categories {
                 edges {
+                  isPrimary
                   node {
                     name
                     uri

@@ -5,7 +5,8 @@ import { useQuery } from '@apollo/client'
 import { GetCategoryStories } from '../../queries/GetCategoryStories'
 import { GetROSBannerAds } from '../../queries/GetROSBannerAds'
 import { GetSpecificBannerAds } from '../../queries/GetSpecificBannerAds'
-import { Post, ModuleAd, Button } from '..'
+import { GetAdvertorialStories } from '../../queries/GetAdvertorialStories'
+import { Post, ModuleAd, Button, AdvertorialPost } from '..'
 
 let cx = classNames.bind(styles)
 
@@ -19,17 +20,23 @@ function shuffleArray(array) {
 
 export default function CategoryStories(categoryUri) {
   // Fetching Posts
-  // const [isFetchingMore, setIsFetchingMore] = useState(false)
+  const [isFetchingMore, setIsFetchingMore] = useState(false)
   // Declare state for banner ads
   const [ROSAdsArray, setROSAdsArray] = useState([])
   const [SpecificAdsArray, setSpecificAdsArray] = useState([])
+  const [AdvertorialArray, setAdvertorialArray] = useState([])
   // Post per fetching
-  const postsPerPage = 20
+  const postsPerPage = 4
   const bannerPerPage = 20
+  const advertPerPage = 5
+  // Sort Stories
+  const [sortedData, setSortedData] = useState(null)
 
   const uri = categoryUri?.categoryUri
   const pinPosts = categoryUri?.pinPosts
   const name = categoryUri?.name
+  // const children = categoryUri?.children
+  const parent = categoryUri?.parent
 
   // Get Stories / Posts
   const { data, error, loading, fetchMore } = useQuery(GetCategoryStories, {
@@ -42,19 +49,21 @@ export default function CategoryStories(categoryUri) {
     nextFetchPolicy: 'cache-and-network',
   })
 
-  const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult.categories.edges.length) {
-      return previousResult.categories
-    }
+  const updateQuery = (prev, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+
+    const prevEdges = prev?.category?.contentNodes?.edges || []
+    const newEdges = fetchMoreResult?.category?.contentNodes?.edges || []
 
     return {
-      categories: {
-        ...previousResult.categories,
-        edges: [
-          ...previousResult.categories.edges,
-          ...fetchMoreResult.categories.edges,
-        ],
-        pageInfo: fetchMoreResult.categories.pageInfo,
+      ...prev,
+      category: {
+        ...prev.category,
+        contentNodes: {
+          ...prev.category.contentNodes,
+          edges: [...prevEdges, ...newEdges],
+          pageInfo: fetchMoreResult.category.contentNodes.pageInfo,
+        },
       },
     }
   }
@@ -76,16 +85,28 @@ export default function CategoryStories(categoryUri) {
     return <pre>{JSON.stringify(error)}</pre>
   }
 
+  let bannerVariable = {
+    first: bannerPerPage,
+    search: name,
+  }
+
+  if (
+    data?.category?.children?.edges?.length === 0 &&
+    name !== ('Trade Talk' || 'Airline News' || 'Travel News')
+  ) {
+    // Modify the variables based on the condition
+    bannerVariable = {
+      search: parent, // Change this to the desired value
+    }
+  }
+
   // Get Specific Banner
   const {
     data: bannerSpecificData,
     error: bannerSpecificError,
     // fetchMore: fetchMoreSpecificBanner,
   } = useQuery(GetSpecificBannerAds, {
-    variables: {
-      first: bannerPerPage,
-      search: name,
-    },
+    variables: bannerVariable,
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-and-network',
   })
@@ -94,10 +115,37 @@ export default function CategoryStories(categoryUri) {
     return <pre>{JSON.stringify(error)}</pre>
   }
 
-  // Load More Function
-  const [visiblePosts, setVisiblePosts] = useState(4)
-  const loadMorePosts = () => {
-    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 4)
+  let queryVariables = {
+    first: advertPerPage,
+    search: null,
+  }
+
+  if (data?.category?.children?.edges?.length === 0) {
+    // Modify the variables based on the condition
+    queryVariables = {
+      search: parent, // Change this to the desired value
+    }
+  }
+
+  if (data?.category?.children?.edges?.length !== 0) {
+    // Modify the variables based on the condition
+    queryVariables = {
+      search: name, // Change this to the desired value
+    }
+  }
+
+  const {
+    data: advertorialsData,
+    error: advertorialsError,
+    // fetchMore: fetchMoreSpecificBanner,
+  } = useQuery(GetAdvertorialStories, {
+    variables: queryVariables, // Use the modified variables
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-and-network',
+  })
+
+  if (advertorialsError) {
+    return <pre>{JSON.stringify(error)}</pre>
   }
 
   // Function to shuffle the banner ads and store them in state
@@ -145,6 +193,7 @@ export default function CategoryStories(categoryUri) {
   }, [bannerROSData]) // Use bannerROSData as a dependency to trigger shuffling when new data arrives
 
   // Function to shuffle the banner ads and store them in state
+
   // Specific Banner
   useEffect(() => {
     const shuffleBannerAds = () => {
@@ -191,69 +240,66 @@ export default function CategoryStories(categoryUri) {
     }
   }, [bannerSpecificData]) // Use bannerROSData as a dependency to trigger shuffling when new data arrives
 
-  // load more posts when scrolled to bottom
-  const checkScrollBottom = () => {
-    const scrolledToBottom =
-      window.scrollY + window.innerHeight >=
-      document.documentElement.scrollHeight
+  useEffect(() => {
+    const shuffleAdvertorialPost = () => {
+      const advertorialArray = Object.values(
+        advertorialsData?.advertorials?.edges || [],
+      )
 
-    if (scrolledToBottom) {
-      // Call the loadMorePosts function to load additional posts
-      loadMorePosts()
+      // Shuffle only the otherBannerAds array
+      const shuffleAdvertorialPost = shuffleArray(advertorialArray)
+
+      // Concatenate the arrays with pinned ads first and shuffled other banner ads
+      const shuffledAdvertorialArray = [...shuffleAdvertorialPost]
+
+      setAdvertorialArray(shuffledAdvertorialArray)
+    }
+
+    // Shuffle the banner ads when the component mounts
+    shuffleAdvertorialPost()
+  }, [advertorialsData])
+
+  // Function to fetch more posts
+  const fetchMorePosts = () => {
+    if (
+      !isFetchingMore &&
+      data?.category?.contentNodes?.pageInfo?.hasNextPage
+    ) {
+      setIsFetchingMore(true)
+      fetchMore({
+        variables: {
+          after: data?.category?.contentNodes?.pageInfo?.endCursor,
+        },
+        updateQuery,
+      }).then(() => {
+        setIsFetchingMore(false) // Reset the flag after fetch is done
+      })
     }
   }
 
+  // Scroll event listener to detect when user scrolls to the bottom
   useEffect(() => {
     const handleScroll = () => {
-      checkScrollBottom()
+      const scrolledToBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight
+
+      if (scrolledToBottom) {
+        // Call the function to fetch more when scrolled to the bottom
+        fetchMorePosts()
+      }
     }
 
-    // Attach the event listener
     window.addEventListener('scroll', handleScroll)
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [data, fetchMore])
 
-  const mainPosts = []
-  const childPosts = []
-
-  // loop through all the main categories posts
-  data?.category?.contentNodes?.edges?.forEach((post) => {
-    mainPosts.push(post.node)
-  })
-
-  // loop through all the child categories and their posts
-  data?.category?.children?.edges?.forEach((childCategory) => {
-    childCategory.node?.contentNodes?.edges?.forEach((post) => {
-      childPosts.push(post.node)
-    })
-
-    childCategory.node?.children?.edges?.forEach((grandChildCategory) => {
-      grandChildCategory.node?.contentNodes?.edges?.forEach((post) => {
-        childPosts.push(post.node)
-      })
-    })
-  })
-
-  // define mainCatPostCards
-  const mainCatPosts = [...(mainPosts != null ? mainPosts : [])]
-
-  // define childCatPostCards
-  const childCatPosts = [...(childPosts != null ? childPosts : [])]
-
-  // sort posts by date
-  const sortPostsByDate = (a, b) => {
-    const dateA = new Date(a.date)
-    const dateB = new Date(b.date)
-    return dateB - dateA // Sort in descending order
+  if (error) {
+    return <pre>{JSON.stringify(error)}</pre>
   }
-
-
-  const sortedMainPosts = mainCatPosts.sort(sortPostsByDate)
-  const sortedChildPosts = childCatPosts.sort(sortPostsByDate)
 
   if (loading) {
     return (
@@ -265,11 +311,40 @@ export default function CategoryStories(categoryUri) {
     )
   }
 
-  // define allPosts
-  const allPosts = [
-    ...(sortedMainPosts != null ? sortedMainPosts : []),
-    ...(sortedChildPosts != null ? sortedChildPosts : []),
-  ]
+  // useEffect(() => {
+  //   if (data) {
+  //     // Extract the edges and node for sorting
+  //     const edges = data.category.contentNodes.edges.slice() // Create a copy of the edges
+
+  //     // Define a custom sorting function based on content type
+  //     const sortByContentType = (a, b) => {
+  //       const order = {
+  //         Editorial: 1,
+  //         Post: 2,
+  //         Update: 3,
+  //       }
+
+  //       return order[a.node.__typename] - order[b.node.__typename]
+  //     }
+
+  //     // Sort the edges based on content type
+  //     edges.sort(sortByContentType)
+
+  //     // Create a copy of the data
+  //     const sortedDataCopy = { ...data }
+  //     sortedDataCopy.contentNodes.edges = edges // Replace the edges with the sorted array
+
+  //     // Set the sorted data in the state
+  //     setSortedData(sortedDataCopy)
+  //   }
+  // }, [data]) // Trigger the sorting when data changes
+
+  // if (!sortedData) {
+  //   // Loading or empty data case
+  //   return null
+  // }
+
+  const allPosts = data?.category?.contentNodes?.edges.map((post) => post.node)
 
   // Declare Pin Posts
   const allPinPosts = pinPosts?.pinPost ? [pinPosts?.pinPost] : []
@@ -296,12 +371,16 @@ export default function CategoryStories(categoryUri) {
     [],
   )
 
+  // Declare 1 Advertorial Post
+  const getAdvertorialPost = AdvertorialArray[0]?.node
+  const numberOfAdvertorial = advertorialsData?.advertorials?.edges?.length
+
   const numberOfBannerAds = sortedBannerAdsArray.length
 
   return (
     <div className={cx('component')}>
       {mergedPosts.length !== 0 &&
-        mergedPosts.slice(0, visiblePosts).map((post, index) => (
+        mergedPosts.map((post, index) => (
           <React.Fragment key={post?.id}>
             <Post
               title={post?.title}
@@ -310,10 +389,16 @@ export default function CategoryStories(categoryUri) {
               date={post?.date}
               author={post?.author?.node?.name}
               uri={post?.uri}
-              parentCategory={
-                post?.categories?.edges[0]?.node?.parent?.node?.name
-              }
-              category={post?.categories?.edges[0]?.node?.name}
+              parentCategory={post?.categories?.edges
+                .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                .map((category) => category?.node?.parent?.node?.name)}
+              category={post?.categories?.edges
+                .filter(
+                  (category) =>
+                    category?.isPrimary === true ||
+                    post?.categories?.edges?.length === 1,
+                ) // Filter for isPrimary === true
+                .map((category) => category?.node?.name)}
               categoryUri={post?.categories?.edges[0]?.node?.uri}
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
@@ -332,18 +417,32 @@ export default function CategoryStories(categoryUri) {
                 }
               />
             )}
+            {index - 1 === 0 && (
+              <>
+                {numberOfAdvertorial !== 0 &&
+                  name !==
+                    ('Trade Talk' || 'Airline News' || 'Travel News') && (
+                    <AdvertorialPost
+                      title={getAdvertorialPost?.title}
+                      excerpt={getAdvertorialPost?.excerpt}
+                      uri={getAdvertorialPost?.uri}
+                      featuredImage={getAdvertorialPost?.featuredImage?.node}
+                    />
+                  )}
+              </>
+            )}
           </React.Fragment>
         ))}
       {/* {mergedPosts.length && ( */}
-      {visiblePosts < mergedPosts.length && (
+      {mergedPosts.length && (
         <div className="mx-auto my-0 flex max-w-[100vw] justify-center md:max-w-[700px]	">
-          {/* {allPosts?.contentNodes?.pageInfo?.hasNextPage &&
-            allPosts?.contentNodes?.pageInfo?.endCursor && (
+          {data?.category?.contentNodes?.pageInfo?.hasNextPage &&
+            data?.category?.contentNodes?.pageInfo?.endCursor && (
               <Button
                 onClick={() => {
                   if (
                     !isFetchingMore &&
-                    allPosts?.contentNodes?.pageInfo?.hasNextPage
+                    data?.category?.contentNodes?.pageInfo?.hasNextPage
                   ) {
                     fetchMorePosts()
                   }
@@ -381,33 +480,7 @@ l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
                   </>
                 )}
               </Button>
-            )} */}
-          <Button onClick={loadMorePosts} className="gap-x-4	">
-            Load More{' '}
-            <svg
-              className="h-auto w-8 origin-center rotate-90	"
-              version="1.0"
-              xmlns="http://www.w3.org/2000/svg"
-              width="512.000000pt"
-              height="512.000000pt"
-              viewBox="0 0 512.000000 512.000000"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <g
-                transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-                fill="#000000"
-                stroke="none"
-              >
-                <path
-                  d="M1387 5110 c-243 -62 -373 -329 -272 -560 27 -62 77 -114 989 -1027
-l961 -963 -961 -963 c-912 -913 -962 -965 -989 -1027 -40 -91 -46 -200 -15
--289 39 -117 106 -191 220 -245 59 -28 74 -31 160 -30 74 0 108 5 155 23 58
-22 106 70 1198 1160 1304 1302 1202 1185 1202 1371 0 186 102 69 -1202 1371
--1102 1101 -1140 1137 -1198 1159 -67 25 -189 34 -248 20z"
-                />
-              </g>
-            </svg>
-          </Button>
+            )}
         </div>
       )}
     </div>
