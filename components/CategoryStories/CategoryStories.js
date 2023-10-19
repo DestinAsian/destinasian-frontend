@@ -29,13 +29,11 @@ export default function CategoryStories(categoryUri) {
   const postsPerPage = 4
   const bannerPerPage = 20
   const advertPerPage = 5
-  // Sort Stories
-  const [sortedData, setSortedData] = useState(null)
 
   const uri = categoryUri?.categoryUri
   const pinPosts = categoryUri?.pinPosts
   const name = categoryUri?.name
-  // const children = categoryUri?.children
+  const children = categoryUri?.children
   const parent = categoryUri?.parent
 
   // Get Stories / Posts
@@ -92,11 +90,25 @@ export default function CategoryStories(categoryUri) {
 
   if (
     data?.category?.children?.edges?.length === 0 &&
-    name !== ('Trade Talk' || 'Airline News' || 'Travel News')
+    data?.category?.parent?.node?.name !== null
   ) {
     // Modify the variables based on the condition
     bannerVariable = {
       search: parent, // Change this to the desired value
+    }
+  }
+
+  if (data?.category?.parent?.node?.name === null) {
+    // Modify the variables based on the condition
+    bannerVariable = {
+      search: name, // Change this to the desired value
+    }
+  }
+
+  if (name === ('Trade Talk' || 'Airline News' || 'Travel News')) {
+    // Modify the variables based on the condition
+    bannerVariable = {
+      search: name, // Change this to the desired value
     }
   }
 
@@ -311,40 +323,7 @@ export default function CategoryStories(categoryUri) {
     )
   }
 
-  // useEffect(() => {
-  //   if (data) {
-  //     // Extract the edges and node for sorting
-  //     const edges = data.category.contentNodes.edges.slice() // Create a copy of the edges
-
-  //     // Define a custom sorting function based on content type
-  //     const sortByContentType = (a, b) => {
-  //       const order = {
-  //         Editorial: 1,
-  //         Post: 2,
-  //         Update: 3,
-  //       }
-
-  //       return order[a.node.__typename] - order[b.node.__typename]
-  //     }
-
-  //     // Sort the edges based on content type
-  //     edges.sort(sortByContentType)
-
-  //     // Create a copy of the data
-  //     const sortedDataCopy = { ...data }
-  //     sortedDataCopy.contentNodes.edges = edges // Replace the edges with the sorted array
-
-  //     // Set the sorted data in the state
-  //     setSortedData(sortedDataCopy)
-  //   }
-  // }, [data]) // Trigger the sorting when data changes
-
-  // if (!sortedData) {
-  //   // Loading or empty data case
-  //   return null
-  // }
-
-  const allPosts = data?.category?.contentNodes?.edges.map((post) => post.node)
+  const allPosts = data?.category?.contentNodes?.edges?.map((post) => post.node)
 
   // Declare Pin Posts
   const allPinPosts = pinPosts?.pinPost ? [pinPosts?.pinPost] : []
@@ -389,17 +368,27 @@ export default function CategoryStories(categoryUri) {
               date={post?.date}
               author={post?.author?.node?.name}
               uri={post?.uri}
-              parentCategory={post?.categories?.edges
-                .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                .map((category) => category?.node?.parent?.node?.name)}
-              category={post?.categories?.edges
-                .filter(
-                  (category) =>
-                    category?.isPrimary === true ||
-                    post?.categories?.edges?.length === 1,
-                ) // Filter for isPrimary === true
-                .map((category) => category?.node?.name)}
-              categoryUri={post?.categories?.edges[0]?.node?.uri}
+              parentCategory={
+                post?.categories?.edges?.length !== 1
+                  ? post?.categories?.edges
+                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                      .map((category) => category?.node?.parent?.node?.name)
+                  : post?.categories?.edges.node?.parent?.node?.name
+              }
+              category={
+                post?.categories?.edges?.length !== 1
+                  ? post?.categories?.edges
+                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                      .map((category) => category?.node?.name)
+                  : post?.categories?.edges.node?.name
+              }
+              categoryUri={
+                post?.categories?.edges?.length !== 1
+                  ? post?.categories?.edges
+                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                      .map((category) => category?.node?.uri)
+                  : post?.categories?.edges.node?.uri
+              }
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
               chooseIcon={post?.acfCategoryIcon?.chooseIcon?.mediaItemUrl}

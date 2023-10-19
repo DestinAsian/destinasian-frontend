@@ -4,6 +4,11 @@ export const GetCategoryStories = gql`
   query GetCategoryStories($first: Int, $after: String, $id: ID!) {
     category(id: $id, idType: URI) {
       name
+      parent {
+        node {
+          name
+        }
+      }
       contentNodes(
         first: $first
         after: $after
@@ -127,6 +132,7 @@ export const GetCategoryStories = gql`
               }
               categories {
                 edges {
+                  isPrimary
                   node {
                     name
                     uri
