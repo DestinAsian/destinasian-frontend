@@ -1,3 +1,4 @@
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import * as MENUS from '../constants/menus'
 import { BlogInfoFragment } from '../fragments/GeneralSettings'
@@ -229,6 +230,7 @@ Component.query = gql`
               }
               categories {
                 edges {
+                  isPrimary
                   node {
                     name
                     uri
@@ -268,6 +270,7 @@ Component.query = gql`
               }
               categories {
                 edges {
+                  isPrimary
                   node {
                     name
                     uri
@@ -342,6 +345,7 @@ Component.query = gql`
                     }
                     categories {
                       edges {
+                        isPrimary
                         node {
                           name
                           uri
@@ -395,6 +399,7 @@ Component.query = gql`
                     }
                     categories {
                       edges {
+                        isPrimary
                         node {
                           name
                           uri

@@ -179,9 +179,27 @@ export default function Component(props) {
           <SingleSlider images={images} />
           <SingleEntryHeader
             title={title}
-            categoryUri={categories[0]?.node?.uri}
-            parentCategory={categories[0]?.node?.parent?.node?.name}
-            categoryName={categories[0]?.node?.name}
+            categoryUri={
+              categories?.length !== 1
+                ? categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.uri)
+                : categories[0]?.node?.uri
+            }
+            parentCategory={
+              categories?.length !== 1
+                ? categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.parent?.node?.name)
+                : categories[0]?.node?.parent?.node?.name
+            }
+            categoryName={
+              categories?.length !== 1
+                ? categories
+                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
+                    .map((category) => category?.node?.name)
+                : categories[0]?.node?.name
+            }
             chooseYourCategory={acfCategoryIcon?.chooseYourCategory}
             chooseIcon={acfCategoryIcon?.chooseIcon?.mediaItemUrl}
             categoryLabel={acfCategoryIcon?.categoryLabel}
@@ -232,6 +250,7 @@ Component.query = gql`
       uri
       categories {
         edges {
+          isPrimary
           node {
             name
             uri
