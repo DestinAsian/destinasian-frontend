@@ -356,6 +356,8 @@ export default function CategoryStories(categoryUri) {
 
   const numberOfBannerAds = sortedBannerAdsArray.length
 
+  console.log(allPosts)
+
   return (
     <div className={cx('component')}>
       {mergedPosts.length !== 0 &&
@@ -373,21 +375,21 @@ export default function CategoryStories(categoryUri) {
                   ? post?.categories?.edges
                       .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                       .map((category) => category?.node?.parent?.node?.name)
-                  : post?.categories?.edges.node?.parent?.node?.name
+                  : post?.categories?.edges[0]?.node?.parent?.node?.name
               }
               category={
                 post?.categories?.edges?.length !== 1
                   ? post?.categories?.edges
                       .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                       .map((category) => category?.node?.name)
-                  : post?.categories?.edges.node?.name
+                  : post?.categories?.edges[0]?.node?.name
               }
               categoryUri={
                 post?.categories?.edges?.length !== 1
                   ? post?.categories?.edges
                       .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                       .map((category) => category?.node?.uri)
-                  : post?.categories?.edges.node?.uri
+                  : post?.categories?.edges[0]?.node?.uri
               }
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
