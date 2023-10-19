@@ -395,7 +395,7 @@ export default function CategoryStories(categoryUri) {
               author={post?.author?.node?.name}
               uri={post?.uri}
               parentCategory={
-                (post?.categories?.edges?.length !== 1 &&
+                (post?.categories?.edges?.length > 1 &&
                   post?.categories?.edges
                     .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                     .map((category) => category?.node?.parent?.node?.name)) ||
@@ -403,7 +403,7 @@ export default function CategoryStories(categoryUri) {
                   post?.categories?.edges[0]?.node?.parent?.node?.name)
               }
               category={
-                (post?.categories?.edges?.length !== 1 &&
+                (post?.categories?.edges?.length > 1 &&
                   post?.categories?.edges
                     .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                     .map((category) => category?.node?.name)) ||
@@ -411,7 +411,7 @@ export default function CategoryStories(categoryUri) {
                   post?.categories?.edges[0]?.node?.name)
               }
               categoryUri={
-                (post?.categories?.edges?.length !== 1 &&
+                (post?.categories?.edges?.length > 1 &&
                   post?.categories?.edges
                     .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
                     .map((category) => category?.node?.uri)) ||

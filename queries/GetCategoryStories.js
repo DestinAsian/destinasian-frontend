@@ -188,6 +188,7 @@ export const GetCategoryStories = gql`
                     }
                     categories {
                       edges {
+                        isPrimary
                         node {
                           name
                           uri
@@ -237,6 +238,7 @@ export const GetCategoryStories = gql`
                     }
                     categories {
                       edges {
+                        isPrimary
                         node {
                           name
                           uri
@@ -269,6 +271,7 @@ export const GetCategoryStories = gql`
                     }
                     categories {
                       edges {
+                        isPrimary
                         node {
                           name
                           uri
@@ -324,6 +327,7 @@ export const GetCategoryStories = gql`
                           }
                           categories {
                             edges {
+                              isPrimary
                               node {
                                 name
                                 uri
@@ -373,6 +377,7 @@ export const GetCategoryStories = gql`
                           }
                           categories {
                             edges {
+                              isPrimary
                               node {
                                 name
                                 uri
@@ -405,6 +410,7 @@ export const GetCategoryStories = gql`
                           }
                           categories {
                             edges {
+                              isPrimary
                               node {
                                 name
                                 uri
