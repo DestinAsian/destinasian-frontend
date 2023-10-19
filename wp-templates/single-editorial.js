@@ -278,6 +278,7 @@ SingleEditorial.query = gql`
       }
       categories {
         edges {
+          isPrimary
           node {
             name
             uri
@@ -312,6 +313,7 @@ SingleEditorial.query = gql`
                   ...FeaturedImageFragment
                   categories {
                     edges {
+                      isPrimary
                       node {
                         name
                         uri

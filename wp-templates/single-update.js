@@ -225,6 +225,7 @@ SingleUpdate.query = gql`
       }
       categories {
         edges {
+          isPrimary
           node {
             name
             uri
@@ -259,6 +260,7 @@ SingleUpdate.query = gql`
                   ...FeaturedImageFragment
                   categories {
                     edges {
+                      isPrimary
                       node {
                         name
                         uri
