@@ -261,6 +261,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -300,6 +301,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -324,6 +326,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -363,6 +366,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -387,6 +391,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -426,6 +431,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -450,6 +456,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -489,6 +496,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -513,6 +521,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
@@ -552,6 +561,7 @@ Component.query = gql`
             }
             categories {
               edges {
+                isPrimary
                 node {
                   name
                   uri
