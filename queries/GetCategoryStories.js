@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GetCategoryStories = gql`
   query GetCategoryStories($first: Int, $after: String, $id: ID!) {
-    category(id: $id, idType: URI) {
+    category(id: $id, idType: DATABASE_ID) {
       name
       parent {
         node {
@@ -47,9 +47,8 @@ export const GetCategoryStories = gql`
                   name
                 }
               }
-              categories {
+              categories(where: { childless: true }) {
                 edges {
-                  isPrimary
                   node {
                     name
                     uri
@@ -99,7 +98,6 @@ export const GetCategoryStories = gql`
               }
               categories {
                 edges {
-                  isPrimary
                   node {
                     name
                     uri
@@ -132,7 +130,6 @@ export const GetCategoryStories = gql`
               }
               categories {
                 edges {
-                  isPrimary
                   node {
                     name
                     uri
@@ -186,9 +183,8 @@ export const GetCategoryStories = gql`
                         }
                       }
                     }
-                    categories {
+                    categories(where: { childless: true }) {
                       edges {
-                        isPrimary
                         node {
                           name
                           uri
@@ -238,7 +234,6 @@ export const GetCategoryStories = gql`
                     }
                     categories {
                       edges {
-                        isPrimary
                         node {
                           name
                           uri
@@ -271,7 +266,6 @@ export const GetCategoryStories = gql`
                     }
                     categories {
                       edges {
-                        isPrimary
                         node {
                           name
                           uri
@@ -325,9 +319,8 @@ export const GetCategoryStories = gql`
                               }
                             }
                           }
-                          categories {
+                          categories(where: { childless: true }) {
                             edges {
-                              isPrimary
                               node {
                                 name
                                 uri
@@ -377,7 +370,6 @@ export const GetCategoryStories = gql`
                           }
                           categories {
                             edges {
-                              isPrimary
                               node {
                                 name
                                 uri
@@ -410,7 +402,6 @@ export const GetCategoryStories = gql`
                           }
                           categories {
                             edges {
-                              isPrimary
                               node {
                                 name
                                 uri

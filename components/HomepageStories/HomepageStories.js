@@ -47,18 +47,17 @@ export default function HomepageStories(pinPosts) {
     },
   )
 
-  const updateQuery = (previousResult, { fetchMoreResult }) => {
-    if (!fetchMoreResult.contentNodes.edges.length) {
-      return previousResult.contentNodes
-    }
+  const updateQuery = (prev, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+
+    const prevEdges = prev?.contentNodes?.edges || []
+    const newEdges = fetchMoreResult?.contentNodes?.edges || []
 
     return {
+      ...prev,
       contentNodes: {
-        ...previousResult.contentNodes,
-        edges: [
-          ...previousResult.contentNodes.edges,
-          ...fetchMoreResult.contentNodes.edges,
-        ],
+        ...prev.contentNodes,
+        edges: [...prevEdges, ...newEdges],
         pageInfo: fetchMoreResult.contentNodes.pageInfo,
       },
     }
@@ -218,29 +217,10 @@ export default function HomepageStories(pinPosts) {
               author={post?.author?.node?.name}
               uri={post?.uri}
               parentCategory={
-                (post?.categories?.edges?.length !== 1 &&
-                  post?.categories?.edges
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.parent?.node?.name)) ||
-                (post?.categories?.edges?.length === 1 &&
-                  post?.categories?.edges[0]?.node?.parent?.node?.name)
+                post?.categories?.edges[0]?.node?.parent?.node?.name
               }
-              category={
-                (post?.categories?.edges?.length !== 1 &&
-                  post?.categories?.edges
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.name)) ||
-                (post?.categories?.edges?.length === 1 &&
-                  post?.categories?.edges[0]?.node?.name)
-              }
-              categoryUri={
-                (post?.categories?.edges?.length !== 1 &&
-                  post?.categories?.edges
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.uri)) ||
-                (post?.categories?.edges?.length === 1 &&
-                  post?.categories?.edges[0]?.node?.uri)
-              }
+              category={post?.categories?.edges[0]?.node?.name}
+              categoryUri={post?.categories?.edges[0]?.node?.uri}
               featuredImage={post?.featuredImage?.node}
               chooseYourCategory={post?.acfCategoryIcon?.chooseYourCategory}
               chooseIcon={post?.acfCategoryIcon?.chooseIcon?.mediaItemUrl}

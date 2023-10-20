@@ -195,28 +195,9 @@ export default function SingleEditorial(props) {
             <SingleEditorialEntryHeader
               image={featuredImage?.node}
               title={title}
-              categoryUri={
-                (categories?.length !== 1 &&
-                  categories
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.uri)) ||
-                (categories?.length === 1 && categories[0]?.node?.uri)
-              }
-              parentCategory={
-                (categories?.length !== 1 &&
-                  categories
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.parent?.node?.name)) ||
-                (categories?.length === 1 &&
-                  categories[0]?.node?.parent?.node?.name)
-              }
-              categoryName={
-                (categories?.length !== 1 &&
-                  categories
-                    .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                    .map((category) => category?.node?.name)) ||
-                (categories?.length === 1 && categories[0]?.node?.name)
-              }
+              categoryUri={categories[0]?.node?.uri}
+              parentCategory={categories[0]?.node?.parent?.node?.name}
+              categoryName={categories[0]?.node?.name}
               author={author.node.name}
               date={date}
             />
@@ -279,7 +260,6 @@ SingleEditorial.query = gql`
       }
       categories {
         edges {
-          isPrimary
           node {
             name
             uri
@@ -314,7 +294,6 @@ SingleEditorial.query = gql`
                   ...FeaturedImageFragment
                   categories {
                     edges {
-                      isPrimary
                       node {
                         name
                         uri

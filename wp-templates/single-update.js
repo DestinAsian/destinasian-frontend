@@ -168,21 +168,9 @@ export default function SingleUpdate(props) {
             <SingleUpdateEntryHeader
               image={featuredImage?.node}
               title={title}
-              categoryUri={
-                categories?.length !== 1
-                  ? categories
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.uri)
-                  : categories[0]?.node?.uri
-              }
+              categoryUri={categories[0]?.node?.uri}
+              categoryName={categories[0]?.node?.name}
               contentTypeName={contentType?.node?.graphqlPluralName}
-              categoryName={
-                categories?.length !== 1
-                  ? categories
-                      .filter((category) => category?.isPrimary === true) // Filter for isPrimary === true
-                      .map((category) => category?.node?.name)
-                  : categories[0]?.node?.name
-              }
               author={author.node.name}
               date={date}
             />
@@ -225,7 +213,6 @@ SingleUpdate.query = gql`
       }
       categories {
         edges {
-          isPrimary
           node {
             name
             uri
@@ -260,7 +247,6 @@ SingleUpdate.query = gql`
                   ...FeaturedImageFragment
                   categories {
                     edges {
-                      isPrimary
                       node {
                         name
                         uri
