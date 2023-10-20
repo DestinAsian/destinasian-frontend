@@ -66,7 +66,7 @@ export default function CategoryStories(categoryUri) {
   //   }
   // }
 
-  // Updates Stories
+  // Editorial & Updates Stories
   if (
     (parent === null || parent === undefined) &&
     children?.edges?.length === 0
@@ -75,7 +75,7 @@ export default function CategoryStories(categoryUri) {
       first: postsPerPage,
       after: null,
       id: uri,
-      contentTypes: [CONTENT_TYPES.UPDATE], // Change this to the desired value
+      contentTypes: [CONTENT_TYPES.EDITORIAL, CONTENT_TYPES.UPDATE], // Change this to the desired value
     }
   }
 
