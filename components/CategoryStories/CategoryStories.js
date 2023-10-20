@@ -44,7 +44,7 @@ export default function CategoryStories(categoryUri) {
     contentTypes: [CONTENT_TYPES.EDITORIAL, CONTENT_TYPES.POST],
   }
 
-  // // Editorial Stories
+  // //  Editorial Stories
   // if (parent === null || parent === undefined) {
   //   // Modify the variables based on the condition
   //   storiesVariable = {
@@ -54,6 +54,30 @@ export default function CategoryStories(categoryUri) {
   //     contentTypes: [CONTENT_TYPES.EDITORIAL], // Change this to the desired value
   //   }
   // }
+
+  // // Post/Guide Stories
+  // if (children?.edges?.length !== 0) {
+  //   // Modify the variables based on the condition
+  //   storiesVariable = {
+  //     first: postsPerPage,
+  //     after: null,
+  //     id: uri,
+  //     contentTypes: [CONTENT_TYPES.POST], // Change this to the desired value
+  //   }
+  // }
+
+  // Updates Stories
+  if (
+    (parent === null || parent === undefined) &&
+    children?.edges?.length === 0
+  ) {
+    storiesVariable = {
+      first: postsPerPage,
+      after: null,
+      id: uri,
+      contentTypes: [CONTENT_TYPES.UPDATE], // Change this to the desired value
+    }
+  }
 
   // Get Stories / Posts
   const { data, error, loading, fetchMore } = useQuery(GetCategoryStories, {
@@ -80,19 +104,6 @@ export default function CategoryStories(categoryUri) {
       },
     }
   }
-
-  // useEffect(() => {
-  //   // Check conditions to update contentTypes
-  //   if (children?.edges?.length !== 0 && data?.category?.contentNodes?.edges?.length !== 0) {
-  //     storiesVariable.contentTypes = [CONTENT_TYPES.POST]
-  //   }
-
-  //   // Refetch with updated contentTypes
-  //   fetchMore({
-  //     variables: storiesVariable,
-  //     updateQuery,
-  //   })
-  // }, [children, fetchMore])
 
   // Get ROS Banner
   const { data: bannerROSData, error: bannerROSError } = useQuery(
