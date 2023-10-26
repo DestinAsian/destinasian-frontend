@@ -44,28 +44,6 @@ export default function CategoryStories(categoryUri) {
     contentTypes: [CONTENT_TYPES.EDITORIAL, CONTENT_TYPES.POST],
   }
 
-  // //  Editorial Stories
-  // if (parent === null || parent === undefined) {
-  //   // Modify the variables based on the condition
-  //   storiesVariable = {
-  //     first: postsPerPage,
-  //     after: null,
-  //     id: uri,
-  //     contentTypes: [CONTENT_TYPES.EDITORIAL], // Change this to the desired value
-  //   }
-  // }
-
-  // // Post/Guide Stories
-  // if (children?.edges?.length !== 0) {
-  //   // Modify the variables based on the condition
-  //   storiesVariable = {
-  //     first: postsPerPage,
-  //     after: null,
-  //     id: uri,
-  //     contentTypes: [CONTENT_TYPES.POST], // Change this to the desired value
-  //   }
-  // }
-
   // Editorial & Updates Stories
   if (
     (parent === null || parent === undefined) &&
