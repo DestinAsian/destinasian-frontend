@@ -80,15 +80,21 @@ span:has(.dropcap) {
   color: var(--wpe--color--black);
   font-family: 'DreamOrphans-Regular';
   font-weight: 700;
-  line-height: 1;
-  font-size: 7.5rem;
-  margin: 0 0.5rem 0 0;
+  margin: 0;
   padding: 0;
-  float: left;
+}
 
-  @media (min-width: $breakpoint-small) {
-    font-size: 10rem;
+p:has(.dropcap)::first-letter {
+  initial-letter: 4;
+  padding-right: 0.5rem;
+
+  @media (min-width: $breakpoint-extra-small) {
+    initial-letter: 5;
   }
+}
+
+p:has(.dropcap)::first-line {
+  line-height: 1.65;
 }
 
 ::-moz-selection {
