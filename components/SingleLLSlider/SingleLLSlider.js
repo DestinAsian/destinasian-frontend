@@ -15,7 +15,7 @@ export default function SingleLLSlider({ images }) {
   const menuIndex = images?.map((image, index) => {
     return index
   })
-  
+
   return (
     <>
       <Swiper
@@ -46,7 +46,7 @@ export default function SingleLLSlider({ images }) {
           <div className="post-swiper-slide">
             {image && (
               <SwiperSlide key={index}>
-                <img src={image} loading="lazy"/>
+                <img src={image} loading="lazy" />
               </SwiperSlide>
             )}
           </div>
