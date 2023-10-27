@@ -72,25 +72,32 @@ iframe {
 }
 
 /* Editorial Dropcap */
-span:has(.dropcap) {
-  padding: 0;
-}
-
 .dropcap {
   color: var(--wpe--color--black);
   font-family: 'DreamOrphans-Regular';
   font-weight: 700;
-  width: auto;
   margin: 0;
   padding: 0;
 }
 
 p:has(.dropcap)::first-letter {
-  initial-letter: 4;
+  initial-letter: 3;
   padding-right: 0.5rem;
+  font-size: 7rem;
+  float: left;
+  line-height: 1;
 
   @media (min-width: $breakpoint-extra-small) {
     initial-letter: 5;
+    font-size: 7rem;
+  }
+}
+
+p:has(.dropcap)::first-line {
+  line-height: 30px;
+
+  @media (min-width: $breakpoint-extra-small) {
+    line-height: 33px;
   }
 }
 
