@@ -1,5 +1,10 @@
-import { WordPressTemplate } from '@faustwp/core';
+// pages/preview.js
+import { getWordPressProps, WordPressTemplate } from '@faustwp/core'
 
-export default function Preview(props) {
-  return <WordPressTemplate {...props} />;
+export default function Page(props) {
+  return <WordPressTemplate {...props} />
+}
+
+export function getStaticProps(ctx) {
+  return getWordPressProps({ ctx, revalidate: 1 })
 }

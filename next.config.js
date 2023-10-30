@@ -1,6 +1,4 @@
-const { withFaust, getWpHostname } = require('@faustwp/core')
-const withCss = require('@zeit/next-css')
-const withPurgeCss = require('next-purgecss')
+const { withFaust, getWpHostname } = require('@faustwp/core');
 
 /**
  * @type {import('next').NextConfig}
@@ -17,12 +15,4 @@ module.exports = withFaust({
     locales: ['en'],
     defaultLocale: 'en',
   },
-})
-withCss(
-  withPurgeCss({
-    purgeCssPaths: [
-      'components/**/*',
-      'styles/**/*',
-    ],
-  }),
-)
+});
