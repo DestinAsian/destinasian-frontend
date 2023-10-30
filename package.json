@@ -19,13 +19,11 @@
     "graphql": "^16.6.0",
     "keen-slider": "^6.8.5",
     "next": "^12.1.6",
-    "next-cloudinary": "^4.28.0",
     "react": "^17.0.2",
     "react-div-100vh": "^0.7.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.8.0",
     "react-instantsearch-dom": "^6.39.1",
-    "react-player": "^2.13.0",
     "react-responsive": "^9.0.2",
     "react-router-dom": "^6.11.1",
     "reveal.js": "^4.5.0",
@@ -34,7 +32,9 @@
     "turnstone": "^2.2.0"
   },
   "devDependencies": {
+    "@zeit/next-css": "^1.0.1",
     "autoprefixer": "^10.4.14",
+    "next-purgecss": "^4.0.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
