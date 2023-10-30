@@ -139,14 +139,11 @@ export default function SEO({ title, description, imageUrl, url, focuskw }) {
         </noscript>
         {/* <!-- END FOUANALYTICS ON-SITE EMBED CODE --> */}
 
-        {/* Favicon */}
-        <link rel="icon" href="../../assets/favicon.ico" sizes="any" />
-
         {/* Typography Cloud */}
         <link
           rel="stylesheet"
           type="text/css"
-          href="https://cloud.typography.com/7429004/7933832/css/fonts.css"
+          href="https://cloud.typography.com/7429004/6477832/css/fonts.css"
         />
 
         {/* Google Fonts */}
