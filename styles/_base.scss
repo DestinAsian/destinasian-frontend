@@ -78,26 +78,13 @@ iframe {
   font-weight: 700;
   margin: 0;
   padding: 0;
-}
-
-p:has(.dropcap)::first-letter {
-  initial-letter: 3;
   padding-right: 0.5rem;
   font-size: 7rem;
   float: left;
   line-height: 1;
 
-  @media (min-width: $breakpoint-extra-small) {
-    initial-letter: 5;
-    font-size: 7rem;
-  }
-}
-
-p:has(.dropcap)::first-line {
-  line-height: 30px;
-
-  @media (min-width: $breakpoint-extra-small) {
-    line-height: 33px;
+    @media (min-width: $breakpoint-extra-small) {
+    font-size: 10rem;
   }
 }
 
