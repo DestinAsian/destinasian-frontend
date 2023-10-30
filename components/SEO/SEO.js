@@ -143,7 +143,7 @@ export default function SEO({ title, description, imageUrl, url, focuskw }) {
         <link
           rel="stylesheet"
           type="text/css"
-          href="https://cloud.typography.com/7429004/6477832/css/fonts.css"
+          href="https://cloud.typography.com/7429004/7933832/css/fonts.css"
         />
 
         {/* Google Fonts */}
