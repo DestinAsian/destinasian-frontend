@@ -32,12 +32,14 @@ export default function CategoryStories(categoryUri) {
   const postsPerPage = 4
   const bannerPerPage = 20
   const advertPerPage = 5
+  const editorialPerPage = 10
 
   const uri = categoryUri?.categoryUri
   const pinPosts = categoryUri?.pinPosts
   const name = categoryUri?.name
   const children = categoryUri?.children
   const parent = categoryUri?.parent
+  const ancestor = categoryUri?.ancestor
 
   let storiesVariable = {
     first: postsPerPage,
@@ -144,6 +146,7 @@ export default function CategoryStories(categoryUri) {
     return <pre>{JSON.stringify(error)}</pre>
   }
 
+  // Advertorial Var
   let queryVariables = {
     first: advertPerPage,
     search: null,
@@ -160,6 +163,32 @@ export default function CategoryStories(categoryUri) {
     // Modify the variables based on the condition
     queryVariables = {
       search: name, // Change this to the desired value
+    }
+  }
+
+  // Editorial Var
+  let editorialVariables = {
+    first: editorialPerPage,
+    categoryName: null,
+  }
+
+  if (data?.category?.children?.edges?.length === 0) {
+    // Modify the variables based on the condition
+    editorialVariables = {
+      categoryName: ancestor, // Change this to the desired value
+    }
+  }
+
+  if (data?.category?.children?.edges?.length !== 0) {
+    // Modify the variables based on the condition
+    editorialVariables = {
+      categoryName: parent, // Change this to the desired value
+    }
+  }
+
+  if (data?.category?.parent === null) {
+    editorialVariables = {
+      categoryName: name,
     }
   }
 
@@ -181,7 +210,7 @@ export default function CategoryStories(categoryUri) {
   const { data: editorialsData, error: editorialsError } = useQuery(
     GetEditorialStories,
     {
-      variables: queryVariables, // Use the modified variables
+      variables: editorialVariables, // Use the modified variables
       fetchPolicy: 'network-only',
       nextFetchPolicy: 'cache-and-network',
     },
@@ -451,6 +480,7 @@ export default function CategoryStories(categoryUri) {
                 {/* Editorial Stories */}
                 {numberOfEditorial !== 0 &&
                   name !== ('Trade Talk' || 'Airline News' || 'Travel News') &&
+                  // data?.category?.children?.edges?.length !== 0 &&
                   getEditorialPost.map((post) => (
                     <Post
                       title={post?.title}
