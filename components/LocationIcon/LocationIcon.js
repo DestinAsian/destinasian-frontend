@@ -19,7 +19,7 @@ export default function LocationIcon({
         {locationValidation == 'acfLocationIcon' && (
           <a href={locationUrl}>
             <div className={cx('icon')}>
-              <Image src={locationIcon.src} layout='fill' />
+              <Image src={locationIcon.src} layout="fill" alt="Location Icon" />
             </div>
           </a>
         )}

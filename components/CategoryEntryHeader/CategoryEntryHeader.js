@@ -43,7 +43,7 @@ export default function CategoryEntryHeader({
               )}
               {image && (
                 <figure className={cx('image')}>
-                  <Image src={image} layout='fill'/>
+                  <Image src={image} layout="fill" alt={title} />
                 </figure>
               )}
               {children.length !== 0 && (

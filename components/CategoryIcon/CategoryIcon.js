@@ -22,22 +22,30 @@ export default function CategoryIcon({
           {/* Generate category icon */}
           {chooseYourCategory == 'attraction' && (
             <div className={cx('icon')}>
-              <Image src={attractionIcon.src} layout='fill' />
+              <Image
+                src={attractionIcon.src}
+                layout="fill"
+                alt="Attraction Icon"
+              />
             </div>
           )}
           {chooseYourCategory == 'dining' && (
             <div className={cx('icon')}>
-              <Image src={diningIcon.src} layout='fill' />
+              <Image src={diningIcon.src} layout="fill" alt="Dining Icon" />
             </div>
           )}
           {chooseYourCategory == 'hotel' && (
             <div className={cx('icon')}>
-              <Image src={hotelIcon.src} layout='fill' />
+              <Image src={hotelIcon.src} layout="fill" alt="Hotel Icon" />
             </div>
           )}
           {chooseYourCategory == 'nightlife' && (
             <div className={cx('icon')}>
-              <Image src={nightlifeIcon.src} layout='fill' />
+              <Image
+                src={nightlifeIcon.src}
+                layout="fill"
+                alt="Nightlife Icon"
+              />
             </div>
           )}
           {/* Label for category icon */}
@@ -49,22 +57,22 @@ export default function CategoryIcon({
           {/* Generate category icon */}
           {chooseYourCategory == 'attraction' && (
             <div className={cx('icon')}>
-              <Image src={chooseIcon} layout='fill' />
+              <Image src={chooseIcon} layout="fill" alt="Attraction Icon" />
             </div>
           )}
           {chooseYourCategory == 'dining' && (
             <div className={cx('icon')}>
-              <Image src={chooseIcon} layout='fill' />
+              <Image src={chooseIcon} layout="fill" alt="Dining Icon" />
             </div>
           )}
           {chooseYourCategory == 'hotel' && (
             <div className={cx('icon')}>
-              <Image src={chooseIcon} layout='fill' />
+              <Image src={chooseIcon} layout="fill" alt="Hotel Icon" />
             </div>
           )}
           {chooseYourCategory == 'nightlife' && (
             <div className={cx('icon')}>
-              <Image src={chooseIcon} layout='fill' />
+              <Image src={chooseIcon} layout="fill" alt="Nightlife Icon" />
             </div>
           )}
           {/* Label for category icon */}

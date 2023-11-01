@@ -63,7 +63,11 @@ export default function CategoryHeader({
             {/* DA logo */}
             <div className={cx('brand')}>
               <Link href="/">
-                <Image src={destinasianLogo.src} layout="fill" />
+                <Image
+                  src={destinasianLogo.src}
+                  layout="fill"
+                  alt="Destinasian Logo"
+                />
               </Link>
             </div>
 

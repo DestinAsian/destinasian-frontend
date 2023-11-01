@@ -71,7 +71,11 @@ export default function SingleHeader({
             <div className={cx('brand')}>
               <Link href="/">
                 <a className={cx('title')}>
-                  <Image src={destinasianLogo.src} layout='fill' />
+                  <Image
+                    src={destinasianLogo.src}
+                    layout="fill"
+                    alt="Destinasian Logo"
+                  />
                 </a>
               </Link>
             </div>
