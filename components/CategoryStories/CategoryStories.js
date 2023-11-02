@@ -478,7 +478,7 @@ export default function CategoryStories(categoryUri) {
             {index - 1 === 0 && (
               <>
                 {/* Editorial Stories */}
-                {numberOfEditorial !== 0 &&
+                {/* {numberOfEditorial !== 0 &&
                   name !== ('Trade Talk' || 'Airline News' || 'Travel News') &&
                   // data?.category?.children?.edges?.length !== 0 &&
                   getEditorialPost.map((post) => (
@@ -490,7 +490,7 @@ export default function CategoryStories(categoryUri) {
                       category={post?.categories?.edges[0]?.node?.name}
                       categoryUri={post?.categories?.edges[0]?.node?.uri}
                     />
-                  ))}
+                  ))} */}
                 {/* Advertorial Stories */}
                 {numberOfAdvertorial !== 0 &&
                   name !==
