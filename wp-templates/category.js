@@ -26,13 +26,11 @@ export default function Component(props) {
     props?.data?.generalSettings
   const {
     name,
-    uri,
     description,
     categoryImages,
     children,
     parent,
     pinPosts,
-    countryCode,
     destinationGuides,
     databaseId,
   } = props?.data?.category ?? []
@@ -177,16 +175,12 @@ Component.query = gql`
   query GetCategoryPage($databaseId: ID!) {
     category(id: $databaseId, idType: DATABASE_ID) {
       name
-      uri
       description
       databaseId
       categoryImages {
         categoryImages {
           mediaItemUrl
         }
-      }
-      countryCode {
-        countryCode
       }
       destinationGuides {
         destinationGuides

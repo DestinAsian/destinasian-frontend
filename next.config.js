@@ -9,7 +9,11 @@ module.exports = withFaust({
     includePaths: ['node_modules'],
   },
   images: {
-    domains: [getWpHostname()],
+    domains: [
+      getWpHostname(),
+      'localhost',
+      process.env.NEXT_PUBLIC_WORDPRESS_URL,
+    ],
     allowFutureImage: true,
   },
   i18n: {
