@@ -5,7 +5,7 @@ import { Container, SkipNavigationLink, FullMenu } from '../../components'
 import styles from './CategoryHeader.module.scss'
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 let cx = classNames.bind(styles)
 
@@ -63,11 +63,7 @@ export default function CategoryHeader({
             {/* DA logo */}
             <div className={cx('brand')}>
               <Link href="/">
-                <Image
-                  src={destinasianLogo.src}
-                  layout="fill"
-                  alt="Destinasian Logo"
-                />
+                <Image src={destinasianLogo.src} alt="Destinasian Logo" fill sizes="100vw" />
               </Link>
             </div>
 
@@ -226,5 +222,5 @@ m-193 -1701 l423 -423 425 425 425 425 212 -213 213 -212 -425 -425 -425 -425
         />
       </div>
     </header>
-  )
+  );
 }
