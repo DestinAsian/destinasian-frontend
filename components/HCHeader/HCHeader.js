@@ -65,17 +65,17 @@ export default function HCHeader({
             {/* DA logo */}
             <div className={cx('brand')}>
               {isNavShown ? (
-                <Link href="/">
-                  <a className={cx('title')}>
-                    <Image src={destinasianLogo.src} alt="Destinasian Logo" fill sizes="100vw" />
-                  </a>
-                </Link>
+                (<Link href="/" className={cx('title')}>
+
+                  <Image src={destinasianLogo.src} alt="Destinasian Logo" fill sizes="100vw" />
+
+                </Link>)
               ) : (
-                <Link href="/">
-                  <a className={cx('title')}>
-                    <Image src={destinasianLogo.src} alt="DestinAsian Logo" fill sizes="100vw" />
-                  </a>
-                </Link>
+                (<Link href="/" className={cx('title')}>
+
+                  <Image src={destinasianLogo.src} alt="DestinAsian Logo" fill sizes="100vw" />
+
+                </Link>)
               )}
             </div>
 
