@@ -15,7 +15,6 @@ import {
   SecondaryHeader,
   EntryMoreReviews,
   MoreReviews,
-  EntryPartnerContent,
   PartnerContent,
 } from '../components'
 import { GetMenus } from '../queries/GetMenus'
@@ -117,11 +116,46 @@ export default function Component(props) {
   const allPosts = mainCatPosts.sort(sortPostsByDate)
 
   const images = [
-    acfPostSlider.slide1 != null ? acfPostSlider.slide1.mediaItemUrl : null,
-    acfPostSlider.slide2 != null ? acfPostSlider.slide2.mediaItemUrl : null,
-    acfPostSlider.slide3 != null ? acfPostSlider.slide3.mediaItemUrl : null,
-    acfPostSlider.slide4 != null ? acfPostSlider.slide4.mediaItemUrl : null,
-    acfPostSlider.slide5 != null ? acfPostSlider.slide5.mediaItemUrl : null,
+    [
+      acfPostSlider?.slide1 != null
+        ? acfPostSlider?.slide1?.mediaItemUrl
+        : null,
+      acfPostSlider?.slideCaption1 != null
+        ? acfPostSlider?.slideCaption1
+        : null,
+    ],
+    [
+      acfPostSlider?.slide2 != null
+        ? acfPostSlider?.slide2?.mediaItemUrl
+        : null,
+      acfPostSlider?.slideCaption2 != null
+        ? acfPostSlider?.slideCaption2
+        : null,
+    ],
+    [
+      acfPostSlider?.slide3 != null
+        ? acfPostSlider?.slide3?.mediaItemUrl
+        : null,
+      acfPostSlider?.slideCaption3 != null
+        ? acfPostSlider?.slideCaption3
+        : null,
+    ],
+    [
+      acfPostSlider?.slide4 != null
+        ? acfPostSlider?.slide4?.mediaItemUrl
+        : null,
+      acfPostSlider?.slideCaption4 != null
+        ? acfPostSlider?.slideCaption4
+        : null,
+    ],
+    [
+      acfPostSlider?.slide5 != null
+        ? acfPostSlider?.slide5?.mediaItemUrl
+        : null,
+      acfPostSlider?.slideCaption5 != null
+        ? acfPostSlider?.slideCaption5
+        : null,
+    ],
   ]
 
   return (
@@ -184,7 +218,6 @@ export default function Component(props) {
             categoryUri={categories[0]?.node?.uri}
           />
           <MoreReviews databaseId={databaseId} />
-          <EntryPartnerContent />
           <PartnerContent
             parentName={categories[0]?.node?.parent?.node?.name}
           />
@@ -268,6 +301,11 @@ Component.query = gql`
         slide5 {
           mediaItemUrl
         }
+        slideCaption1
+        slideCaption3
+        slideCaption2
+        slideCaption4
+        slideCaption5
       }
       acfCategoryIcon {
         categoryLabel
