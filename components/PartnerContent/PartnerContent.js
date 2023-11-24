@@ -351,6 +351,7 @@ export default function PartnerContent({ parentName }) {
             </div>
           </article>
         )}
+        <div className={cx('border-divider')}></div>
       </div>
     </>
   )
